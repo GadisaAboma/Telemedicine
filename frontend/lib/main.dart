@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/home/public_home.dart';
+import 'package:frontend/login/login.dart';
 
 import 'home/home.dart';
 
@@ -15,12 +17,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        primarySwatch: Colors.brown,
         primaryColor: const Color.fromARGB(199, 4, 14, 26),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(199, 4, 14, 26),
         ),
       ),
-      home: Home(),
+      home: Login(),
     );
   }
 }

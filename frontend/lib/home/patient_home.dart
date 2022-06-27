@@ -33,6 +33,7 @@ class _HomeState extends State<Home> {
   }
 
  
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +67,9 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-             Posts(),
-            
+            if (index == 0) Posts(),
+            if (index == 1) Notifications(),
+            if (index == 2) Messages()
           ],
         ),
       ),
@@ -83,7 +85,43 @@ class _HomeState extends State<Home> {
           colorEndAnimation: Colors.red,
           animatedIconData: AnimatedIcons.menu_close //To principal button
           ),
-      
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        currentIndex: index,
+        selectedItemColor: Colors.white,
+        showUnselectedLabels: false,
+        onTap: (currentIndex) {
+          setState(() {
+            index = currentIndex;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.white,
+              size: 30,
+            ),
+            label: "home",
+          ),
+          BottomNavigationBarItem(
+            label: "notification",
+            icon: Icon(
+              Icons.notifications,
+              size: 30,
+              color: Colors.white,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "messages",
+            icon: Icon(
+              Icons.message,
+              size: 30,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
