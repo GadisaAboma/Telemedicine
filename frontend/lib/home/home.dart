@@ -15,19 +15,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
 
-  // late BuildContext ctx;
-
-  // Widget add() {
-  //   return FloatActionButtonText(
-  //     onPressed: () {
-  //       fabKey.currentState!.animate();
-  //     },
-  //     icon: Icons.add,
-  //     text: "Start",
-  //     textLeft: -115,
-  //   );
-  // }
-
   Widget chat(BuildContext ctx) {
     return Container(
       child: FloatingActionButton(
@@ -45,18 +32,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  // Widget inbox() {
-  //   return FloatActionButtonText(
-
-  //     onPressed: () {
-  //       fabKey.currentState!.animate();
-  //     },
-  //     icon: Icons.inbox,
-  //     textLeft: -135,
-  //     text: "Desbloquear",
-  //   );
-  // }
-
+ 
   int index = 0;
 
   @override
