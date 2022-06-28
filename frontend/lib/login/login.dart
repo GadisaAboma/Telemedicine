@@ -129,7 +129,7 @@ class _LoginState extends State<Login> {
                                     onPressed: () => login(context),
                                     child: Text("login"),
                                   ),
-                                  
+
                                 ),
                                 Container(
                                   child: TextButton(
@@ -144,88 +144,7 @@ class _LoginState extends State<Login> {
                   ]),
             ),
           ),
-<<<<<<< HEAD
-          Container(
-            padding: EdgeInsets.all(20),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                "Hello,",
-                style: textStyle(),
-              ),
-              Text(
-                "Welcome To",
-                style: textStyle(),
-              ),
-              Text(
-                "Telemedicine",
-                style: textStyle(),
-              ),
-            ]),
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          Expanded(
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(19, 14, 14, 15),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                child: Container(
-                  margin: EdgeInsets.only(top: 50, left: 30, right: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Username"),
-                      TextFormField(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Password"),
-                      TextFormField(),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20)),
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey[900],
-                                textStyle: const TextStyle(fontSize: 22),
-                              ),
-                          onPressed: () {
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Home();
-                            }));
-                          },
-                          label: const Text("login"),
-                          icon: Icon(Icons.login),
-                        ),
-                      ),
-                      Container(
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text("Forget password"),
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-          )
-        ]),
-=======
         ),
->>>>>>> 844ff799ddc66c079aa0f29bc4c1c0de7271e485
       ),
     );
   }
