@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/home/home.dart';
+import 'package:frontend/register/register.dart';
 
 class Login extends StatefulWidget {
+  static String loginRoute = "/";
   const Login({Key? key}) : super(key: key);
 
   @override
@@ -16,28 +18,107 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Register here!",
-                        style: TextStyle(
-                            decorationStyle: TextDecorationStyle.dashed),
-                      )),
-                ),
-              ],
+      body: Form(
+        child: Container(
+          margin:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * .05),
+          child: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.95,
+              margin: EdgeInsets.only(),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, Register.registerRoute);
+                          },
+                          child: Text(
+                            "Register here!",
+                            style: TextStyle(
+                                decorationStyle: TextDecorationStyle.dashed),
+                          )),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hello,",
+                              style: textStyle(),
+                            ),
+                            Text(
+                              "Welcome To",
+                              style: textStyle(),
+                            ),
+                            Text(
+                              "Telemedicine",
+                              style: textStyle(),
+                            ),
+                          ]),
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Expanded(
+                      child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(19, 7, 7, 185),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
+                            ),
+                          ),
+                          child: Container(
+                            margin:
+                                EdgeInsets.only(top: 50, left: 30, right: 30),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Username"),
+                                TextFormField(),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Password"),
+                                TextFormField(),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return Home();
+                                      }));
+                                    },
+                                    child: Text("login"),
+                                  ),
+                                ),
+                                Container(
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: Text("Forget password"),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    )
+                  ]),
             ),
           ),
+<<<<<<< HEAD
           Container(
             padding: EdgeInsets.all(20),
             child:
@@ -116,6 +197,9 @@ class _LoginState extends State<Login> {
                 )),
           )
         ]),
+=======
+        ),
+>>>>>>> 844ff799ddc66c079aa0f29bc4c1c0de7271e485
       ),
     );
   }
