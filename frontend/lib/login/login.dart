@@ -90,14 +90,19 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(20)),
                         width: double.infinity,
                         height: 50,
-                        child: ElevatedButton(
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                                primary: Colors.blueGrey[900],
+                                textStyle: const TextStyle(fontSize: 22),
+                              ),
                           onPressed: () {
                             Navigator.pushReplacement(context,
                                 MaterialPageRoute(builder: (context) {
                               return Home();
                             }));
                           },
-                          child: Text("login"),
+                          label: const Text("login"),
+                          icon: Icon(Icons.login),
                         ),
                       ),
                       Container(
