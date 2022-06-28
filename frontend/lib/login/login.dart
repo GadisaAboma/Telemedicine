@@ -15,10 +15,20 @@ TextStyle textStyle() {
 }
 
 class _LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
+  void login(BuildContext ctx) {
+    if (formKey.currentState!.validate()) {
+      Navigator.pushReplacement(ctx, MaterialPageRoute(builder: (context) {
+        return Home();
+      }));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
+        key: formKey,
         child: Container(
           margin:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * .05),
@@ -81,12 +91,32 @@ class _LoginState extends State<Login> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Username"),
-                                TextFormField(),
+                                TextFormField(
+                                  validator: ((value) {
+                                    String username = value.toString().trim();
+                                    if (username.isEmpty) {
+                                      return "username field required";
+                                    }
+                                    if (username.length < 3) {
+                                      return "username must greater than 3 character";
+                                    }
+                                  }),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 Text("Password"),
-                                TextFormField(),
+                                TextFormField(
+                                  validator: ((value) {
+                                    String password = value.toString().trim();
+                                    if (password.isEmpty) {
+                                      return "password field required";
+                                    }
+                                    if (password.length < 3) {
+                                      return "password must greater than 3 character";
+                                    }
+                                  }),
+                                ),
                                 SizedBox(
                                   height: 30,
                                 ),
@@ -96,14 +126,10 @@ class _LoginState extends State<Login> {
                                   width: double.infinity,
                                   height: 50,
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return Home();
-                                      }));
-                                    },
+                                    onPressed: () => login(context),
                                     child: Text("login"),
                                   ),
+                                  
                                 ),
                                 Container(
                                   child: TextButton(
