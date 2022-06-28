@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/login/login.dart';
+import 'package:frontend/provider/register.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   static String registerRoute = "/register";
@@ -17,12 +19,11 @@ class _RegisterState extends State<Register> {
   String username = "";
   String password = "";
 
-  void register() {
+  void register(BuildContext ctx) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      print(fullname);
-      print(username);
-      print(password);
+      Provider.of<RegisterProvider>(context,listen: false)
+          .signup(fullname, username, password);
     }
   }
 
@@ -126,7 +127,7 @@ class _RegisterState extends State<Register> {
                       height: 20,
                     ),
                     ElevatedButton(
-                      onPressed: register,
+                      onPressed: () => register(context),
                       child: Container(
                           height: 40,
                           alignment: Alignment.center,
