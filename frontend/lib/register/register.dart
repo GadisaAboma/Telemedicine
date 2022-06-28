@@ -13,11 +13,14 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final formKey = GlobalKey<FormState>();
 
-  String name = "";
+  String fullname = "";
+  String username = "";
   String password = "";
 
   void register() {
-    formKey.currentState!.validate();
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+    }
   }
 
   @override
@@ -71,7 +74,11 @@ class _RegisterState extends State<Register> {
                           return "full name must greater than 5 character";
                         }
                       }),
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        setState(() {
+                          fullname = value.toString();
+                        });
+                      },
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 20),
@@ -86,6 +93,11 @@ class _RegisterState extends State<Register> {
                           return "username must greater than 3 character";
                         }
                       }),
+                      onSaved: (value) {
+                        setState(() {
+                          username = value.toString();
+                        });
+                      },
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 20),
@@ -101,6 +113,11 @@ class _RegisterState extends State<Register> {
                           return "password must greater than 7 character";
                         }
                       }),
+                      onSaved: (value) {
+                        setState(() {
+                          password = value.toString();
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 20,
