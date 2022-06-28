@@ -20,6 +20,9 @@ class _RegisterState extends State<Register> {
   void register() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      print(fullname);
+      print(username);
+      print(password);
     }
   }
 
