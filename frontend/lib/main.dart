@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/home/public_home.dart';
 import 'package:frontend/login/login.dart';
+import 'package:frontend/provider/register.dart';
+import 'package:frontend/register/register.dart';
+import 'package:provider/provider.dart';
 
 import 'home/home.dart';
 
@@ -13,17 +15,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.brown,
-        primaryColor: const Color.fromARGB(199, 4, 14, 26),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(199, 4, 14, 26),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create:((context) =>  RegisterProvider()),),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blueGrey,
+          primaryColor: const Color.fromARGB(199, 4, 14, 26),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromARGB(199, 4, 14, 26),
+          ),
         ),
+        routes: {
+          '/':(context)=>Login(),
+          "/register":(context) => Register(),
+          // "/adminHome":(context) => 
+        },
+        // home: Login(),
       ),
-      home: Login(),
     );
   }
 }
