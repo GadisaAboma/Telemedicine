@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:frontend/home/home.dart';
 import 'package:frontend/register/register.dart';
@@ -37,116 +38,120 @@ class _LoginState extends State<Login> {
               height: MediaQuery.of(context).size.height * 0.95,
               margin: EdgeInsets.only(),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.topRight,
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, Register.registerRoute);
-                          },
-                          child: Text(
-                            "Register here!",
-                            style: TextStyle(
-                                decorationStyle: TextDecorationStyle.dashed),
-                          )),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Register.registerRoute);
+                        },
+                        child: Text(
+                          "Register here!",
+                          style: TextStyle(
+                              decorationStyle: TextDecorationStyle.dashed),
+                        )),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Hello,",
+                            style: textStyle(),
+                          ),
+                          Text(
+                            "Welcome To",
+                            style: textStyle(),
+                          ),
+                          Text(
+                            "Telemedicine",
+                            style: textStyle(),
+                          ),
+                        ]),
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(19, 7, 7, 185),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                        ),
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 50, left: 30, right: 30),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Hello,",
-                              style: textStyle(),
+                           const Text("Username"),
+                            TextFormField(
+                              validator: ((value) {
+                                String username = value.toString().trim();
+                                if (username.isEmpty) {
+                                  return "username field required";
+                                }
+                                if (username.length < 3) {
+                                  return "username must greater than 3 character";
+                                }
+                              }),
                             ),
-                            Text(
-                              "Welcome To",
-                              style: textStyle(),
+                            SizedBox(
+                              height: 10,
                             ),
-                            Text(
-                              "Telemedicine",
-                              style: textStyle(),
+                            Text("Password"),
+                            TextFormField(
+                              validator: ((value) {
+                                String password = value.toString().trim();
+                                if (password.isEmpty) {
+                                  return "password field required";
+                                }
+                                if (password.length < 3) {
+                                  return "password must greater than 3 character";
+                                }
+                              }),
                             ),
-                          ]),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                primary: Colors.blueGrey[900],
+                                textStyle: const TextStyle(fontSize: 22),
+                              ),
+                                onPressed: () => login(context),
+                                label: const Text("login"),
+                                icon: const Icon(Icons.login),
+                              ),
+                            ),
+                            Container(
+                              child: TextButton(
+                                onPressed: () {},
+                                child: const Text("Forget password"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      height: 100,
-                    ),
-                    Expanded(
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(19, 7, 7, 185),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(40),
-                              topRight: Radius.circular(40),
-                            ),
-                          ),
-                          child: Container(
-                            margin:
-                                EdgeInsets.only(top: 50, left: 30, right: 30),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Username"),
-                                TextFormField(
-                                  validator: ((value) {
-                                    String username = value.toString().trim();
-                                    if (username.isEmpty) {
-                                      return "username field required";
-                                    }
-                                    if (username.length < 3) {
-                                      return "username must greater than 3 character";
-                                    }
-                                  }),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("Password"),
-                                TextFormField(
-                                  validator: ((value) {
-                                    String password = value.toString().trim();
-                                    if (password.isEmpty) {
-                                      return "password field required";
-                                    }
-                                    if (password.length < 3) {
-                                      return "password must greater than 3 character";
-                                    }
-                                  }),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  width: double.infinity,
-                                  height: 50,
-                                  child: ElevatedButton.icon(
-                                    onPressed: () => login(context),
-                                    label: const Text("login"),
-                                    icon: const Icon(Icons.login),
-                                  ),
-
-                                ),
-                                Container(
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text("Forget password"),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
-                    )
-                  ]),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-       ),
+      ),
     );
   }
 }
