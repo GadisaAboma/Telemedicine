@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/home/home.dart';
 import 'package:frontend/register/register.dart';
+import 'package:frontend/utils/helpers.dart';
 
 class Login extends StatefulWidget {
   static String loginRoute = "/";
@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
                     child: TextButton(
                         onPressed: () {
                           Navigator.pushReplacementNamed(
-                              context, Register.registerRoute);
+                              context, Helpers.registerRoute);
                         },
                         child: Text(
                           "Register here!",
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                           const Text("Username"),
+                            const Text("Username"),
                             TextFormField(
                               validator: ((value) {
                                 String username = value.toString().trim();
@@ -127,9 +127,9 @@ class _LoginState extends State<Login> {
                               height: 50,
                               child: ElevatedButton.icon(
                                 style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey[900],
-                                textStyle: const TextStyle(fontSize: 22),
-                              ),
+                                  primary: Colors.blueGrey[900],
+                                  textStyle: const TextStyle(fontSize: 22),
+                                ),
                                 onPressed: () => login(context),
                                 label: const Text("login"),
                                 icon: const Icon(Icons.login),

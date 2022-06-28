@@ -7,15 +7,21 @@ import '../utils/helpers.dart';
 
 class RegisterProvider extends ChangeNotifier {
   List _userData = [];
-  
+  bool isLoading = false;
 
-  void signup(String name, String username, String password) async {
+  void setLoading() {
+    isLoading = !isLoading;
+    notifyListeners();
+  }
+
+  Future signup(String name, String username, String password) async {
+    setLoading();
     Map<String, String> jsonData = {
       "name": name,
       "username": username,
       "password": password
     };
-    print("object");
+    // print("object");
     try {
       final response = await http.post(
           Uri.parse("${Helpers.url}/api/patients/registerPatient"),
@@ -24,12 +30,13 @@ class RegisterProvider extends ChangeNotifier {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
-      final resData = json.decode(response.body);
-      print(resData);
+      final responseData = json.decode(response.body);
+      setLoading();
       notifyListeners();
+      return "success";
       // print(jsonData);
     } catch (e) {
-      print(e);
+      return e;
     }
   }
 }
