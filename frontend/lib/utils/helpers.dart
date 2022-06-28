@@ -1,3 +1,9 @@
 class Helpers {
-  static String ip = "http://10.141.215.115:3000";
+  static String url = "http://10.141.209.164:3000";
+
+  static String homeRoute = "/PatientHome";
+  static String loginRoute = "/";
+  static String registerRoute = "/register";
+
+  // static String url = "http://10.141.214.82:3000";
 }
