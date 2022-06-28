@@ -15,16 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        primaryColor: const Color.fromARGB(199, 4, 14, 26),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(199, 4, 14, 26),
-=======
+   
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create:((context) =>  RegisterProvider()),),
@@ -38,7 +29,6 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             backgroundColor: Color.fromARGB(199, 4, 14, 26),
           ),
->>>>>>> 844ff799ddc66c079aa0f29bc4c1c0de7271e485
         ),
         routes: {
           '/':(context)=>Login(),
