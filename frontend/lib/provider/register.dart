@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import '../utils/helpers.dart';
 
 class RegisterProvider extends ChangeNotifier {
   List _userData = [];
-  String url = "http://10.141.214.82:3000";
+  
 
   void signup(String name, String username, String password) async {
     Map<String, String> jsonData = {
@@ -17,7 +18,7 @@ class RegisterProvider extends ChangeNotifier {
     print("object");
     try {
       final response = await http.post(
-          Uri.parse("$url/api/patients/registerPatient"),
+          Uri.parse("${Helpers.url}/api/patients/registerPatient"),
           body: json.encode(jsonData),
           headers: {
             "Content-type": "application/json",
