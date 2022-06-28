@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                                     }
                                   }),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ),
                                 Container(
@@ -125,9 +125,10 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(20)),
                                   width: double.infinity,
                                   height: 50,
-                                  child: ElevatedButton(
+                                  child: ElevatedButton.icon(
                                     onPressed: () => login(context),
-                                    child: Text("login"),
+                                    label: const Text("login"),
+                                    icon: const Icon(Icons.login),
                                   ),
 
                                 ),
