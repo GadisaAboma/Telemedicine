@@ -13,7 +13,7 @@ connectDB()
 app.use(express.json())
 
 // Registering routes
-app.use("/api/patients",patientRoutes)
+app.use("/api/patients", patientRoutes)
 
 app.use(notFound)
 app.use(errorHandler)
