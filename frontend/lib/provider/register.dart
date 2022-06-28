@@ -32,7 +32,7 @@ class RegisterProvider extends ChangeNotifier {
           });
       final responseData = json.decode(response.body);
       setLoading();
-      notifyListeners();
+      // notifyListeners();
       return "success";
       // print(jsonData);
     } catch (e) {

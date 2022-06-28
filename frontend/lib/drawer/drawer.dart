@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/helpers.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -25,6 +26,17 @@ class DrawerWidget extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        Column(
+          children: [
+            ListTile(
+              title: Text("logout"),
+              leading: Icon(Icons.logout),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Helpers.loginRoute);
+              },
+            )
+          ],
         )
       ]),
     );
