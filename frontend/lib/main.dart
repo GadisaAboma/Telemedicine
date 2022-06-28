@@ -15,10 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create:((context) =>  RegisterProvider()),),
+        ChangeNotifierProvider(
+          create: ((context) => RegisterProvider()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -31,9 +32,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         routes: {
-          '/':(context)=>Login(),
-          "/register":(context) => Register(),
-          // "/adminHome":(context) => 
+          '/': (context) => Login(),
+          "/register": (context) => Register(),
+          // "/adminHome":(context) =>
         },
         // home: Login(),
       ),

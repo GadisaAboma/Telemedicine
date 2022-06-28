@@ -16,7 +16,10 @@ class _RegisterState extends State<Register> {
   String name = "";
   String password = "";
 
-  void register() {}
+  void register() {
+    formKey.currentState!.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,20 +61,52 @@ class _RegisterState extends State<Register> {
                     Container(
                         margin: EdgeInsets.only(top: 20),
                         child: Text("Full Name")),
-                    TextFormField(),
+                    TextFormField(
+                      validator: ((value) {
+                        String fullname = value.toString().trim();
+                        if (fullname.isEmpty) {
+                          return "fullname does not empty";
+                        }
+                        if (fullname.length < 5) {
+                          return "full name must greater than 5 character";
+                        }
+                      }),
+                      onSaved: (value) {},
+                    ),
                     Container(
                         margin: EdgeInsets.only(top: 20),
                         child: Text("Username")),
-                    TextFormField(),
+                    TextFormField(
+                      validator: ((value) {
+                        String username = value.toString().trim();
+                        if (username.isEmpty) {
+                          return "username does not empty";
+                        }
+                        if (username.length < 3) {
+                          return "username must greater than 3 character";
+                        }
+                      }),
+                    ),
                     Container(
                         margin: EdgeInsets.only(top: 20),
                         child: Text("Password")),
-                    TextFormField(),
+                    TextFormField(
+                      obscureText: true,
+                      validator: ((value) {
+                        String password = value.toString().trim();
+                        if (password.isEmpty) {
+                          return "password does not empty";
+                        }
+                        if (password.length < 7) {
+                          return "password must greater than 7 character";
+                        }
+                      }),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: register,
                       child: Container(
                           height: 40,
                           alignment: Alignment.center,
