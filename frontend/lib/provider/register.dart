@@ -13,7 +13,7 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future signup(String name, String username, String password) async {
+  Future register(String name, String username, String password) async {
     setLoading();
     Map<String, String> jsonData = {
       "name": name,
@@ -35,6 +35,28 @@ class RegisterProvider extends ChangeNotifier {
       return "success";
       // print(jsonData);
     } catch (e) {
+      return e;
+    }
+  }
+
+  Future login(String username, String password) async {
+    Map<String, String> loginData = {
+      "username": username,
+      "password": password
+    };
+    try {
+      final response = await http.post(
+          Uri.parse("${Helpers.url}/api/patients/login"),
+          body: json.encode(loginData),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      final responseData = json.decode(response.body);
+      setLoading();
+      return responseData;
+    } catch (e) {
+      print(e);
       return e;
     }
   }

@@ -31,6 +31,22 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  Widget add(BuildContext ctx) {
+    return Container(
+      child: FloatingActionButton(
+        onPressed: () {
+          fabKey.currentState!.closeFABs();
+          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
+            return ChatBot();
+            
+          }));
+        },
+        heroTag: "btn1",
+        tooltip: 'Second button',
+        child: Icon(Icons.add),
+      ),
+    );
+  }
 
  
 
@@ -76,7 +92,7 @@ class _HomeState extends State<Home> {
           fabButtons: <Widget>[
             // add(),
             chat(context),
-            chat(context),
+            add(context),
             // inbox(),
           ],
           colorStartAnimation: Theme.of(context).primaryColor,

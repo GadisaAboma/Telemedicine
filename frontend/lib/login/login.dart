@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/home/home.dart';
+import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   static String loginRoute = "/";
@@ -17,11 +19,20 @@ TextStyle textStyle() {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
-  void login(BuildContext ctx) {
+  String username = "";
+  String password = "";
+  void login(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
-      Navigator.pushReplacement(ctx, MaterialPageRoute(builder: (context) {
-        return Home();
-      }));
+      formKey.currentState!.save();
+      final responseLogin =
+          await Provider.of<RegisterProvider>(context, listen: false)
+              .login(username, password);
+      print(responseLogin);
+      if (responseLogin['code'] == 404) {
+        print(responseLogin["error"]);
+      } else if (responseLogin["code"] == 202) {
+        Navigator.pushReplacementNamed(context, Helpers.homeRoute);
+      }
     }
   }
 
@@ -101,22 +112,29 @@ class _LoginState extends State<Login> {
                                   return "username must greater than 3 character";
                                 }
                               }),
+                              onSaved: (value) {
+                                setState(() {
+                                  username = value.toString();
+                                });
+                              },
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text("Password"),
-                            TextFormField(
-                              validator: ((value) {
-                                String password = value.toString().trim();
-                                if (password.isEmpty) {
-                                  return "password field required";
-                                }
-                                if (password.length < 3) {
-                                  return "password must greater than 3 character";
-                                }
-                              }),
-                            ),
+                            TextFormField(validator: ((value) {
+                              String password = value.toString().trim();
+                              if (password.isEmpty) {
+                                return "password field required";
+                              }
+                              if (password.length < 3) {
+                                return "password must greater than 3 character";
+                              }
+                            }), onSaved: (value) {
+                              setState(() {
+                                password = value.toString();
+                              });
+                            }),
                             const SizedBox(
                               height: 30,
                             ),

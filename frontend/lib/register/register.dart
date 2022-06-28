@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
       formKey.currentState!.save();
       final registerResponse =
           await Provider.of<RegisterProvider>(context, listen: false)
-              .signup(fullname, username, password);
+              .register(fullname, username, password);
       if (registerResponse == "success") {
         Navigator.pushReplacementNamed(context, Helpers.homeRoute);
       }
