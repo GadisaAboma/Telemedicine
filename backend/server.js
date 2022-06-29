@@ -3,9 +3,14 @@ const app = express()
 const dotenv = require('dotenv')
 const cors = require('cors')
 const { connectDB } = require('./db/database')
+
+// importing our custom routes
 const patientRoutes = require('./routes/patientRoutes')
 const doctorRoutes = require('./routes/doctorRoutes')
 const adminRoutes = require('./routes/adminRoutes')
+const userRoutes = require('./routes/userRoutes')
+
+
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware')
 
 // Server Configuration
@@ -18,6 +23,7 @@ app.use(express.json())
 app.use("/api/patients", patientRoutes)
 app.use('/api/doctors', doctorRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/user', userRoutes)
 
 app.use(notFound)
 app.use(errorHandler)
