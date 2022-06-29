@@ -10,7 +10,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const patient = await Patient.findOne({username})
     const doctor = await Doctor.findOne({username})
     
-
+console.log(admin)
     if(admin && admin.password === password) {
         res.send({
             ...admin,

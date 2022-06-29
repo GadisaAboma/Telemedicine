@@ -23,13 +23,13 @@ class _LoginState extends State<Login> {
   void login(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      final responseLogin =
+      final loginResponse =
           await Provider.of<RegisterProvider>(context, listen: false)
               .login(username, password);
-      // print(responseLogin);
-      if (responseLogin['code'] == 404) {
-        print(responseLogin["error"]);
-      } else if (responseLogin["code"] == 202) {
+      // print(loginResponse);
+      if (loginResponse['code'] == 404) {
+        print(loginResponse["error"]);
+      } else if (loginResponse["code"] == 202) {
         Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
       }
     }
