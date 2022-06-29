@@ -27,8 +27,11 @@ class _RegisterState extends State<Register> {
       final registerResponse =
           await Provider.of<RegisterProvider>(context, listen: false)
               .register(fullname, username, password, acountType);
-      if (registerResponse == "success") {
-        Navigator.pushReplacementNamed(context, Helpers.homeRoute);
+      if (registerResponse == "success" && acountType == "patient") {
+        Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
+      }
+      if (registerResponse == "success" && acountType == "doctor") {
+        Navigator.pushReplacementNamed(context, Helpers.doctorHomeRoute);
       }
     }
   }

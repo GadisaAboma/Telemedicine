@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
       if (responseLogin['code'] == 404) {
         print(responseLogin["error"]);
       } else if (responseLogin["code"] == 202) {
-        Navigator.pushReplacementNamed(context, Helpers.homeRoute);
+        Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
       }
     }
   }
