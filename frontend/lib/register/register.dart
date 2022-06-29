@@ -5,7 +5,6 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
-
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -20,16 +19,26 @@ class _RegisterState extends State<Register> {
   String username = "";
   String password = "";
 
+  String acountType = "patient";
+
   void register(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       final registerResponse =
           await Provider.of<RegisterProvider>(context, listen: false)
-              .register(fullname, username, password);
+              .register(fullname, username, password, acountType);
       if (registerResponse == "success") {
         Navigator.pushReplacementNamed(context, Helpers.homeRoute);
       }
     }
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Doctor"), value: "doctor"),
+      DropdownMenuItem(child: Text("Patient"), value: "patient"),
+    ];
+    return menuItems;
   }
 
   @override
@@ -75,6 +84,22 @@ class _RegisterState extends State<Register> {
                           SizedBox(
                             height: 30,
                           ),
+                          Container(
+                              child: Row(children: [
+                            Text("who are you?"),
+                            SizedBox(
+                            width: 20,
+                          ),
+                            DropdownButton(
+                                value: acountType,
+                                items: dropdownItems,
+                                onChanged: (values) {
+                                  setState(() {
+                                    acountType = values.toString();
+                                  });
+                                  print(acountType);
+                                }),
+                          ])),
                           Container(
                               margin: EdgeInsets.only(top: 20),
                               child: Text("Full Name")),
