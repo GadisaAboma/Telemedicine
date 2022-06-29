@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/home/admin_home.dart';
+import 'package:frontend/home/doctor_home.dart';
 import 'package:frontend/login/login.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:provider/provider.dart';
 
-import 'home/home.dart';
+import 'home/patient_home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,10 +33,18 @@ class MyApp extends StatelessWidget {
             backgroundColor: Color.fromARGB(199, 4, 14, 26),
           ),
         ),
+
+        //         static String patientHomeRoute = "/PatientHome";
+        // static String doctorHomeRoute = "/doctorHome";
+        // static String adminHomeRoute = "/adminHome";
+        // static String loginRoute = "/";
+        // static String registerRoute = "/register";
         routes: {
           '/': (context) => Login(),
           "/register": (context) => Register(),
-          "/PatientHome":(context) => Home()
+          "/PatientHome": (context) => PatientHome(),
+          "/doctorHome": (context) => DoctorHome(),
+          "/adminHome": (context) => AdminHome(),
         },
         // home: Login(),
       ),

@@ -7,12 +7,12 @@ import '../messages/messages.dart';
 import '../notifications/notification.dart';
 import '../posts/posts.dart';
 
-class Home extends StatefulWidget {
+class PatientHome extends StatefulWidget {
   @override
-  State<Home> createState() => _HomeState();
+  State<PatientHome> createState() => _PatientHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _PatientHomeState extends State<PatientHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
 
   Widget chat(BuildContext ctx) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/home/home.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';

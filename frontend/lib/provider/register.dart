@@ -14,38 +14,28 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   Future register(
-      String name, String username, String password, String acountType) async {
+      String name, String username, String password, String accountType) async {
     setLoading();
     Map<String, String> jsonData = {
       "name": name,
       "username": username,
       "password": password
     };
-    // print("object");
+   
     try {
-      late http.Response response;
-      late dynamic responseData;
-      if (acountType == "patient") {
-        response = await http.post(
-            Uri.parse("${Helpers.url}/api/patients/registerPatient"),
-            body: json.encode(jsonData),
-            headers: {
-              "Content-type": "application/json",
-              "Accept": "application/json",
-            });
-        responseData = json.decode(response.body);
-      }
-      if (acountType == "doctor") {
-        response = await http.post(
-            Uri.parse("${Helpers.url}/api/doctors/registerDoctor"),
-            body: json.encode(jsonData),
-            headers: {
-              "Content-type": "application/json",
-              "Accept": "application/json",
-            });
-        responseData = json.decode(response.body);
-      }
-      
+      final String routeType =
+          accountType == "patient" ? "registerPatient" : "registerDoctor";
+ print("object $accountType");
+      final response = await http.post(
+          Uri.parse("${Helpers.url}/api/patients/$routeType"),
+          body: json.encode(jsonData),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      final responseData = json.decode(response.body);
+      print(responseData);
+
       setLoading();
       // notifyListeners();
       return "success";

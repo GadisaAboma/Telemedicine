@@ -28,6 +28,7 @@ class _RegisterState extends State<Register> {
           await Provider.of<RegisterProvider>(context, listen: false)
               .register(fullname, username, password, acountType);
       if (registerResponse == "success" && acountType == "patient") {
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
       }
       if (registerResponse == "success" && acountType == "doctor") {
@@ -38,15 +39,15 @@ class _RegisterState extends State<Register> {
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Doctor"), value: "doctor"),
-      DropdownMenuItem(child: Text("Patient"), value: "patient"),
+      const DropdownMenuItem(value: "doctor", child: Text("Doctor")),
+      const DropdownMenuItem(value: "patient", child: Text("Patient")),
     ];
     return menuItems;
   }
 
   @override
   Widget build(BuildContext context) {
-    isLoading = Provider.of<RegisterProvider>(context, listen: false).isLoading;
+    isLoading = Provider.of<RegisterProvider>(context, listen: true).isLoading;
     return Scaffold(
       body: isLoading
           ? Center(
@@ -91,8 +92,8 @@ class _RegisterState extends State<Register> {
                               child: Row(children: [
                             Text("who are you?"),
                             SizedBox(
-                            width: 20,
-                          ),
+                              width: 20,
+                            ),
                             DropdownButton(
                                 value: acountType,
                                 items: dropdownItems,
