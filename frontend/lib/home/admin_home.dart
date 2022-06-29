@@ -76,13 +76,7 @@ class _AdminHomeState extends State<AdminHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Posts(),
-          ],
-        ),
-      ),
+      body: Center(child: Text("admin"),),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
           fabButtons: <Widget>[
