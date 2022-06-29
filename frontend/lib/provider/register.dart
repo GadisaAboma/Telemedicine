@@ -59,9 +59,12 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       final responseData = json.decode(response.body);
-      print(responseData["_doc"]);
+      // print(responseData["role"]);
       setLoading();
-      return responseData;
+      return {
+        "data": responseData["_doc"],
+        "role": responseData["role"],
+      };
     } catch (e) {
       print(e);
       return e;
