@@ -13,7 +13,8 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future register(String name, String username, String password, String acountType) async {
+  Future register(
+      String name, String username, String password, String acountType) async {
     setLoading();
     Map<String, String> jsonData = {
       "name": name,
@@ -22,14 +23,29 @@ class RegisterProvider extends ChangeNotifier {
     };
     // print("object");
     try {
-      final response = await http.post(
-          Uri.parse("${Helpers.url}/api/patients/registerPatient"),
-          body: json.encode(jsonData),
-          headers: {
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          });
-      final responseData = json.decode(response.body);
+      late http.Response response;
+      late dynamic responseData;
+      if (acountType == "patient") {
+        response = await http.post(
+            Uri.parse("${Helpers.url}/api/patients/registerPatient"),
+            body: json.encode(jsonData),
+            headers: {
+              "Content-type": "application/json",
+              "Accept": "application/json",
+            });
+        responseData = json.decode(response.body);
+      }
+      if (acountType == "doctor") {
+        response = await http.post(
+            Uri.parse("${Helpers.url}/api/doctors/registerDoctor"),
+            body: json.encode(jsonData),
+            headers: {
+              "Content-type": "application/json",
+              "Accept": "application/json",
+            });
+        responseData = json.decode(response.body);
+      }
+      
       setLoading();
       // notifyListeners();
       return "success";
