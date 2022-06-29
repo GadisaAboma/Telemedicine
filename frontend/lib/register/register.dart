@@ -5,8 +5,8 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
-class Register extends StatefulWidget {
 
+class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
       formKey.currentState!.save();
       final registerResponse =
           await Provider.of<RegisterProvider>(context, listen: false)
-              .signup(fullname, username, password);
+              .register(fullname, username, password);
       if (registerResponse == "success") {
         Navigator.pushReplacementNamed(context, Helpers.homeRoute);
       }
@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    isLoading = Provider.of<RegisterProvider>(context, listen: true).isLoading;
+    isLoading = Provider.of<RegisterProvider>(context, listen: false).isLoading;
     return Scaffold(
       body: isLoading
           ? Center(
