@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
       final responseLogin =
           await Provider.of<RegisterProvider>(context, listen: false)
               .login(username, password);
-      print(responseLogin);
+      // print(responseLogin);
       if (responseLogin['code'] == 404) {
         print(responseLogin["error"]);
       } else if (responseLogin["code"] == 202) {

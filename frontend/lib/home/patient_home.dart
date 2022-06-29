@@ -22,7 +22,22 @@ class _PatientHomeState extends State<PatientHome> {
           fabKey.currentState!.closeFABs();
           Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
             return ChatBot();
-            
+          }));
+        },
+        heroTag: "btn1",
+        tooltip: 'Second button',
+        child: Icon(Icons.chat),
+      ),
+    );
+  }
+
+  Widget add(BuildContext ctx) {
+    return Container(
+      child: FloatingActionButton(
+        onPressed: () {
+          fabKey.currentState!.closeFABs();
+          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
+            return ChatBot();
           }));
         },
         heroTag: "btn2",
@@ -32,7 +47,6 @@ class _PatientHomeState extends State<PatientHome> {
     );
   }
 
- 
   int index = 0;
 
   @override
@@ -78,7 +92,7 @@ class _PatientHomeState extends State<PatientHome> {
           fabButtons: <Widget>[
             // add(),
             chat(context),
-            chat(context),
+            add(context),
             // inbox(),
           ],
           colorStartAnimation: Theme.of(context).primaryColor,
