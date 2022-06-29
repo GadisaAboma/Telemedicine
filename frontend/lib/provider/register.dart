@@ -13,7 +13,7 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future register(String name, String username, String password) async {
+  Future register(String name, String username, String password, String acountType) async {
     setLoading();
     Map<String, String> jsonData = {
       "name": name,
