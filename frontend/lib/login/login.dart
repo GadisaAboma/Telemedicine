@@ -23,6 +23,7 @@ class _LoginState extends State<Login> {
   void login(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      loadingSpinner(ctx);
       final loginResponse =
           await Provider.of<RegisterProvider>(ctx, listen: false)
               .login(username, password);
@@ -38,9 +39,23 @@ class _LoginState extends State<Login> {
           Navigator.pushReplacementNamed(ctx, Helpers.patientHomeRoute);
           break;
         default:
-          Navigator.pushReplacementNamed(ctx, Helpers.patientHomeRoute);
+          Navigator.pop(ctx);
       }
+      // Navigator.pop(ctx);
     }
+  }
+
+  Future loadingSpinner(BuildContext ctx) {
+    return showDialog(
+        context: (ctx),
+        builder: (ctx) {
+          return AlertDialog(
+            // alignment: Alignment.center,
+            content: Container(
+                height: 50, child: Center(child: CircularProgressIndicator())),
+            // actions: [Container(child: CircularProgressIndicator())],
+          );
+        });
   }
 
   @override
