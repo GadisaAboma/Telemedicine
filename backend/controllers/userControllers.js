@@ -6,9 +6,10 @@ const Doctor = require('../models/Doctor')
 const loginUser = asyncHandler(async (req, res) => {
     const { username, password } = req.body
 
-    const admin = await admin.findOne({username})
+    const admin = await Admin.findOne({username})
     const patient = await Patient.findOne({username})
     const doctor = await Doctor.findOne({username})
+    
 
     if(admin && admin.password === password) {
         res.send({

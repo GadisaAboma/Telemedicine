@@ -21,11 +21,11 @@ class RegisterProvider extends ChangeNotifier {
       "username": username,
       "password": password
     };
-   
+
     try {
       final String routeType =
           accountType == "patient" ? "registerPatient" : "registerDoctor";
- print("object $accountType");
+      print("object $accountType");
       final response = await http.post(
           Uri.parse("${Helpers.url}/api/patients/$routeType"),
           body: json.encode(jsonData),
@@ -52,13 +52,14 @@ class RegisterProvider extends ChangeNotifier {
     };
     try {
       final response = await http.post(
-          Uri.parse("${Helpers.url}/api/patients/login"),
+          Uri.parse("${Helpers.url}/api/user/login"),
           body: json.encode(loginData),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
       final responseData = json.decode(response.body);
+      print(responseData["_doc"]);
       setLoading();
       return responseData;
     } catch (e) {
