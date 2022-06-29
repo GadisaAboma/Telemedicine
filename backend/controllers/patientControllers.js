@@ -1,15 +1,16 @@
 const Patient = require('../models/Patient')
 const asyncHandler = require('express-async-handler')
 
-const registerPatient = asyncHandler( async (req, res) => {
-   const { name,username, password,  } = req.body
-   const patient = new Patient({
-    name,username,
-    password,
-   })
+const registerPatient = asyncHandler(async (req, res) => {
+    const { name, username, password, } = req.body
+    const patient = new Patient({
+        name,
+        username,
+        password,
+    })
 
-   const newPatient = await patient.save()
-   res.send(newPatient)
+    const newPatient = await patient.save()
+    res.send(newPatient)
 })
 
 
@@ -18,7 +19,7 @@ const loginPatient = asyncHandler(async (req, res) => {
 
     const patient = await Patient.findOne({username})
 
-    if(patient && patient.password === password) {
+    if (patient && patient.password === password) {
         res.send(patient)
     } else {
         res.status(404)
@@ -26,7 +27,7 @@ const loginPatient = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports= {
+module.exports = {
     registerPatient,
     loginPatient
 }
