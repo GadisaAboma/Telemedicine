@@ -39,10 +39,10 @@ class RegisterProvider extends ChangeNotifier {
       // }
 
       final String routeType =
-          accountType == "patient" ? "registerPatient" : "registerDoctor";
+          accountType == "patient" ? "patients/registerPatient" : "doctors/registerDoctor";
       print("object $accountType");
       final response = await http.post(
-          Uri.parse("${Helpers.url}/api/patients/$routeType"),
+          Uri.parse("${Helpers.url}/api/$routeType"),
           body: json.encode(jsonData),
           headers: {
             "Content-type": "application/json",
