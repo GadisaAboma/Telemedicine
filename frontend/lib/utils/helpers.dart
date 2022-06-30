@@ -1,5 +1,5 @@
 class Helpers {
-  static String url = "http://192.168.137.42:3000";
+  static String url = "http://192.168.125.127:3000";
 
   static String patientHomeRoute = "/PatientHome";
   static String doctorHomeRoute = "/doctorHome";
