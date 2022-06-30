@@ -76,12 +76,8 @@ class _DoctorHomeState extends State<DoctorHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Posts(),
-          ],
-        ),
+      body: Center(
+        child: Text("Hoctor home page"),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
