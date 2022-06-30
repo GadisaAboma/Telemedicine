@@ -38,8 +38,9 @@ class RegisterProvider extends ChangeNotifier {
       //   print('connected');
       // }
 
-      final String routeType =
-          accountType == "patient" ? "patients/registerPatient" : "doctors/registerDoctor";
+      final String routeType = accountType == "patient"
+          ? "patients/registerPatient"
+          : "doctors/registerDoctor";
       print("object $accountType");
       final response = await http.post(
           Uri.parse("${Helpers.url}/api/$routeType"),
@@ -77,7 +78,6 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       final responseData = json.decode(response.body);
-      print("role is" + responseData);
       setLoading();
       print(responseData);
       return {

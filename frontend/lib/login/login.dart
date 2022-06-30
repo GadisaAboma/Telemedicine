@@ -27,7 +27,8 @@ class _LoginState extends State<Login> {
       final loginResponse =
           await Provider.of<RegisterProvider>(ctx, listen: false)
               .login(username, password);
-      print(loginResponse);
+      // print(loginResponse);
+
       switch (loginResponse['role']) {
         case "admin":
           Navigator.pushReplacementNamed(ctx, Helpers.adminHomeRoute);
