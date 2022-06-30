@@ -6,7 +6,7 @@ const registerAdmin = asyncHandler(async (req, res) => {
 
     const newAdmin = await admin.save()
 
-    if(newAdmin) {
+    if (newAdmin) {
         res.status(201).send(newAdmin)
     } else {
         res.status(404)
