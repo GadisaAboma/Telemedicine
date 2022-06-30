@@ -15,21 +15,29 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future register(
-      String name, String username, String password, String accountType) async {
+  Future register(String name, String username, String password,
+      String accountType, String specializedIn, String gender) async {
     setLoading();
-    Map<String, String> jsonData = {
-      "name": name,
-      "username": username,
-      "password": password
-    };
+    Map<String, String> jsonData = accountType == "doctor"
+        ? {
+            "name": name,
+            "gender": gender,
+            "username": username,
+            "password": password,
+            "specializedIn": specializedIn,
+          }
+        : {
+            "name": name,
+            "username": username,
+            "password": password,
+          };
 
     try {
-      final result = await InternetAddress.lookup('example.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
-      }
-      
+      // final result = await InternetAddress.lookup('google.com');
+      // if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      //   print('connected');
+      // }
+
       final String routeType =
           accountType == "patient" ? "registerPatient" : "registerDoctor";
       print("object $accountType");
@@ -47,10 +55,10 @@ class RegisterProvider extends ChangeNotifier {
       // notifyListeners();
       return "success";
       // print(jsonData);
-    } on SocketException catch (_) {
-  print('not connected');
-}
-     catch (e) {
+    } on SocketException catch (e) {
+      print('not connected');
+      return e;
+    } catch (e) {
       return e;
     }
   }
@@ -69,8 +77,9 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       final responseData = json.decode(response.body);
-      // print(responseData["role"]);
+      print("role is" + responseData);
       setLoading();
+      print(responseData);
       return {
         "data": responseData["_doc"],
         "role": responseData["role"],

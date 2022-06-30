@@ -18,6 +18,8 @@ class _RegisterState extends State<Register> {
   String fullname = "";
   String username = "";
   String password = "";
+  String gender = "male";
+  String specializedIn = "child";
 
   String accountType = "patient";
   bool isDoctor = false;
@@ -28,19 +30,19 @@ class _RegisterState extends State<Register> {
       // isLoading = Provider.of<RegisterProvider>(context, listen: true).isLoading;
       loadingSpinner(ctx);
       final registerResponse =
-          await Provider.of<RegisterProvider>(context, listen: false)
-              .register(fullname, username, password, accountType);
-      print(registerResponse);
+          await Provider.of<RegisterProvider>(context, listen: false).register(
+              fullname, username, password, accountType, specializedIn, gender);
+      print("registerResponse: $registerResponse");
       if (registerResponse == "success" && accountType == "patient") {
-        Navigator.pop(ctx);
+        // Navigator.pop(ctx);
         // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
       }
       if (registerResponse == "success" && accountType == "doctor") {
-        Navigator.pop(ctx);
+        // Navigator.pop(ctx);
         Navigator.pushReplacementNamed(context, Helpers.doctorHomeRoute);
       }
-    Navigator.pop(ctx);
+      // Navigator.pop(ctx);
     }
   }
 
@@ -143,6 +145,32 @@ class _RegisterState extends State<Register> {
                         });
                       },
                     ),
+                    Row(
+                      children: [
+                        Text("gender"),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        DropdownButton(
+                            iconEnabledColor: Colors.amber,
+                            value: gender,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("male"),
+                                value: "male",
+                              ),
+                              DropdownMenuItem(
+                                value: "female",
+                                child: Text("Female"),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                gender = value.toString();
+                              });
+                            }),
+                      ],
+                    ),
                     Container(
                         margin: EdgeInsets.only(top: 20),
                         child: Text("Username")),
@@ -162,28 +190,37 @@ class _RegisterState extends State<Register> {
                         });
                       },
                     ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     if (isDoctor)
-                      Row(
-                        children: [
-                          Text("Specialized in"),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          DropdownButton(
-                              value: "child",
-                              items: [
-                                DropdownMenuItem(
-                                  child: Text("child"),
-                                  value: "child",
-                                ),
-                                DropdownMenuItem(
-                                  child: Text("dhukkuba lafee"),
-                                  value: "lafee",
-                                ),
-                              ],
-                              onChanged: (value) {})
-                        ],
-                      ),
+                      Column(children: [
+                        Row(
+                          children: [
+                            Text("Specialized in"),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            DropdownButton(
+                                value: specializedIn,
+                                items: [
+                                  DropdownMenuItem(
+                                    child: Text("child"),
+                                    value: "child",
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text("lafee"),
+                                    value: "lafee",
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    specializedIn = value.toString();
+                                  });
+                                })
+                          ],
+                        ),
+                      ]),
                     Container(
                         margin: EdgeInsets.only(top: 20),
                         child: Text("Password")),
