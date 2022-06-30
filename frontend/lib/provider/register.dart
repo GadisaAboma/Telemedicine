@@ -1,6 +1,8 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../utils/helpers.dart';
 
@@ -23,6 +25,11 @@ class RegisterProvider extends ChangeNotifier {
     };
 
     try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+      
       final String routeType =
           accountType == "patient" ? "registerPatient" : "registerDoctor";
       print("object $accountType");
@@ -40,7 +47,10 @@ class RegisterProvider extends ChangeNotifier {
       // notifyListeners();
       return "success";
       // print(jsonData);
-    } catch (e) {
+    } on SocketException catch (_) {
+  print('not connected');
+}
+     catch (e) {
       return e;
     }
   }
@@ -59,9 +69,12 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       final responseData = json.decode(response.body);
-      print(responseData["_doc"]);
+      // print(responseData["role"]);
       setLoading();
-      return responseData;
+      return {
+        "data": responseData["_doc"],
+        "role": responseData["role"],
+      };
     } catch (e) {
       print(e);
       return e;

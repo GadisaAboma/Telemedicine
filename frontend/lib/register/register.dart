@@ -19,19 +19,21 @@ class _RegisterState extends State<Register> {
   String username = "";
   String password = "";
 
-  String acountType = "patient";
+  String accountType = "patient";
+  bool isDoctor = false;
 
   void register(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       final registerResponse =
           await Provider.of<RegisterProvider>(context, listen: false)
-              .register(fullname, username, password, acountType);
-      if (registerResponse == "success" && acountType == "patient") {
+              .register(fullname, username, password, accountType);
+      print(registerResponse);
+      if (registerResponse == "success" && accountType == "patient") {
         // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
       }
-      if (registerResponse == "success" && acountType == "doctor") {
+      if (registerResponse == "success" && accountType == "doctor") {
         Navigator.pushReplacementNamed(context, Helpers.doctorHomeRoute);
       }
     }
@@ -95,13 +97,18 @@ class _RegisterState extends State<Register> {
                               width: 20,
                             ),
                             DropdownButton(
-                                value: acountType,
+                                value: accountType,
                                 items: dropdownItems,
                                 onChanged: (values) {
                                   setState(() {
-                                    acountType = values.toString();
+                                    accountType = values.toString();
+                                    if (accountType == "doctor") {
+                                      isDoctor = true;
+                                    } else {
+                                      isDoctor = false;
+                                    }
                                   });
-                                  print(acountType);
+                                  print(accountType);
                                 }),
                           ])),
                           Container(
@@ -142,6 +149,28 @@ class _RegisterState extends State<Register> {
                               });
                             },
                           ),
+                          if (isDoctor)
+                            Row(
+                              children: [
+                                Text("Specialized in"),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                DropdownButton(
+                                    value: "child",
+                                    items: [
+                                      DropdownMenuItem(
+                                        child: Text("child"),
+                                        value: "child",
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text("dhukkuba lafee"),
+                                        value: "lafee",
+                                      ),
+                                    ],
+                                    onChanged: (value) {})
+                              ],
+                            ),
                           Container(
                               margin: EdgeInsets.only(top: 20),
                               child: Text("Password")),

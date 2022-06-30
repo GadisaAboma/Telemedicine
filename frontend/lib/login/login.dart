@@ -23,16 +23,39 @@ class _LoginState extends State<Login> {
   void login(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      loadingSpinner(ctx);
       final loginResponse =
-          await Provider.of<RegisterProvider>(context, listen: false)
+          await Provider.of<RegisterProvider>(ctx, listen: false)
               .login(username, password);
-      // print(loginResponse);
-      if (loginResponse['code'] == 404) {
-        print(loginResponse["error"]);
-      } else if (loginResponse["code"] == 202) {
-        Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
+      print(loginResponse);
+      switch (loginResponse['role']) {
+        case "admin":
+          Navigator.pushReplacementNamed(ctx, Helpers.adminHomeRoute);
+          break;
+        case "doctor":
+          Navigator.pushReplacementNamed(ctx, Helpers.doctorHomeRoute);
+          break;
+        case "patient":
+          Navigator.pushReplacementNamed(ctx, Helpers.patientHomeRoute);
+          break;
+        default:
+          Navigator.pop(ctx);
       }
+      // Navigator.pop(ctx);
     }
+  }
+
+  Future loadingSpinner(BuildContext ctx) {
+    return showDialog(
+        context: (ctx),
+        builder: (ctx) {
+          return AlertDialog(
+            // alignment: Alignment.center,
+            content: Container(
+                height: 50, child: Center(child: CircularProgressIndicator())),
+            // actions: [Container(child: CircularProgressIndicator())],
+          );
+        });
   }
 
   @override
@@ -121,19 +144,22 @@ class _LoginState extends State<Login> {
                               height: 10,
                             ),
                             Text("Password"),
-                            TextFormField(validator: ((value) {
-                              String password = value.toString().trim();
-                              if (password.isEmpty) {
-                                return "password field required";
-                              }
-                              if (password.length < 3) {
-                                return "password must greater than 3 character";
-                              }
-                            }), onSaved: (value) {
-                              setState(() {
-                                password = value.toString();
-                              });
-                            }),
+                            TextFormField(
+                                obscureText: true,
+                                validator: ((value) {
+                                  String password = value.toString().trim();
+                                  if (password.isEmpty) {
+                                    return "password field required";
+                                  }
+                                  if (password.length < 3) {
+                                    return "password must greater than 3 character";
+                                  }
+                                }),
+                                onSaved: (value) {
+                                  setState(() {
+                                    password = value.toString();
+                                  });
+                                }),
                             const SizedBox(
                               height: 30,
                             ),
