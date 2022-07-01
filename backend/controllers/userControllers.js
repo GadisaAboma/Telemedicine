@@ -28,9 +28,6 @@ const loginUser = asyncHandler(async (req, res) => {
             ...doctor,
             role: 'doctor'
         }
-
-        ///
-
         res.send(user)
 
     } else {
@@ -40,6 +37,12 @@ const loginUser = asyncHandler(async (req, res) => {
 
 })
 
+
+const startTextChat = asyncHandler( async (req, res) => {
+
+})
+
 module.exports = {
-    loginUser
+    loginUser,
+    startTextChat
 }
