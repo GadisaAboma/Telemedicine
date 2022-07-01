@@ -16,7 +16,8 @@ class _SearchDoctorState extends State<SearchDoctor> {
   void search(BuildContext ctx) {
     searchedDoctor = edit.text;
     edit.text = "";
-    Provider.of<PatientProvider>(context).searchDoctor(searchedDoctor);
+    Provider.of<PatientProvider>(context, listen: false)
+        .searchDoctor(searchedDoctor);
   }
 
   @override
