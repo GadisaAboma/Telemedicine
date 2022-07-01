@@ -18,4 +18,20 @@ class PatientProvider extends ChangeNotifier {
       return e;
     }
   }
+
+  Future searchDoctor(String username) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/patients/searchDoctor"),
+          body: (json.encode({"username": username})),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      final data = json.decode(response.body);
+      print(data["_docs"]);
+    } catch (e) {
+      return e;
+    }
+  }
 }

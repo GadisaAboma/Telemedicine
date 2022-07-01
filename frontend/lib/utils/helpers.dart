@@ -6,6 +6,7 @@ String doctorHomeRoute = "/doctorHome";
 String adminHomeRoute = "/adminHome";
 String loginRoute = "/";
 String registerRoute = "/register";
+String searchDoctorRoute = "/searchDoctor";
 
   // static String url = "http://10.141.214.82:3000";
 
