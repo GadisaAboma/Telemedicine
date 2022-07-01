@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
+import 'package:frontend/patients/contact-list/doctors-list.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
-import '../messages/messages.dart';
-import '../notifications/notification.dart';
+import '../patients/messages/messages.dart';
+import '../patients/notifications/notification.dart';
 import '../posts/posts.dart';
 
 class PatientHome extends StatefulWidget {
@@ -83,7 +84,7 @@ class _PatientHomeState extends State<PatientHome> {
           children: [
             if (index == 0) Posts(),
             if (index == 1) Notifications(),
-            if (index == 2) Messages()
+            if (index == 2) DoctorsList()
           ],
         ),
       ),

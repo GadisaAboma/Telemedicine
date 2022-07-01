@@ -36,11 +36,11 @@ class _RegisterState extends State<Register> {
       if (registerResponse == "success" && accountType == "patient") {
         // Navigator.pop(ctx);
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, Helpers.patientHomeRoute);
+        Navigator.pushReplacementNamed(context, patientHomeRoute);
       }
       if (registerResponse == "success" && accountType == "doctor") {
         // Navigator.pop(ctx);
-        Navigator.pushReplacementNamed(context, Helpers.doctorHomeRoute);
+        Navigator.pushReplacementNamed(context, doctorHomeRoute);
       }
       // Navigator.pop(ctx);
     }
