@@ -40,6 +40,24 @@ const registerPatient = asyncHandler(async (req, res) => {
     res.send(newPatient)
 })
 
+const searchDoctor = asyncHandler(async (req, res) => {
+    const { username } = req.body
+
+    const doctor  = await Doctor.findOne(username)
+
+    if(doctor) {
+        res.send(doctor)
+
+    } else {
+        res.status(400)
+        throw new Error('Doctor not found!')
+    }
+
+
+
+})
+
 module.exports = {
     registerPatient,
+    searchDoctor
 }
