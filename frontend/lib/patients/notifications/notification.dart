@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../widget/notefication_widget.dart';
+import '../../widget/notefication_widget.dart';
 
 class Notifications extends StatelessWidget {
   const Notifications({Key? key}) : super(key: key);

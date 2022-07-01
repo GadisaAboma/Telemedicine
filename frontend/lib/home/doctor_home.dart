@@ -3,8 +3,6 @@ import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
-import '../messages/messages.dart';
-import '../notifications/notification.dart';
 import '../posts/posts.dart';
 
 class DoctorHome extends StatefulWidget {

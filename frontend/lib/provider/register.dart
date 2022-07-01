@@ -17,6 +17,7 @@ class RegisterProvider extends ChangeNotifier {
 
   Future register(String name, String username, String password,
       String accountType, String specializedIn, String gender) async {
+        print("object");
     setLoading();
     Map<String, String> jsonData = accountType == "doctor"
         ? {
@@ -37,6 +38,7 @@ class RegisterProvider extends ChangeNotifier {
       // if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       //   print('connected');
       // }
+      
 
       final String routeType = accountType == "patient"
           ? "patients/registerPatient"

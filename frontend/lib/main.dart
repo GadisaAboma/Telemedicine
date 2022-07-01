@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/home/admin_home.dart';
 import 'package:frontend/home/doctor_home.dart';
 import 'package:frontend/login/login.dart';
+import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: ((context) => RegisterProvider()),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => PatientProvider()),
         ),
       ],
       child: MaterialApp(

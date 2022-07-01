@@ -27,7 +27,6 @@ class _LoginState extends State<Login> {
       final loginResponse =
           await Provider.of<RegisterProvider>(ctx, listen: false)
               .login(username, password);
-      // print(loginResponse);
 
       switch (loginResponse['role']) {
         case "admin":
@@ -42,7 +41,6 @@ class _LoginState extends State<Login> {
         default:
           Navigator.pop(ctx);
       }
-      // Navigator.pop(ctx);
     }
   }
 
@@ -54,7 +52,6 @@ class _LoginState extends State<Login> {
             // alignment: Alignment.center,
             content: Container(
                 height: 50, child: Center(child: CircularProgressIndicator())),
-            // actions: [Container(child: CircularProgressIndicator())],
           );
         });
   }
