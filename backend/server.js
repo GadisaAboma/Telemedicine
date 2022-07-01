@@ -1,10 +1,12 @@
 const express = require('express')
-const app = express()
+const http = require('http')
 const dotenv = require('dotenv')
 const cors = require('cors')
 const { connectDB } = require('./db/database')
+const socketio = require('socket.io')
 
 
+const app = express()
 const path = require('path')
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -15,6 +17,8 @@ const doctorRoutes = require('./routes/doctorRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 const userRoutes = require('./routes/userRoutes')
 
+// const server = http.createServer(app)
+// const io = socketio(server)
 
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware')
 
