@@ -43,7 +43,7 @@ const registerPatient = asyncHandler(async (req, res) => {
 const searchDoctor = asyncHandler(async (req, res) => {
     const { username } = req.body
 
-    const doctor  = await Doctor.findOne(username)
+    const doctor  = await Doctor.findOne({username})
 
     if(doctor) {
         res.send(doctor)
