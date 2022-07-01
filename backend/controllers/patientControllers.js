@@ -4,36 +4,37 @@ const Admin = require('../models/Admin')
 const asyncHandler = require('express-async-handler')
 
 const registerPatient = asyncHandler(async (req, res) => {
-    const { name, username, password, } = req.body
+    const { name, username, gender, password, } = req.body
 
-       const admin = await Admin.findOne({username})
+    const admin = await Admin.findOne({ username })
 
-       if(admin) {
-        res.status(400)
-        throw new Error('Username already taken')
-        
-       }
-
-       const doctor = await Doctor.findOne({username})
-
-       if(doctor) {
+    if (admin) {
         res.status(400)
         throw new Error('Username already taken')
 
-       }
+    }
 
-       const existingPatient = await Patient.findOne({username})
+    const doctor = await Doctor.findOne({ username })
 
-       if(existingPatient) {
+    if (doctor) {
         res.status(400)
         throw new Error('Username already taken')
 
-       }
+    }
+
+    const existingPatient = await Patient.findOne({ username })
+
+    if (existingPatient) {
+        res.status(400)
+        throw new Error('Username already taken')
+
+    }
 
     const patient = new Patient({
         name,
         username,
         password,
+        gender
     })
 
     const newPatient = await patient.save()
@@ -43,9 +44,9 @@ const registerPatient = asyncHandler(async (req, res) => {
 const searchDoctor = asyncHandler(async (req, res) => {
     const { username } = req.body
 
-    const doctor  = await Doctor.findOne({username})
+    const doctor = await Doctor.findOne({ username })
 
-    if(doctor) {
+    if (doctor) {
         res.send(doctor)
 
     } else {
