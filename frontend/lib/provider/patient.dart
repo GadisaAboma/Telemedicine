@@ -8,7 +8,7 @@ class PatientProvider extends ChangeNotifier {
   Future doctors() async {
     try {
       final response = await http
-          .get(Uri.parse("${Helpers.url}/patients/doctorsList"), headers: {
+          .get(Uri.parse("$serverUrl/patients/doctorsList"), headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
       });

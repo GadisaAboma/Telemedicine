@@ -3,6 +3,7 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+import '../service/socket_service.dart';
 
 class Login extends StatefulWidget {
   static String loginRoute = "/";
@@ -30,13 +31,16 @@ class _LoginState extends State<Login> {
 
       switch (loginResponse['role']) {
         case "admin":
-          Navigator.pushReplacementNamed(ctx, Helpers.adminHomeRoute);
+          Navigator.pushReplacementNamed(ctx, adminHomeRoute);
           break;
         case "doctor":
-          Navigator.pushReplacementNamed(ctx, Helpers.doctorHomeRoute);
+          SocketService.setUserName("hirpha");
+          SocketService.connectAndListen();
+          Navigator.pushReplacementNamed(ctx, doctorHomeRoute);
+
           break;
         case "patient":
-          Navigator.pushReplacementNamed(ctx, Helpers.patientHomeRoute);
+          Navigator.pushReplacementNamed(ctx, patientHomeRoute);
           break;
         default:
           Navigator.pop(ctx);
@@ -76,7 +80,7 @@ class _LoginState extends State<Login> {
                     child: TextButton(
                         onPressed: () {
                           Navigator.pushReplacementNamed(
-                              context, Helpers.registerRoute);
+                              context, registerRoute);
                         },
                         child: Text(
                           "Register here!",

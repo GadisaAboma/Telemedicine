@@ -33,7 +33,7 @@ class DrawerWidget extends StatelessWidget {
               title: Text("logout"),
               leading: Icon(Icons.logout),
               onTap: () {
-                Navigator.pushReplacementNamed(context, Helpers.loginRoute);
+                Navigator.pushReplacementNamed(context, loginRoute);
               },
             )
           ],

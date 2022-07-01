@@ -28,6 +28,9 @@ const loginUser = asyncHandler(async (req, res) => {
             ...doctor,
             role: 'doctor'
         }
+
+        ///
+
         res.send(user)
 
     } else {

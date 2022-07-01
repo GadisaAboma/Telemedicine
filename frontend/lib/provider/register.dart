@@ -45,7 +45,7 @@ class RegisterProvider extends ChangeNotifier {
           : "doctors/registerDoctor";
       print("object $accountType");
       final response = await http.post(
-          Uri.parse("${Helpers.url}/api/$routeType"),
+          Uri.parse("$serverUrl/api/$routeType"),
           body: json.encode(jsonData),
           headers: {
             "Content-type": "application/json",
@@ -73,7 +73,7 @@ class RegisterProvider extends ChangeNotifier {
     };
     try {
       final response = await http.post(
-          Uri.parse("${Helpers.url}/api/user/login"),
+          Uri.parse("$serverUrl/api/user/login"),
           body: json.encode(loginData),
           headers: {
             "Content-type": "application/json",
