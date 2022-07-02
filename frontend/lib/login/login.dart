@@ -21,6 +21,8 @@ class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   String username = "";
   String password = "";
+
+  
   void login(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -34,8 +36,8 @@ class _LoginState extends State<Login> {
           Navigator.pushReplacementNamed(ctx, adminHomeRoute);
           break;
         case "doctor":
-          SocketService.setUserName("hirpha");
-          SocketService.connectAndListen();
+          /* SocketService.setUserName("hirpha");
+          SocketService.connectAndListen(); */
           Navigator.pushReplacementNamed(ctx, doctorHomeRoute);
 
           break;

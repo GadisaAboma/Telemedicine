@@ -11,15 +11,12 @@ const registerPatient = asyncHandler(async (req, res) => {
     if (admin) {
         res.status(400)
         throw new Error('Username already taken')
-
     }
-
     const doctor = await Doctor.findOne({ username })
 
     if (doctor) {
         res.status(400)
         throw new Error('Username already taken')
-
     }
 
     const existingPatient = await Patient.findOne({ username })

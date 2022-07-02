@@ -8,4 +8,3 @@ String loginRoute = "/";
 String registerRoute = "/register";
 
   // static String url = "http://10.141.214.82:3000";
-
