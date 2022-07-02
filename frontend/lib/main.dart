@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/home/admin_home.dart';
 import 'package:frontend/home/doctor_home.dart';
 import 'package:frontend/login/login.dart';
+import 'package:frontend/patients/search-doctor/search-doctor.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           "/PatientHome": (context) => PatientHome(),
           "/doctorHome": (context) => DoctorHome(),
           "/adminHome": (context) => AdminHome(),
+          "/searchDoctor": (context) => SearchDoctor(),
         },
         // home: Login(),
       ),

@@ -17,7 +17,7 @@ class RegisterProvider extends ChangeNotifier {
 
   Future register(String name, String username, String password,
       String accountType, String specializedIn, String gender) async {
-        print("object");
+    print("object");
     setLoading();
     Map<String, String> jsonData = accountType == "doctor"
         ? {
@@ -30,6 +30,7 @@ class RegisterProvider extends ChangeNotifier {
         : {
             "name": name,
             "username": username,
+            "gender": gender,
             "password": password,
           };
 
@@ -38,14 +39,12 @@ class RegisterProvider extends ChangeNotifier {
       // if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       //   print('connected');
       // }
-      
 
       final String routeType = accountType == "patient"
           ? "patients/registerPatient"
           : "doctors/registerDoctor";
       print("object $accountType");
-      final response = await http.post(
-          Uri.parse("$serverUrl/api/$routeType"),
+      final response = await http.post(Uri.parse("$serverUrl/api/$routeType"),
           body: json.encode(jsonData),
           headers: {
             "Content-type": "application/json",
@@ -72,8 +71,7 @@ class RegisterProvider extends ChangeNotifier {
       "password": password
     };
     try {
-      final response = await http.post(
-          Uri.parse("$serverUrl/api/user/login"),
+      final response = await http.post(Uri.parse("$serverUrl/api/user/login"),
           body: json.encode(loginData),
           headers: {
             "Content-type": "application/json",

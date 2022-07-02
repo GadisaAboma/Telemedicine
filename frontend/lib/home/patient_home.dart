@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:frontend/patients/contact-list/doctors-list.dart';
+import 'package:frontend/utils/helpers.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
@@ -54,21 +55,14 @@ class _PatientHomeState extends State<PatientHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: "Search",
-              fillColor: Colors.white,
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        ),
         actions: [
+          Container(
+            height: 40,
+            child: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () =>
+                    Navigator.pushNamed(context, searchDoctorRoute)),
+          ),
           IconButton(
             onPressed: () {},
             icon: Icon(

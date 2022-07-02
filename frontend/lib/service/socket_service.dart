@@ -26,7 +26,7 @@ class SocketService {
     _socketResponse = StreamController<Chat>();
     _userResponse = StreamController<List<String>>();
     _socket = io.io(
-        "http://192.168.1.38:3000",
+        serverUrl,
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()

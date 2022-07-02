@@ -12,7 +12,8 @@ var allUsers = [];
 
 
     //static folder
-    app.use(express.static(path.join(__dirname,'web')));
+    // app.use(express.static(path.join(__dirname,'web')));
+    console.log(path.join(__dirname,'web'));
     
     function emitUsers() {
         io.emit('users',allUsers);    
@@ -25,8 +26,8 @@ var allUsers = [];
     }
     
     //socket listeners
-
-    io.on('connection', function (socket) {
+    
+    io.of("/login").on('connection', function (socket) {
         var userName = socket.request._query.userName;
         allUsers.push(userName);
         emitUsers();
