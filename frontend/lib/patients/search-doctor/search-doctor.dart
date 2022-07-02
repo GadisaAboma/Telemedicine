@@ -13,11 +13,20 @@ class _SearchDoctorState extends State<SearchDoctor> {
   TextEditingController edit = TextEditingController();
 
   String searchedDoctor = "";
-  void search(BuildContext ctx) {
+  dynamic doctor = {};
+  void search(BuildContext ctx) async {
     searchedDoctor = edit.text;
+
     edit.text = "";
-    Provider.of<PatientProvider>(context, listen: false)
-        .searchDoctor(searchedDoctor);
+    final returneddoctor =
+        await Provider.of<PatientProvider>(context, listen: false)
+            .searchDoctor(searchedDoctor);
+    print(returneddoctor);
+    if (returneddoctor != null) {
+      setState(() {
+        doctor = returneddoctor;
+      });
+    }
   }
 
   @override
@@ -56,7 +65,18 @@ class _SearchDoctorState extends State<SearchDoctor> {
               )),
         ],
       ),
-      body: Center(child: Text("search doctor")),
+      body: doctor.isNotEmpty
+          ? ListTile(
+              leading: CircleAvatar(),
+              title: Text(doctor['name'].toString()),
+              subtitle: Text(doctor["specializedIn"].toString()),
+              trailing: IconButton(
+                icon: Icon(Icons.message),
+                onPressed: () {},
+              ),
+              onTap: () {},
+            )
+          : Center(child: Text("search doctor")),
     );
   }
 }

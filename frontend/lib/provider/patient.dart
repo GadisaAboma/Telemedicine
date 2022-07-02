@@ -22,7 +22,7 @@ class PatientProvider extends ChangeNotifier {
   Future searchDoctor(String username) async {
     try {
       final response = await http.post(
-          Uri.parse("$serverUrl/patients/searchDoctor"),
+          Uri.parse("$serverUrl/api/patients/searchDoctor"),
           body: (json.encode({"username": username})),
           headers: {
             "Content-type": "application/json",
@@ -30,6 +30,8 @@ class PatientProvider extends ChangeNotifier {
           });
       final data = json.decode(response.body);
       print("the data ${data}");
+      notifyListeners();
+      return data;
     } catch (e) {
       return e;
     }
