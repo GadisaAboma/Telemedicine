@@ -38,11 +38,11 @@ const loginUser = asyncHandler(async (req, res) => {
 })
 
 
-const startTextChat = asyncHandler( async (req, res) => {
+// const startTextChat = asyncHandler( async (req, res) => {
 
-})
+// })
 
 module.exports = {
     loginUser,
-    startTextChat
+    // startTextChat
 }

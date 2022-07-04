@@ -3,7 +3,7 @@ const router = express.Router()
 const { loginUser, startTextChat } = require('../controllers/userControllers')
 
 router.post('/login', loginUser)
-router.post('/startTextChat', startTextChat);
+//router.post('/startTextChat', startTextChat);
 
 
 
