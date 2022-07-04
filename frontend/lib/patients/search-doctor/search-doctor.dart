@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/provider/patient.dart';
+import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+import '../../service/socket_service.dart';
 
 class SearchDoctor extends StatefulWidget {
   SearchDoctor({Key? key}) : super(key: key);
@@ -72,7 +74,11 @@ class _SearchDoctorState extends State<SearchDoctor> {
               subtitle: Text(doctor["specializedIn"].toString()),
               trailing: IconButton(
                 icon: Icon(Icons.message),
-                onPressed: () {},
+                onPressed: () {
+                  SocketService.setUserName("gadisa");
+                  SocketService.connectAndListen();
+                  Navigator.pushNamed(context, chatPageRoute);
+                },
               ),
               onTap: () {},
             )

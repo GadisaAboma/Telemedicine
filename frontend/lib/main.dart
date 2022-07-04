@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/chat-page/chat_page.dart';
 import 'package:frontend/home/admin_home.dart';
 import 'package:frontend/home/doctor_home.dart';
 import 'package:frontend/login/login.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           "/doctorHome": (context) => DoctorHome(),
           "/adminHome": (context) => AdminHome(),
           "/searchDoctor": (context) => SearchDoctor(),
+          "/chatPage": (context) => ChatPage()
         },
         // home: Login(),
       ),

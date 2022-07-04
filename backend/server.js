@@ -21,7 +21,7 @@ var allUsers = [];
 
 
 //static folder
-app.use(express.static(path.join(__dirname,'web')));
+// app.use(express.static(path.join(__dirname,'web')));
 
 function emitUsers() {
     io.emit('users',allUsers);    
@@ -33,9 +33,7 @@ function removeUser(user) {
     });   
 }
 
-
-
-io.of("/login").on("connection",  (socket) => {
+io.on("connection",  (socket) => {
     var userName = socket.request._query.userName;
     allUsers.push(userName);
     emitUsers();
@@ -81,6 +79,8 @@ const userRoutes = require('./routes/userRoutes')
 // const io = socketio(server)
 
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware')
+const Patient = require('./models/Patient')
+const Doctor = require('./models/Doctor')
 
 // Server Configuration
 dotenv.config()
@@ -96,6 +96,15 @@ app.use("/api/patients", patientRoutes)
 app.use('/api/doctors', doctorRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/user', userRoutes)
+
+app.get('/patients', async (req, res) => {
+    const patients = await Patient.find({});
+    res.send(patients)
+})
+app.get('/doctors', async (req, res) => {
+    const patients = await Doctor.find({});
+    res.send(patients)
+})
 
 
 app.use(notFound)
@@ -116,7 +125,6 @@ app.use(errorHandler)
 //     next()
 // })
 //socket listeners
-
 
 
 
