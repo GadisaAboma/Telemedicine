@@ -26,7 +26,7 @@ class SocketService {
     _socketResponse = StreamController<Chat>();
     _userResponse = StreamController<List<String>>();
     _socket = io.io(
-        serverUrl,
+        "$serverUrl/login",
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()
@@ -34,6 +34,7 @@ class SocketService {
             .build());
 
     _socket.connect();
+
     print("connection set $_userName");
 
     //When an event recieved from server, data is added to the stream

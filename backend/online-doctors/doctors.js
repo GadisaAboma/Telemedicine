@@ -26,8 +26,12 @@ var allUsers = [];
     }
     
     //socket listeners
-    
-    io.of("/login").on('connection', function (socket) {
+    const namespace = io.of("/login")
+    namespace.use((socket, next) =>{
+        console.log(socket)
+        next()
+    })
+    namespace.on('connection', function (socket) {
         var userName = socket.request._query.userName;
         allUsers.push(userName);
         emitUsers();
