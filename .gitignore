@@ -1,5 +1,5 @@
 /backend/node_modules/
-/chat-server/node_modules/
+/chatServer/node_modules/
 # /chat-server/node_modules/
 # /chat-server/build/
 # /chat-server/npm-debug.log
