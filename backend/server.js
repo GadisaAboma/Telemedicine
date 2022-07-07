@@ -1,27 +1,29 @@
-const express = require('express')
-const http = require('http')
+var express = require('express');
+var app = require('express')();
+const path = require('path')
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 const dotenv = require('dotenv')
 const cors = require('cors')
 const { connectDB } = require('./db/database')
-const socketio = require('socket.io')
 
 
 // const express = require('express');
-const app = express();
+//const app = express();
 // const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+// const server = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = socketio();
 
 // const app = express()
-const path = require('path')
+// const path = require('path')
 
 
 var allUsers = [];
 
 
 //static folder
-// app.use(express.static(path.join(__dirname,'web')));
+ app.use(express.static(path.join(__dirname,'public')));
 
 function emitUsers() {
     io.emit('users',allUsers);    
@@ -34,6 +36,9 @@ function removeUser(user) {
 }
 
 io.on("connection",  (socket) => {
+
+    console.log("New websoccet connection")
+
     var userName = socket.request._query.userName;
     allUsers.push(userName);
     emitUsers();

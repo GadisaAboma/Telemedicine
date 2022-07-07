@@ -50,7 +50,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
                     width: 220,
                     child: TextFormField(
                       controller: edit,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "Search doctor",
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -58,7 +58,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
                     ),
                   ),
                   IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.search,
                         color: Colors.blueGrey,
                       ),
