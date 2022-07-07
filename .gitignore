@@ -1,8 +1,8 @@
 /backend/node_modules/
 /chat-server/node_modules/
-/chat-server/node_modules/
-/chat-server/build/
-/chat-server/npm-debug.log
-/chat-server/.nyc
-/chat-server/.env
-/chat-server/.DS_Store
+# /chat-server/node_modules/
+# /chat-server/build/
+# /chat-server/npm-debug.log
+# /chat-server/.nyc
+# /chat-server/.env
+# /chat-server/.DS_Store
