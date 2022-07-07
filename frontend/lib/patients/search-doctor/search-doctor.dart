@@ -18,7 +18,6 @@ class _SearchDoctorState extends State<SearchDoctor> {
   dynamic doctor = {};
   void search(BuildContext ctx) async {
     searchedDoctor = edit.text;
-
     edit.text = "";
     final returneddoctor =
         await Provider.of<PatientProvider>(context, listen: false)
@@ -75,7 +74,8 @@ class _SearchDoctorState extends State<SearchDoctor> {
               trailing: IconButton(
                 icon: Icon(Icons.message),
                 onPressed: () {
-                  SocketService.setUserName("gadisa");
+                  print(doctor["_id"]);
+                  SocketService.setUserName(doctor["_id"]);
                   SocketService.connectAndListen();
                   Navigator.pushNamed(context, chatPageRoute);
                 },

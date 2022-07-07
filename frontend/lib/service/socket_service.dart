@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:frontend/model/chat.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../utils/helpers.dart';
 
 class SocketService {
   static late StreamController<Chat> _socketResponse;
   static late StreamController<List<String>> _userResponse;
-  static late io.Socket _socket;
+  static late IO.Socket _socket;
   static String _userName = '';
 
   static String? get userId => _socket.id;
@@ -25,9 +25,9 @@ class SocketService {
   static void connectAndListen() {
     _socketResponse = StreamController<Chat>();
     _userResponse = StreamController<List<String>>();
-    _socket = io.io(
-        serverUrl,
-        io.OptionBuilder()
+    _socket = IO.io(
+        "http://192.168.1.44:8080",
+        IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()
             .setQuery({'userName': _userName})
