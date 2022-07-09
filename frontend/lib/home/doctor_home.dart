@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
+import 'package:frontend/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../posts/posts.dart';
+import '../provider/register.dart';
+import '../service/socket_service.dart';
+import '../views/chat/chat_page.dart';
 
 class DoctorHome extends StatefulWidget {
   @override
@@ -47,6 +52,8 @@ class _DoctorHomeState extends State<DoctorHome> {
 
   @override
   Widget build(BuildContext context) {
+    Object? id = ModalRoute.of(context)?.settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -75,7 +82,17 @@ class _DoctorHomeState extends State<DoctorHome> {
       ),
       drawer: DrawerWidget(),
       body: Center(
-        child: Text("Hoctor home page"),
+        child: ElevatedButton(
+          child: Text("chatpage"),
+          onPressed: () {
+            SocketService.setUserName("doctor");
+            SocketService.connectAndListen();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const ChatPage(),
+            ));
+            // Navigator.pushNamed(context, chatPageRoute, arguments: id.toString());
+          },
+        ),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,

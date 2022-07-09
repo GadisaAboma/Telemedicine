@@ -16,6 +16,85 @@ const {connectDB} = require("./db/database")
 
 connectDB()
 
+// var allUsers = [];
+
+
+// //static folder
+// app.use(express.static(path.join(__dirname,'web')));
+
+// function emitUsers() {
+//     io.emit('users',allUsers);    
+//     console.log('users',allUsers);
+// }
+// function removeUser(user) {
+//     allUsers= allUsers.filter(function(ele){ 
+//         return ele != user; 
+//     });   
+// }
+
+// //socket listeners
+// io.on('connection',   async function (socket)  {
+//     var chatID = socket.request._query.chatID;
+//     // const doctor = await Doctor.findById(mongoose.Types.ObjectId(chatID)) 
+//     //  console.log(doctor)
+//     // allUsers.push(chatID);
+//     // emitUsers();
+//     var msg = `🔥👤 ${chatID} has joined! 😎🔥`;
+//     console.log(msg)
+
+//     socket.join(chatID)
+
+//     /////////////////////////////////////
+
+
+   
+//     //Send message to only a particular user
+//     socket.on('send_message', message => {
+//         receiverChatID = message.receiverChatID
+//         senderChatID = message.senderChatID
+//         content = message.content
+//         console.log(message)
+//         //Send message to only that particular room
+//         // socket.emit('receive_message', {
+//         //     'content': content,
+//         //     'senderChatID': senderChatID,
+//         //     'receiverChatID':receiverChatID,
+//         // })
+//         socket.in(receiverChatID).emit('receive_message', message)
+//     })
+
+
+//     ////////////////////
+
+
+//     //broadcast when a user connects
+
+//     socket.on('disconnect', () => {       
+      
+//         var disMsg = `${chatID} has disconnected! 😭😭`;
+//         console.log(disMsg);
+//         io.emit('message', {
+//             "message": disMsg,
+//         });
+//         // removeUser(chatID);
+//         // emitUsers()
+
+//         socket.leave("chatID")
+//     });
+
+//     socket.on('message', (data) => {
+//         console.log(`👤 ${data.userName} : ${data.message}`)
+//         io.emit('message', data);
+//     });
+
+
+
+// });
+
+
+
+
+
 var allUsers = [];
 
 
@@ -33,10 +112,8 @@ function removeUser(user) {
 }
 
 //socket listeners
-io.on('connection',   async function (socket)  {
+io.on('connection', function (socket) {
     var userName = socket.request._query.userName;
-    const doctor = await Doctor.findById(mongoose.Types.ObjectId(userName)) 
-     console.log(doctor)
     allUsers.push(userName);
     emitUsers();
     var msg = `🔥👤 ${userName} has joined! 😎🔥`;
@@ -66,8 +143,6 @@ io.on('connection',   async function (socket)  {
 
 
 });
-
-
 
 const PORT = 8080;
 

@@ -13,6 +13,7 @@ class Chat {
   });
 
   factory Chat.fromRawJson(Map<String, dynamic> jsonData) {
+   
     return Chat(
         userId: jsonData['userId'],
         userName: jsonData['userName'],

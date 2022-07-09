@@ -41,6 +41,7 @@ dependencies:
   connectivity_plus: ^2.2.1
   socket_io_client: ^1.0.2
   anim_search_bar: ^2.0.2
+  intl:
 
 
 dev_dependencies:

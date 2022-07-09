@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
 import 'package:frontend/provider/patient.dart';
+import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import '../../service/socket_service.dart';
+import '../../views/chat/chat_page.dart';
 
 class SearchDoctor extends StatefulWidget {
   SearchDoctor({Key? key}) : super(key: key);
@@ -75,9 +80,12 @@ class _SearchDoctorState extends State<SearchDoctor> {
                 icon: Icon(Icons.message),
                 onPressed: () {
                   print(doctor["_id"]);
-                  SocketService.setUserName(doctor["_id"]);
+                  SocketService.setUserName("chala");
                   SocketService.connectAndListen();
-                  Navigator.pushNamed(context, chatPageRoute);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const ChatPage(),
+                  ));
+                  // Navigator.pushNamed(context, chatPageRoute);
                 },
               ),
               onTap: () {},

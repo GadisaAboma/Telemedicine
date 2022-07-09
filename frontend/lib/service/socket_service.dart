@@ -1,13 +1,13 @@
 import 'dart:async';
-import 'package:frontend/model/chat.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import '../utils/helpers.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
+
+import '../model/chat.dart';
 
 class SocketService {
   static late StreamController<Chat> _socketResponse;
   static late StreamController<List<String>> _userResponse;
-  static late IO.Socket _socket;
+  static late io.Socket _socket;
   static String _userName = '';
 
   static String? get userId => _socket.id;
@@ -17,17 +17,29 @@ class SocketService {
   static Stream<List<String>> get userResponse =>
       _userResponse.stream.asBroadcastStream();
 
+  static get serverUrl => null;
+
   static void setUserName(String name) {
-    // print(name);
     _userName = name;
+  }
+
+  static void sendMessage(String message) {
+    _socket.emit(
+        'message',
+        Chat(
+          userId: userId,
+          userName: _userName,
+          message: message,
+          time: DateTime.now().toString(),
+        ));
   }
 
   static void connectAndListen() {
     _socketResponse = StreamController<Chat>();
     _userResponse = StreamController<List<String>>();
-    _socket = IO.io(
-        "http://192.168.1.44:8080",
-        IO.OptionBuilder()
+    _socket = io.io(
+        "http://127.0.0.1:8080",
+        io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()
             .setQuery({'userName': _userName})
@@ -35,12 +47,10 @@ class SocketService {
 
     _socket.connect();
 
-    print("connection set $_userName");
-
     //When an event recieved from server, data is added to the stream
-    // _socket.on('message', (data) {
-    //   _socketResponse.sink.add(Chat.fromRawJson(data));
-    // });
+    _socket.on('message', (data) {
+      _socketResponse.sink.add(Chat.fromRawJson(data));
+    });
 
     //when users are connected or disconnected
     _socket.on('users', (data) {
@@ -48,19 +58,8 @@ class SocketService {
       _userResponse.sink.add(users);
     });
 
-    _socket.onDisconnect((_) => print('disconnect'));
+    // _socket.onDisconnect((_) => print('disconnect'));
   }
-
-  // static void sendMessage(String message) {
-  //   _socket.emit(
-  //       'message',
-  //       Chat(
-  //         userId: userId,
-  //         userName: _userName,
-  //         message: message,
-  //         time: DateTime.now().toString(),
-  //       ));
-  // }
 
   static void dispose() {
     _socket.dispose();

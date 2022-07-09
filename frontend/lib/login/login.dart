@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
           Navigator.pushReplacementNamed(ctx, adminHomeRoute);
           break;
         case "doctor":
-          Navigator.pushReplacementNamed(ctx, doctorHomeRoute);
+          Navigator.pushReplacementNamed(ctx, doctorHomeRoute, arguments: "62bcb801befd9942d15ca025");
 
           break;
         case "patient":
@@ -69,7 +69,8 @@ class _LoginState extends State<Login> {
               EdgeInsets.only(top: MediaQuery.of(context).size.height * .05),
           child: SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.95,
+              // height: MediaQuery.of(context).size.height * 0.95,
+              height: 500,
               margin: EdgeInsets.only(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,73 +120,75 @@ class _LoginState extends State<Login> {
                           topRight: Radius.circular(40),
                         ),
                       ),
-                      child: Container(
-                        margin: EdgeInsets.only(top: 50, left: 30, right: 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text("Username"),
-                            TextFormField(
-                              validator: ((value) {
-                                String username = value.toString().trim();
-                                if (username.isEmpty) {
-                                  return "username field required";
-                                }
-                                if (username.length < 3) {
-                                  return "username must greater than 3 character";
-                                }
-                              }),
-                              onSaved: (value) {
-                                setState(() {
-                                  username = value.toString();
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text("Password"),
-                            TextFormField(
-                                obscureText: true,
+                      child: SingleChildScrollView(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 50, left: 30, right: 30),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Username"),
+                              TextFormField(
                                 validator: ((value) {
-                                  String password = value.toString().trim();
-                                  if (password.isEmpty) {
-                                    return "password field required";
+                                  String username = value.toString().trim();
+                                  if (username.isEmpty) {
+                                    return "username field required";
                                   }
-                                  if (password.length < 3) {
-                                    return "password must greater than 3 character";
+                                  if (username.length < 3) {
+                                    return "username must greater than 3 character";
                                   }
                                 }),
                                 onSaved: (value) {
                                   setState(() {
-                                    password = value.toString();
+                                    username = value.toString();
                                   });
-                                }),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              width: double.infinity,
-                              height: 50,
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.blueGrey[900],
-                                  textStyle: const TextStyle(fontSize: 22),
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text("Password"),
+                              TextFormField(
+                                  obscureText: true,
+                                  validator: ((value) {
+                                    String password = value.toString().trim();
+                                    if (password.isEmpty) {
+                                      return "password field required";
+                                    }
+                                    if (password.length < 3) {
+                                      return "password must greater than 3 character";
+                                    }
+                                  }),
+                                  onSaved: (value) {
+                                    setState(() {
+                                      password = value.toString();
+                                    });
+                                  }),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20)),
+                                width: double.infinity,
+                                height: 50,
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.blueGrey[900],
+                                    textStyle: const TextStyle(fontSize: 22),
+                                  ),
+                                  onPressed: () => login(context),
+                                  label: const Text("login"),
+                                  icon: const Icon(Icons.login),
                                 ),
-                                onPressed: () => login(context),
-                                label: const Text("login"),
-                                icon: const Icon(Icons.login),
                               ),
-                            ),
-                            Container(
-                              child: TextButton(
-                                onPressed: () {},
-                                child: const Text("Forget password"),
+                              Container(
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text("Forget password"),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
