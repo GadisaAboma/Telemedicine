@@ -85,6 +85,7 @@ class _DoctorHomeState extends State<DoctorHome> {
         child: ElevatedButton(
           child: Text("chatpage"),
           onPressed: () {
+            print("object");
             SocketService.setUserName("doctor");
             SocketService.connectAndListen();
             Navigator.of(context).pushReplacement(MaterialPageRoute(
