@@ -86,7 +86,12 @@ class _DoctorHomeState extends State<DoctorHome> {
           child: Text("chatpage"),
           onPressed: () {
             print("object");
+            String logginUser =
+                Provider.of<RegisterProvider>(context, listen: false)
+                    .loggedinUser;
             SocketService.setUserName("doctor");
+            SocketService.setReciever("sanyiii");
+            SocketService.setSender(logginUser);
             SocketService.connectAndListen();
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const ChatPage(),

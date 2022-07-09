@@ -31,7 +31,17 @@ const registerPatient = asyncHandler(async (req, res) => {
         name,
         username,
         password,
-        gender
+        gender,
+        messages:{
+            user:"patient",
+            content:{
+            sender:"Telemedicine",
+            message:"welcome" + name,
+            reciever:"patient"
+
+            }
+
+        }
     })
 
     const newPatient = await patient.save()

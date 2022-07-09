@@ -91,7 +91,12 @@ const Doctor = require('./models/Doctor')
 dotenv.config()
 app.use(cors())
 connectDB()
+
 app.use(express.json())
+
+
+
+
 
 
 

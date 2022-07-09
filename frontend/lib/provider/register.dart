@@ -65,7 +65,7 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
-  // late List<User> loggedinUser;
+  late String loggedinUser;
 
   Future login(String username, String password) async {
     Map<String, String> loginData = {
@@ -82,7 +82,8 @@ class RegisterProvider extends ChangeNotifier {
       final responseData = json.decode(response.body);
       setLoading();
       print(responseData);
-      // loggedinUser.add(User(responseData["_doc"]["name"], responseData["_doc"]["_id"]));
+      loggedinUser = responseData["_doc"]["username"];
+      // loggedinUser.add(User(responseData["_doc"]["username"], responseData["_doc"]["_id"]));
       return {
         "data": responseData["_doc"],
         "role": responseData["role"],

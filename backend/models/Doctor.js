@@ -25,6 +25,27 @@ const doctorSchema = new Schema({
         required: true,
     },
 
+    messages: [{
+        user:{
+            type:String,
+            required:true
+        },
+        content: [{
+            sender: {
+                type:String,
+                required: true,
+                },
+                message:{
+                    type:String,
+                    required: true,
+                },
+                reciever:{
+                    type:String,
+                    required: true,
+                }
+        }]
+    }]
+
 })
 
 

@@ -20,7 +20,27 @@ const patientSchema = new Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    messages: [{
+        user:{
+            type:String,
+            required:true
+        },
+        content: [{
+            sender: {
+                type:String,
+                required: true,
+                },
+                message:{
+                    type:String,
+                    required: true,
+                },
+                reciever:{
+                    type:String,
+                    required: true,
+                }
+        }]
+      }]
 
 })
 

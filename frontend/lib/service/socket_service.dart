@@ -9,6 +9,8 @@ class SocketService {
   static late StreamController<List<String>> _userResponse;
   static late io.Socket _socket;
   static String _userName = '';
+  static String _reciever = '';
+  static String _sender = '';
 
   static String? get userId => _socket.id;
 
@@ -22,6 +24,13 @@ class SocketService {
   static void setUserName(String name) {
     _userName = name;
   }
+  static void setReciever(String reciever) {
+    _reciever = reciever;
+  }
+  static void setSender(String sender) {
+    _sender = sender;
+  }
+
 
   static void sendMessage(String message) {
     _socket.emit(
@@ -32,6 +41,9 @@ class SocketService {
           message: message,
           time: DateTime.now().toString(),
         ));
+
+    _socket.emit("send_message",
+        {"reciever": _reciever, "message": message, "sender": _sender});
   }
 
   static void connectAndListen() {
@@ -50,6 +62,12 @@ class SocketService {
     //When an event recieved from server, data is added to the stream
     _socket.on('message', (data) {
       _socketResponse.sink.add(Chat.fromRawJson(data));
+    });
+
+    /// send message to specific user
+
+    _socket.on("new_message", (data) {
+      print(data);
     });
 
     //when users are connected or disconnected

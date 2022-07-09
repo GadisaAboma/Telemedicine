@@ -31,7 +31,16 @@ const registerDoctor = asyncHandler(async (req, res) => {
 
        }
 
-    const doctor = new Doctor(req.body)
+    const doctor = new Doctor({...req.body,messages:{
+        user:"patient",
+        content:{
+        sender:"Telemedicine",
+        message:"welcome",
+        reciever:"patient"
+
+        }
+
+    }})
 
     const newDoctor = await doctor.save()
 

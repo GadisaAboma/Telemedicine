@@ -80,7 +80,12 @@ class _SearchDoctorState extends State<SearchDoctor> {
                 icon: Icon(Icons.message),
                 onPressed: () {
                   print(doctor["_id"]);
+                  String logginUser =
+                      Provider.of<RegisterProvider>(context, listen: false)
+                          .loggedinUser;
                   SocketService.setUserName("chala");
+                  SocketService.setReciever(doctor["username"]);
+                  SocketService.setSender(logginUser);
                   SocketService.connectAndListen();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const ChatPage(),
