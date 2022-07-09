@@ -58,17 +58,14 @@ io.on('connection', function (socket) {
 
         socketId = connectedUser[data.reciever]
 
-        io.to(socketId).emit("new_message",data)
-        
-        console.log(data)
-        // if reciveir is patient
-        var reciever = await Patient.findOne({
 
-            username: data.reciever
-        }) 
+        ////////////////////////////////////////
+        // let reciever is patient and sender is doctor
+
+        var reciever = await Patient.findOne({ username: data.reciever   }) 
         var sender = await Doctor.findOne({username:data.sender})
+
         var index = -1;
-        // var user = reciever.messages.find(user => user.user ==) 
         var new_reciever_message = {
             user:data.sender,
             content:[ ]
@@ -78,6 +75,8 @@ io.on('connection', function (socket) {
             content:[]
         }
         
+        ////////////////////////////////////////////
+        // check if reciever is patient and sender is doctor
         if(reciever != null){  
 
         reciever.messages.map((message) =>{
@@ -113,83 +112,82 @@ io.on('connection', function (socket) {
             index = -1
         }
 
-        
-        
-        console.log(sender)
-        console.log(data)
-    // save data
+
+        // save message to both patient and doctor
+
         await reciever.save()
         await sender.save()
         new_reciever_message.content = []
         new_reciever_message.user = ''
         new_sender_message.content = []
         new_sender_message.user = ""
-    } 
-    
-    else {
+        } 
+
+        ////////////////////////////////////////////////////
+        // if reciever is doctor and sender is patient
+
+        else {
 
           // if reciever is Doctor
       reciever = await Doctor.findOne({  username: data.reciever }) 
-     sender = await Patient.findOne({ username:data.sender })
+      sender = await Patient.findOne({ username:data.sender })
      
-    new_reciever_message.user = data.sender
-    new_sender_message.user = data.reciever
+        new_reciever_message.user = data.sender
+        new_sender_message.user = data.reciever
     
-    reciever.messages.map((message) =>{
+     reciever.messages.map((message) =>{
         index += 1
         if(message.user == data.sender ){
             new_reciever_message.content = message.content
             new_reciever_message.content.push(data)
             return;
         } 
-    })
+        })
 
-    if(index == 0){
+        if(index == 0){
         reciever.messages.push(new_reciever_message)
         index = -1  
-    } else {
+        } else {
         reciever.messages[index] = new_reciever_message
-    index = -1
-    }
+        index = -1
+        }
     
 
-    sender.messages.map((message) =>{
+        sender.messages.map((message) =>{
         index += 1
         if(message.user ==data.reciever ){
             new_sender_message.content = message.content
             new_sender_message.content.push(data)
             return;
         } 
-    })
+        })
     
-     if(index == 0){
+         if(index == 0){
         sender.messages.push(new_sender_message)
         index = -1  
-    } else {
+        } else {
         sender.messages[index] = new_sender_message
         index = -1
-    }
-    new_reciever_message.content = []
-    new_reciever_message.user = ''
-    new_sender_message.content = []
-    new_sender_message.user = ""
-    console.log(reciever)
-        console.log(data)
-    // save data
+        }
+
+        new_reciever_message.content = []
+        new_reciever_message.user = ''
+        new_sender_message.content = []
+        new_sender_message.user = ""
+    
+    
+        ////////////////////////////////////////////////////
+        // if reciever is doctor and sender is patient
         await reciever.save()
         await sender.save()
-}
+        }
+        io.to(socketId).emit("new_message",data)
 
         
         
     })
     
-
-
-
-
-    
-    socket.on('disconnect', () => {       
+        socket.on('disconnect', () => {       
       
         var disMsg = `${userName} has disconnected! 😭😭`;
         console.log(disMsg);
@@ -198,18 +196,18 @@ io.on('connection', function (socket) {
         });
         removeUser(userName);
         emitUsers()
-    });
+     });
 
 
-    socket.on('message', (data) => {
+        socket.on('message', (data) => {
         console.log(`👤 ${data.userName} : ${data.message}`)
         io.emit('message', data);
-    });
+        });
 
 
 
 
-})
+    })
 const PORT = 8080;
 
 server.listen(PORT,'0.0.0.0',()=>{
