@@ -17,6 +17,25 @@ class DoctorHome extends StatefulWidget {
 
 class _DoctorHomeState extends State<DoctorHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
+  int index = 0;
+  dynamic doctorInfo;
+
+  @override
+  void initState() {
+    doctorInfo =
+        Provider.of<RegisterProvider>(context, listen: false).doctordInfo;
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void setNavigation(int navagateIndex) {
+    if (navagateIndex == 0) {
+      index = 0;
+    } else if (navagateIndex == 1) {
+      index = 1;
+    }
+  }
 
   Widget chat(BuildContext ctx) {
     return Container(
@@ -50,26 +69,69 @@ class _DoctorHomeState extends State<DoctorHome> {
     );
   }
 
+  Widget ListOfPatient(BuildContext ctx) {
+    // String logginUser =
+    //             Provider.of<RegisterProvider>(context, listen: false)
+    //                 .loggedinUser;
+
+    return ListView.builder(
+        itemCount: doctorInfo["messages"].length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(doctorInfo["messages"][index]["user"]),
+            leading: CircleAvatar(backgroundColor: Colors.amber),
+            trailing: IconButton(
+              icon: Icon(Icons.message),
+              onPressed: () {
+                // SocketService.setUserName(doctorInfo["username"]);
+                SocketService.setReciever(
+                    doctorInfo["messages"][index]["user"]);
+                SocketService.setSender(doctorInfo["username"]);
+                SocketService.connectAndListen(doctorInfo["username"]);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const ChatPage(),
+                ));
+              },
+            ),
+          );
+        });
+  }
+
+  Widget SetBody(BuildContext ctx) {
+    Widget returnedWidget;
+    if (index == 0) {
+      returnedWidget = Center(
+        child: ElevatedButton(
+          child: Text("chatpage"),
+          onPressed: () {
+            print("object");
+
+            // Navigator.pushNamed(context, chatPageRoute, arguments: id.toString());
+          },
+        ),
+      );
+    } else if (index == 1) {
+      returnedWidget = Center(
+        child: Text("Notification"),
+      );
+    } else {
+      returnedWidget = Center(
+        child: ListOfPatient(ctx),
+      );
+    }
+
+    return returnedWidget;
+  }
+
   @override
   Widget build(BuildContext context) {
     Object? id = ModalRoute.of(context)?.settings.arguments;
+    // print(doctorInfo);
 
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: "Search",
-              fillColor: Colors.white,
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        ),
+        title:
+            Container(height: 40, child: Text("hi, Dr. ${doctorInfo["name"]}")),
         actions: [
           IconButton(
             onPressed: () {},
@@ -81,25 +143,21 @@ class _DoctorHomeState extends State<DoctorHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: Center(
-        child: ElevatedButton(
-          child: Text("chatpage"),
-          onPressed: () {
-            print("object");
-            String logginUser =
-                Provider.of<RegisterProvider>(context, listen: false)
-                    .loggedinUser;
-            SocketService.setUserName("doctor");
-            SocketService.setReciever("sanyiii");
-            SocketService.setSender(logginUser);
-            SocketService.connectAndListen();
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const ChatPage(),
-            ));
-            // Navigator.pushNamed(context, chatPageRoute, arguments: id.toString());
+      body: SetBody(context),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (value) {
+            setState(() {
+              index = value;
+            });
           },
-        ),
-      ),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), label: "Notification"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.message), label: "message"),
+          ]),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
           fabButtons: <Widget>[

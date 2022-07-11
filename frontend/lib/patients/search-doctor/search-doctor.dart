@@ -39,36 +39,38 @@ class _SearchDoctorState extends State<SearchDoctor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Container(
-              width: 300,
-              height: 20,
-              margin: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+        title: Container(
+          width: 300,
+          height: 40,
+          margin: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 220,
+                child: TextFormField(
+                  controller: edit,
+                  decoration: const InputDecoration(
+                      hintText: "Search doctor",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      )),
+                ),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 220,
-                    child: TextFormField(
-                      controller: edit,
-                      decoration: const InputDecoration(
-                          hintText: "Search doctor",
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          )),
-                    ),
+              IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.blueGrey,
                   ),
-                  IconButton(
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.blueGrey,
-                      ),
-                      onPressed: () => search(context))
-                ],
-              )),
+                  onPressed: () => search(context))
+            ],
+          ),
+        ),
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.person)),
         ],
       ),
       body: doctor.isNotEmpty
@@ -80,13 +82,13 @@ class _SearchDoctorState extends State<SearchDoctor> {
                 icon: Icon(Icons.message),
                 onPressed: () {
                   print(doctor["_id"]);
-                  String logginUser =
+                  String me =
                       Provider.of<RegisterProvider>(context, listen: false)
-                          .loggedinUser;
-                  SocketService.setUserName("chala");
+                          .me;
+                  // SocketService.setUserName(me);
                   SocketService.setReciever(doctor["username"]);
-                  SocketService.setSender(logginUser);
-                  SocketService.connectAndListen();
+                  SocketService.setSender(me);
+                  SocketService.connectAndListen(me);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const ChatPage(),
                   ));
