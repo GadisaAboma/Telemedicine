@@ -8,4 +8,5 @@ String loginRoute = "/";
 String registerRoute = "/register";
 String searchDoctorRoute = "/searchDoctor";
 String chatPageRoute = '/chatPage';
+
 // static String url = "http://10.141.214.82:3000";

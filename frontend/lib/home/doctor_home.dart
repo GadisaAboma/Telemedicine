@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../posts/posts.dart';
+import '../provider/message.dart';
 import '../provider/register.dart';
-import '../service/socket_service.dart';
 import '../views/chat/chat_page.dart';
 
 class DoctorHome extends StatefulWidget {
@@ -69,30 +69,46 @@ class _DoctorHomeState extends State<DoctorHome> {
     );
   }
 
-  Widget ListOfPatient(BuildContext ctx) {
-    // String logginUser =
-    //             Provider.of<RegisterProvider>(context, listen: false)
-    //                 .loggedinUser;
+  // SocketService? s;
 
+  Widget listOfPatient(BuildContext ctx) {
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(doctorInfo["messages"][index]["user"]),
-            leading: CircleAvatar(backgroundColor: Colors.amber),
-            trailing: IconButton(
-              icon: Icon(Icons.message),
-              onPressed: () {
-                // SocketService.setUserName(doctorInfo["username"]);
-                SocketService.setReciever(
-                    doctorInfo["messages"][index]["user"]);
-                SocketService.setSender(doctorInfo["username"]);
-                SocketService.connectAndListen(doctorInfo["username"]);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const ChatPage(),
-                ));
-              },
-            ),
+          return Column(
+            children: [
+              Container(
+                height: 60,
+                margin: EdgeInsets.only(top: 6, right: 15, left: 15),
+                child: ListTile(
+                  onTap: () {
+                    // SocketService.init();
+                    final chat = Provider.of<PreviousChat>(ctx, listen: false);
+                    chat.setUserName(doctorInfo["username"]);
+                    chat.setReciever(doctorInfo["messages"][index]["user"]);
+                    chat.setSender(doctorInfo["username"]);
+                    (doctorInfo["messages"][index]["content"] as List)
+                        .forEach((data) {
+                      (data as Map).remove("_id");
+                      // print(data);
+                      chat.addToChatHistory(data);
+                    });
+                    chat.connectAndListen(doctorInfo["username"]);
+                    Navigator.of(ctx).push(MaterialPageRoute(
+                      builder: (ctx) => ChatPage(),
+                    ));
+                  },
+                  title: Text(doctorInfo["messages"][index]["user"]),
+                  leading: CircleAvatar(backgroundColor: Colors.blueAccent),
+                  trailing: Icon(
+                    Icons.done_all,
+                  ),
+                ),
+              ),
+              Divider(
+                height: 2,
+              )
+            ],
           );
         });
   }
@@ -116,7 +132,7 @@ class _DoctorHomeState extends State<DoctorHome> {
       );
     } else {
       returnedWidget = Center(
-        child: ListOfPatient(ctx),
+        child: listOfPatient(ctx),
       );
     }
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/chat.dart';
-import '../../service/socket_service.dart';
+import '../../provider/message.dart';
 
 class MessageView extends StatelessWidget {
   final Chat chat;
@@ -27,7 +28,7 @@ class MessageView extends StatelessWidget {
 
     var size = MediaQuery.of(context).size;
     // bool isSendByUser = chat.userId == SocketService.userId;
-    bool isSendByUser = chat.sender == SocketService.getUsername();
+    bool isSendByUser = chat.sender == Provider.of<PreviousChat>(context, listen: false).getUsername();
 
     return Align(
       alignment: isSendByUser ? Alignment.centerRight : Alignment.centerLeft,

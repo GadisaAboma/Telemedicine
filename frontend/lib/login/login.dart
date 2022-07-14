@@ -3,7 +3,6 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
-import '../service/socket_service.dart';
 
 class Login extends StatefulWidget {
   static String loginRoute = "/";

@@ -53,6 +53,10 @@ class RegisterProvider extends ChangeNotifier {
       final responseData = json.decode(response.body);
       print(responseData);
 
+      if (responseData["role"] == "doctor") {
+        doctordInfo = responseData["_doc"];
+      }
+
       setLoading();
       // notifyListeners();
       return "success";
@@ -67,6 +71,22 @@ class RegisterProvider extends ChangeNotifier {
 
   late String me;
   late dynamic doctordInfo;
+
+  Future fetchPatient(String username) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/patients/fetchPatient"),
+          body: json.encode({"username": username}),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      // print("response data  " + response.body);
+      return json.decode( response.body);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future login(String username, String password) async {
     Map<String, String> loginData = {
