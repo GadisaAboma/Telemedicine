@@ -11,7 +11,7 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (chat.userId == null) {
+    if (chat.sender == null) {
       return Center(
           child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -26,7 +26,8 @@ class MessageView extends StatelessWidget {
     }
 
     var size = MediaQuery.of(context).size;
-    bool isSendByUser = chat.userId == SocketService.userId;
+    // bool isSendByUser = chat.userId == SocketService.userId;
+    bool isSendByUser = chat.sender == SocketService.getUsername();
 
     return Align(
       alignment: isSendByUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -37,7 +38,7 @@ class MessageView extends StatelessWidget {
               isSendByUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Text(
-              (chat.userName ?? ''),
+              (chat.sender ?? ''),
               style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
@@ -71,10 +72,10 @@ class MessageView extends StatelessWidget {
                   ],
                 )),
             const SizedBox(height: 4),
-            Text(
-              f.format(DateTime.parse(chat.time ?? '')),
-              style: const TextStyle(fontSize: 10),
-            )
+            // Text(
+            //   f.format(DateTime.parse(chat.time ?? '')),
+            //   style: const TextStyle(fontSize: 10),
+            // )
           ],
         ),
       ),

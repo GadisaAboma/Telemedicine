@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../../model/chat.dart';
 import '../../service/socket_service.dart';
 import 'message_view.dart';
@@ -13,7 +12,18 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const Text("chat")),
+      appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              SocketService.dispose();
+              Navigator.pop(context);
+            },
+          ),
+          centerTitle: true,
+          title: const Text("chat")),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

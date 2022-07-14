@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -24,29 +25,29 @@ class SocketService {
   static void setUserName(String name) {
     _userName = name;
   }
+
+  static String getUsername() {
+    return _userName;
+  }
+
   static void setReciever(String reciever) {
     _reciever = reciever;
   }
+
   static void setSender(String sender) {
     _sender = sender;
+    setUserName(_sender);
   }
 
-
   static void sendMessage(String message) {
-    _socket.emit(
-        'message',
-        Chat(
-          userId: userId,
-          userName: _userName,
-          message: message,
-          time: DateTime.now().toString(),
-        ));
+    // _socket.emit('message',
+    // Chat(message: "helloo", reciever: "hkkk", sender: "lhlshflhdslf"));
 
     _socket.emit("send_message",
         {"reciever": _reciever, "message": message, "sender": _sender});
   }
 
-  static void connectAndListen() {
+  static void connectAndListen(String username) {
     _socketResponse = StreamController<Chat>();
     _userResponse = StreamController<List<String>>();
     _socket = io.io(
@@ -54,20 +55,29 @@ class SocketService {
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()
-            .setQuery({'userName': _userName})
+            .setQuery({'userName': username})
             .build());
 
     _socket.connect();
 
     //When an event recieved from server, data is added to the stream
-    _socket.on('message', (data) {
-      _socketResponse.sink.add(Chat.fromRawJson(data));
-    });
+    // _socket.on('message', (data) {
+    //   // if(_reciever == data['reciever']){
+    //   // _socketResponse.sink.add(Chat.fromRawJson(data));
+    //   // }
+    //   print("data" + data.toString());
+    // });
 
     /// send message to specific user
 
     _socket.on("new_message", (data) {
-      print(data);
+      // print(data);
+      // print(jsonDecode(data)["reciever"]);
+      // print(_reciever + " rec " + _reciever == data["reciever"]);
+      if (((_reciever == data["reciever"]) || (_reciever == data["sender"])) &&
+          ((_sender == data["reciever"]) || (_sender == data["sender"]))) {
+        _socketResponse.sink.add(Chat.fromRawJson(data));
+      }
     });
 
     //when users are connected or disconnected
@@ -86,5 +96,6 @@ class SocketService {
     _socket.disconnect();
     _socketResponse.close();
     _userResponse.close();
+    
   }
 }
