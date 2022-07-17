@@ -75,6 +75,9 @@ class _DoctorHomeState extends State<DoctorHome> {
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
+          if (index == 0) {
+            return Container();
+          }
           return Column(
             children: [
               Container(
@@ -84,15 +87,18 @@ class _DoctorHomeState extends State<DoctorHome> {
                   onTap: () {
                     // SocketService.init();
                     final chat = Provider.of<PreviousChat>(ctx, listen: false);
+
                     chat.setUserName(doctorInfo["username"]);
                     chat.setReciever(doctorInfo["messages"][index]["user"]);
                     chat.setSender(doctorInfo["username"]);
+
                     (doctorInfo["messages"][index]["content"] as List)
                         .forEach((data) {
                       (data as Map).remove("_id");
                       // print(data);
                       chat.addToChatHistory(data);
                     });
+
                     chat.connectAndListen(doctorInfo["username"]);
                     Navigator.of(ctx).push(MaterialPageRoute(
                       builder: (ctx) => ChatPage(),

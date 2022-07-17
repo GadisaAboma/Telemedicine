@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
-import 'package:frontend/patients/contact-list/doctors-list.dart';
+import 'package:frontend/patients/doctor-list/doctor-list.dart';
+import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
@@ -50,9 +52,30 @@ class _PatientHomeState extends State<PatientHome> {
   }
 
   int index = 0;
+  late dynamic provider;
+  late dynamic doctors;
+  
+  void fetchDoctor(BuildContext ctx) async {
+    provider = Provider.of<RegisterProvider>(ctx, listen: false)
+        .fetchChattedDoctor(provider.me);
+  }
+
+  Widget home(BuildContext ctx) {
+    Widget homeWidget = Container();
+    if (index == 0) {
+      homeWidget = Posts();
+    } else if (index == 1) {
+      homeWidget = Notifications();
+    } else if (index == 2) {
+      fetchDoctor(ctx);
+      homeWidget = DoctorList();
+    }
+    return homeWidget;
+  }
 
   @override
   Widget build(BuildContext context) {
+    fetchDoctor(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -73,15 +96,7 @@ class _PatientHomeState extends State<PatientHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (index == 0) Posts(),
-            if (index == 1) Notifications(),
-            if (index == 2) DoctorsList()
-          ],
-        ),
-      ),
+      body: SingleChildScrollView(child: home(context)),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
           fabButtons: <Widget>[

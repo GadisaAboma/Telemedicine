@@ -8,13 +8,15 @@ import 'chat_text_input.dart';
 import 'user_list_view.dart';
 
 class ChatPage extends StatelessWidget {
-  //  ChatPage({Key? key}));
+  ChatPage({Key? key});
   @override
   Widget build(BuildContext context) {
-    // dynamic previousChat = SocketService.getChatHistory();
-    var previousChat =
-        Provider.of<PreviousChat>(context, listen: true).chatHistory;
+    var provider = Provider.of<PreviousChat>(context, listen: true);
+    final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
+
+    String title = provider.getUsername() 
+    != previousChat[0].reciever?previousChat[0].reciever:previousChat[0].sender;
 
     void _scrollDown() {
       try {
@@ -39,15 +41,15 @@ class ChatPage extends StatelessWidget {
             },
           ),
           centerTitle: true,
-          title: const Text("chat")),
-      body: Padding(
+          title:  Text(title)),
+      body: previousChat == null?Container(child:Center(child:Text("welcome "))):Padding(
           padding: const EdgeInsets.all(8.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             // const UserListView(),
             Expanded(
               child: ListView.builder(
-                controller: _scrollController,
+                  controller: _scrollController,
                   itemCount: previousChat.length,
                   itemBuilder: (contex, index) {
                     bool isSendByUser = previousChat[index].sender ==

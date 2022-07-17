@@ -89,14 +89,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
                   final chat =
                       Provider.of<PreviousChat>(context, listen: false);
                   String myUsername = provider.me;
-                  final patientData = await provider.fetchPatient(myUsername);
-                  // Map<String, String> data = json.decode(patientData);
-// (patientData["messages"]["content"] as List)
-//                         .forEach((data) {
-//                       (data as Map).remove("_id");
-//                       print(data);
-//                       chat.addToChatHistory(data);
-//                     });
+                  final patientData = await provider.fetchMessage(myUsername);
 
                   (patientData["messages"] as List).forEach((element) {
                     if (element["user"] == doctor["username"]) {
@@ -114,10 +107,10 @@ class _SearchDoctorState extends State<SearchDoctor> {
                   chat.setSender(myUsername);
                   chat.connectAndListen(myUsername);
 
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ChatPage(),
-                  ));
-                  // Navigator.pushNamed(context, chatPageRoute);
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) =>  ChatPage(),
+                  // ));
+                  Navigator.pushNamed(context, chatPageRoute);
                 },
               ),
               onTap: () {},
