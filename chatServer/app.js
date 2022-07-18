@@ -7,13 +7,9 @@ var io = require('socket.io')(server);
 
 
 
-
-
-
-
 const Doctor = require("./models/Doctor")
 const Patient = require("./models/Patient")
-const {connectDB} = require("./db/database")
+const { connectDB } = require("./db/database")
 
 connectDB()
 
@@ -21,11 +17,11 @@ var allUsers = [];
 
 
 //static folder
-app.use(express.static(path.join(__dirname,'web')));
+app.use(express.static(path.join(__dirname, 'web')));
 
 function emitUsers() {
-    io.emit('users',allUsers);    
-    console.log('users',allUsers);
+    io.emit('users', allUsers);
+    console.log('users', allUsers);
 }
 var removedsUSer
 function removeUser(user) {
@@ -59,7 +55,7 @@ io.on('connection', function (socket) {
     emitUsers();
     var msg = `🔥👤 ${userName} has joined! 😎🔥`;
     console.log(msg)
- 
+
     // attach incoming listener for new user
     // var userName = socket.request._query.userName;
 
@@ -84,23 +80,23 @@ console.log(connectedUser)
         ////////////////////////////////////////
         // let reciever is patient and sender is doctor
 
-        var reciever = await Patient.findOne({ username: data.reciever   }) 
-        var sender = await Doctor.findOne({username:data.sender})
+        var reciever = await Patient.findOne({ username: data.reciever })
+        var sender = await Doctor.findOne({ username: data.sender })
 
         var index = -1;
         var isPrevousUser = false;
         var new_reciever_message = {
-            user:data.sender,
-            content:[ ]
+            user: data.sender,
+            content: []
         }
         var new_sender_message = {
-            user:data.reciever,
-            content:[]
+            user: data.reciever,
+            content: []
         }
-        
+
         ////////////////////////////////////////////
         // check if reciever is patient and sender is doctor
-        if(reciever != null){  
+        if (reciever != null) {
 
         reciever.messages.map((message) =>{
             index += 1 
@@ -177,9 +173,8 @@ console.log(connectedUser)
         reciever.messages[index] = new_reciever_message
         index = -1
         }
-    
+        io.to(socketId).emit("new_message", data)
 
-        sender.messages.map((message) =>{
         index += 1
         if(message.user ==data.reciever ){
             isPrevousUser = true
@@ -187,7 +182,7 @@ console.log(connectedUser)
             new_sender_message.content.push(data)
             return;
         } 
-        })
+        }
     
          if(index == 0 || !isPrevousUser ){
         sender.messages.push(new_sender_message)
@@ -207,18 +202,13 @@ console.log(connectedUser)
         // if reciever is doctor and sender is patient
         await reciever.save()
         await sender.save()
-        }
+        
         if(reciverSocketId){
         }
         io.to(reciverSocketId).emit("new_message",data)
         // io.to(senderSocketId).emit("new_message",data)
 
-        
-        
-    })
-    
-        socket.on('disconnect', () => {       
-      
+
         var disMsg = `${userName} has disconnected! 😭😭`;
         console.log(disMsg);
         io.emit('message', {
@@ -226,7 +216,7 @@ console.log(connectedUser)
         });
         removeUser(userName);
         emitUsers()
-     });
+    });
 
 
         // socket.on('message', (data) => {
@@ -237,10 +227,9 @@ console.log(connectedUser)
        
      
 
-    })
+})
 const PORT = 8080;
 
-server.listen(PORT,'0.0.0.0',()=>{
-    console.log('Server up and running at',PORT);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log('Server up and running at', PORT);
 })
-    

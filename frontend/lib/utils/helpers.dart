@@ -8,5 +8,5 @@ String loginRoute = "/";
 String registerRoute = "/register";
 String searchDoctorRoute = "/searchDoctor";
 String chatPageRoute = '/chatPage';
-String chatbotUrl = 'http://192.168.1.212:5000/bot';
+String chatbotUrl = 'http://192.168.1.51:5000/bot';
 // static String url = "http://10.141.214.82:3000";

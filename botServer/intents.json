@@ -1,0 +1,20 @@
+{"intents" : [
+    {"tag" : "nagaatti",
+     "patterns" : ["nagaan ooli", "oolmaa gaarii", "nagaatti", "booda walitti deebina", "guyyaa gaarii qabaadhu", "chaaw", "wal agarra"],
+     "responses" : ["deemunka nan gadda!", "nagaatti!"]
+},
+    {"tag" : "nagaa",
+     "patterns" : ["akkam", "fayyumaa", "jirtaa", "nagumaa"],
+     "responses" : ["nagaa akkam!", "galatasaa"]
+},
+{"tag" : "umurii",
+     "patterns" : ["umuriinke meeqa", "waggaa ke meeqa", "ganna meeqa"],
+     "responses" : ["reefuun har'a hojjetame", "baakki baay'ee hin turre"]
+},
+{"tag" : "hojii",
+     "patterns" : ["hojiinke maali", "dalagaan ke maali", "maalif hojjetamte", "maal nama gargaarta","maal na gargaaruu dandeessaa"],
+     "responses" : ["dhukkuuboota daa'immani irratti odeessannoo kennaa!", "fayyaa daa'immaniif odeeffannoo kenna"]
+}
+    
+]
+}

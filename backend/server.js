@@ -23,19 +23,19 @@ var allUsers = [];
 
 
 //static folder
- app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 function emitUsers() {
-    io.emit('users',allUsers);    
-    console.log('users',allUsers);
+    io.emit('users', allUsers);
+    console.log('users', allUsers);
 }
 function removeUser(user) {
-    allUsers= allUsers.filter(function(ele){ 
-        return ele != user; 
-    });   
+    allUsers = allUsers.filter(function (ele) {
+        return ele != user;
+    });
 }
 
-io.on("connection",  (socket) => {
+io.on("connection", (socket) => {
 
     console.log("New websoccet connection")
 
@@ -51,8 +51,8 @@ io.on("connection",  (socket) => {
         "message": msg
     }
     );
-    socket.on('disconnect', () => {       
-      
+    socket.on('disconnect', () => {
+
         var disMsg = `${userName} has disconnected! 😭😭`;
         console.log(disMsg);
         io.emit('message', {
@@ -140,6 +140,6 @@ app.use(errorHandler)
 
 const PORT = 3000;
 
-server.listen(PORT,()=>{
-    console.log('Server up and running at',PORT);
+server.listen(PORT, () => {
+    console.log('Server up and running at', PORT);
 });
