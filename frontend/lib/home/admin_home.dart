@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
+import 'package:frontend/admin/doctor_detail_info.dart';
+import 'package:frontend/provider/register.dart';
+import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
@@ -13,12 +16,46 @@ class AdminHome extends StatefulWidget {
 class _AdminHomeState extends State<AdminHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
   int index = 0;
-  Widget bodyWidget() {
+  var unApprovedDoctorsList;
+
+  @override
+  void initState() {
+    Provider.of<RegisterProvider>(context, listen: false).unApprovedDoctors();
+
+    super.initState();
+  }
+
+  Widget bodyWidget(BuildContext ctx) {
     Widget returnedwidget = Container();
     if (index == 1) {
-      returnedwidget = Center(
-        child: Text("list of doctors"),
-      );
+      // returnedwidget = Center(
+      //   child: Text("There is unapproved doctors"),
+      // );
+      unApprovedDoctorsList = Provider.of<RegisterProvider>(ctx, listen: false)
+          .unApprovedDoctorsList;
+      print(unApprovedDoctorsList);
+      return unApprovedDoctorsList == null
+          ? Center(child: Text("There is no unapproved doctor"))
+          : ListView.builder(
+              itemCount: unApprovedDoctorsList.length,
+              itemBuilder: ((_, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(unApprovedDoctorsList[index]["name"]),
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return DoctorDetailInfo(
+                              doctorInfo: unApprovedDoctorsList[index]);
+                        }));
+                      },
+                    ),
+                    Divider()
+                  ],
+                );
+              }),
+            );
     } else {
       returnedwidget = Center(
         child: Text("admin"),
@@ -56,7 +93,7 @@ class _AdminHomeState extends State<AdminHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: bodyWidget(),
+      body: bodyWidget(context),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
           onTap: (value) {
