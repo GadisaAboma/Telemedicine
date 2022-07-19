@@ -29,7 +29,6 @@ class PatientProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       final data = json.decode(response.body);
-      print("the data ${data}");
       notifyListeners();
       return data;
     } catch (e) {

@@ -1,12 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/provider/message.dart';
 
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
-import '../../service/socket_service.dart';
 import '../../views/chat/chat_page.dart';
 
 class SearchDoctor extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
     final returneddoctor =
         await Provider.of<PatientProvider>(context, listen: false)
             .searchDoctor(searchedDoctor);
-    print(returneddoctor);
+    // print(returneddoctor);
     if (returneddoctor != null) {
       setState(() {
         doctor = returneddoctor;
@@ -80,19 +81,36 @@ class _SearchDoctorState extends State<SearchDoctor> {
               subtitle: Text(doctor["specializedIn"].toString()),
               trailing: IconButton(
                 icon: Icon(Icons.message),
-                onPressed: () {
-                  print(doctor["_id"]);
-                  String me =
-                      Provider.of<RegisterProvider>(context, listen: false)
-                          .me;
-                  // SocketService.setUserName(me);
-                  SocketService.setReciever(doctor["username"]);
-                  SocketService.setSender(me);
-                  SocketService.connectAndListen(me);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const ChatPage(),
-                  ));
-                  // Navigator.pushNamed(context, chatPageRoute);
+                onPressed: () async {
+                  // print(doctor["_id"]);
+
+                  final provider =
+                      Provider.of<RegisterProvider>(context, listen: false);
+                  final chat =
+                      Provider.of<PreviousChat>(context, listen: false);
+                  String myUsername = provider.me;
+                  final patientData = await provider.fetchMessage(myUsername);
+
+                  (patientData["messages"] as List).forEach((element) {
+                    if (element["user"] == doctor["username"]) {
+                      (element["content"] as List).forEach((message) {
+                        (message as Map).remove("_id");
+                        print(patientData["messages"]);
+                        chat.addToChatHistory(message);
+                      });
+                    }
+                  });
+
+                  
+                  chat.setUserName(myUsername);
+                  chat.setReciever(doctor["username"]);
+                  chat.setSender(myUsername);
+                  chat.connectAndListen(myUsername);
+
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) =>  ChatPage(),
+                  // ));
+                  Navigator.pushNamed(context, chatPageRoute);
                 },
               ),
               onTap: () {},

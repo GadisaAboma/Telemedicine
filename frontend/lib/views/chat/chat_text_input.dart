@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/provider/message.dart';
+import 'package:provider/provider.dart';
 
-import '../../service/socket_service.dart';
 
 class ChatTextInput extends StatelessWidget {
   const ChatTextInput({Key? key}) : super(key: key);
@@ -13,7 +14,10 @@ class ChatTextInput extends StatelessWidget {
     sendMessage() {
       var message = textController.text;
       if (message.isEmpty) return;
-      SocketService.sendMessage(message);
+      // SocketService.sendMessage(message);
+
+      Provider.of<PreviousChat>(context, listen: false)
+          .sendMessage(message);
       textController.text = '';
       focusCode.requestFocus();
     }

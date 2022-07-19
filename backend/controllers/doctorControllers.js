@@ -45,13 +45,28 @@ const registerDoctor = asyncHandler(async (req, res) => {
     const newDoctor = await doctor.save()
 
     if(newDoctor) {
-        res.status(201).send(newDoctor)
+        res.status(201).send({...newDoctor,role:"doctor"})
     } else {
         res.status(404)
         throw new Error("Unable to register!")
     }
 })
 
+const messages = asyncHandler(async (req, res)=>{
+    
+const doctors = await Doctor.findOne(req.body)
+var storedMessage =[]
+doctors.messages.find(message=>{
+    if(message.user !== "patient"){
+        storedMessage.push(message.user)
+    }
+    
+})
+res.send(doctors)
+
+})
+
 module.exports = {
-registerDoctor
+
+registerDoctor,messages
 }
