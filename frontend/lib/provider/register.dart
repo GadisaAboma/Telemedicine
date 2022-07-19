@@ -73,7 +73,7 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   Future approveRequest(String id) async {
-    final response = await http.put(Uri.parse("$serverUrl/api/admin/approve"),
+    final response = await http.post(Uri.parse("$serverUrl/api/admin/approve"),
         body: json.encode({"id": id}),
         headers: {
           "Content-type": "application/json",
