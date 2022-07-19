@@ -12,37 +12,19 @@ class AdminHome extends StatefulWidget {
 
 class _AdminHomeState extends State<AdminHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
-
-  Widget chat(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn2",
-        tooltip: 'Second button',
-        child: Icon(Icons.chat),
-      ),
-    );
-  }
-
-  Widget add(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn1",
-        tooltip: 'Second button',
-        child: Icon(Icons.add),
-      ),
-    );
+  int index = 0;
+  Widget bodyWidget() {
+    Widget returnedwidget = Container();
+    if (index == 1) {
+      returnedwidget = Center(
+        child: Text("list of doctors"),
+      );
+    } else {
+      returnedwidget = Center(
+        child: Text("admin"),
+      );
+    }
+    return returnedwidget;
   }
 
   @override
@@ -74,19 +56,19 @@ class _AdminHomeState extends State<AdminHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: Center(child: Text("admin"),),
-      floatingActionButton: AnimatedFloatingActionButton(
-          key: fabKey,
-          fabButtons: <Widget>[
-            // add(),
-            chat(context),
-            add(context),
-            // inbox(),
-          ],
-          colorStartAnimation: Theme.of(context).primaryColor,
-          colorEndAnimation: Colors.red,
-          animatedIconData: AnimatedIcons.menu_close //To principal button
-          ),
+      body: bodyWidget(),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (value) {
+            setState(() {
+              index = value;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.approval), label: "Approval")
+          ]),
     );
   }
 }

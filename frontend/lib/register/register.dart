@@ -18,8 +18,8 @@ class _RegisterState extends State<Register> {
   String fullname = "";
   String username = "";
   String password = "";
-  String gender = "male";
-  String specializedIn = "child";
+  String? gender;
+  String specializedIn = "Conception and Pregnancy Adviser";
 
   String accountType = "patient";
   bool isDoctor = false;
@@ -31,7 +31,12 @@ class _RegisterState extends State<Register> {
       loadingSpinner(ctx);
       final registerResponse =
           await Provider.of<RegisterProvider>(context, listen: false).register(
-              fullname, username, password, accountType, specializedIn, gender);
+              fullname,
+              username,
+              password,
+              accountType,
+              specializedIn,
+              gender.toString());
       print("registerResponse: $registerResponse");
       if (registerResponse == "success" && accountType == "patient") {
         // Navigator.pop(ctx);
@@ -132,6 +137,9 @@ class _RegisterState extends State<Register> {
                             margin: EdgeInsets.only(top: 20),
                             child: Text("Full Name")),
                         TextFormField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
                           validator: ((value) {
                             String fullname = value.toString().trim();
                             if (fullname.isEmpty) {
@@ -147,36 +155,41 @@ class _RegisterState extends State<Register> {
                             });
                           },
                         ),
-                        Row(
-                          children: [
-                            Text("gender"),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            DropdownButton(
-                                iconEnabledColor: Colors.amber,
-                                value: gender,
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text("male"),
-                                    value: "male",
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "female",
-                                    child: Text("Female"),
-                                  ),
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    gender = value.toString();
-                                  });
-                                }),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Text("gender"),
+                        //     SizedBox(
+                        //       width: 20,
+                        //     ),
+                        // DropdownButton(
+                        //     iconEnabledColor: Colors.amber,
+                        //     value: gender,
+                        //     items: [
+                        //       DropdownMenuItem(
+                        //         child: Text("male"),
+                        //         value: "male",
+                        //       ),
+                        //       DropdownMenuItem(
+                        //         value: "female",
+                        //         child: Text("Female"),
+                        //       ),
+                        //     ],
+                        //     onChanged: (value) {
+                        //       setState(() {
+                        //         gender = value.toString();
+                        //       });
+                        //     }),
+
+                        //   ],
+                        // ),
+
                         Container(
                             margin: EdgeInsets.only(top: 20),
                             child: Text("Username")),
                         TextFormField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
                           validator: ((value) {
                             String username = value.toString().trim();
                             if (username.isEmpty) {
@@ -195,6 +208,33 @@ class _RegisterState extends State<Register> {
                         SizedBox(
                           height: 30,
                         ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("What is your gender?"),
+                              ListTile(
+                                title: Text("Male"),
+                                leading: Radio(
+                                    value: "male",
+                                    groupValue: gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        gender = value.toString();
+                                      });
+                                    }),
+                              ),
+                              ListTile(
+                                title: Text("Female"),
+                                leading: Radio(
+                                    value: "female",
+                                    groupValue: gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        gender = value.toString();
+                                      });
+                                    }),
+                              )
+                            ]),
                         if (isDoctor)
                           Column(children: [
                             Row(
@@ -207,12 +247,25 @@ class _RegisterState extends State<Register> {
                                     value: specializedIn,
                                     items: [
                                       DropdownMenuItem(
-                                        child: Text("child"),
-                                        value: "child",
+                                        child: Text(
+                                            "Conception and Pregnancy Adviser"),
+                                        value:
+                                            "Conception and Pregnancy Adviser",
                                       ),
                                       DropdownMenuItem(
-                                        child: Text("lafee"),
-                                        value: "lafee",
+                                        child:
+                                            Text("Critical Infant Caregiver"),
+                                        value: "Critical Infant Caregiver",
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text(
+                                            "Premature and Newborn Supervisor"),
+                                        value:
+                                            "Premature and Newborn Supervisor",
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text("Routine Check-Up Expert"),
+                                        value: "Routine Check-Up Expert",
                                       ),
                                     ],
                                     onChanged: (value) {
@@ -228,6 +281,9 @@ class _RegisterState extends State<Register> {
                             child: Text("Password")),
                         TextFormField(
                           obscureText: true,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
                           validator: ((value) {
                             String password = value.toString().trim();
                             if (password.isEmpty) {

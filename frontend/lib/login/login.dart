@@ -35,7 +35,8 @@ class _LoginState extends State<Login> {
           Navigator.pushReplacementNamed(ctx, adminHomeRoute);
           break;
         case "doctor":
-          Navigator.pushReplacementNamed(ctx, doctorHomeRoute, arguments: "62bcb801befd9942d15ca025");
+          Navigator.pushReplacementNamed(ctx, doctorHomeRoute,
+              arguments: "62bcb801befd9942d15ca025");
 
           break;
         case "patient":
@@ -127,7 +128,12 @@ class _LoginState extends State<Login> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text("Username"),
+                              SizedBox(height: 10,),
                               TextFormField(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10))),
                                 validator: ((value) {
                                   String username = value.toString().trim();
                                   if (username.isEmpty) {
@@ -147,7 +153,14 @@ class _LoginState extends State<Login> {
                                 height: 10,
                               ),
                               Text("Password"),
+                              SizedBox(
+                                height: 10,
+                              ),
                               TextFormField(
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
                                   obscureText: true,
                                   validator: ((value) {
                                     String password = value.toString().trim();
