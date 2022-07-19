@@ -24,6 +24,10 @@ const doctorSchema = new Schema({
         type: String,
         required: true,
     },
+    isActive: {
+        type: Boolean,
+        default: false
+    },
 
     messages: [{
         user:{

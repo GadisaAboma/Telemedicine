@@ -51,7 +51,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
           child: Row(
             children: [
               Container(
-                width: 220,
+                width: 100,
                 child: TextFormField(
                   controller: edit,
                   decoration: const InputDecoration(

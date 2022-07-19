@@ -11,6 +11,8 @@ import nltk
 
 from nltk.stem import WordNetLemmatizer
 
+nltk.download('punkt')
+
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 

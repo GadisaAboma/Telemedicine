@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const Admin = require('../models/Admin')
+const Doctor = require('../models/Doctor')
 
 const registerAdmin = asyncHandler(async (req, res) => {
     const admin = new Admin(req.body)
@@ -14,6 +15,21 @@ const registerAdmin = asyncHandler(async (req, res) => {
     }
 })
 
+const allRequests = asyncHandler(async (req, res) => {
+    const requests = await Doctor.find({
+        isActive: false
+    })
+
+    if(requests.length > 0) {
+        res.send(requests)
+    } else {
+        res.status(404)
+        throw new Error("No requests to show!")
+    }
+
+})
+
 module.exports = {
-    registerAdmin
+    registerAdmin,
+    allRequests
 }

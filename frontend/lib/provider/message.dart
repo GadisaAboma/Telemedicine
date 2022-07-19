@@ -48,7 +48,7 @@ class PreviousChat extends ChangeNotifier {
     print(username);
 
     _socket = io.io(
-        "http://127.0.0.1:8080",
+        "http://192.168.1.51:8080",
         // "http://192.168.1.44:8080",
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
