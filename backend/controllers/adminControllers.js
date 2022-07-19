@@ -31,7 +31,7 @@ const allRequests = asyncHandler(async (req, res) => {
 
 const approveRequest = asyncHandler(async (req, res) => {
     const { id } = req.body
-    const doctor = Doctor.findById(id)
+    const doctor = await Doctor.findById(id)
     doctor.isActive = true
     await doctor.save()
 })
