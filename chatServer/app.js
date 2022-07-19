@@ -97,7 +97,6 @@ console.log(connectedUser)
         ////////////////////////////////////////////
         // check if reciever is patient and sender is doctor
         if (reciever != null) {
-
         reciever.messages.map((message) =>{
             index += 1 
             if(message.user == data.sender ){
@@ -173,15 +172,16 @@ console.log(connectedUser)
         reciever.messages[index] = new_reciever_message
         index = -1
         }
-        io.to(socketId).emit("new_message", data)
+        // io.to(socketId).emit("new_message", data)
 
+        sender.messages.map((message) =>{
         index += 1
         if(message.user ==data.reciever ){
             isPrevousUser = true
             new_sender_message.content = message.content
             new_sender_message.content.push(data)
             return;
-        } 
+        }}) 
         }
     
          if(index == 0 || !isPrevousUser ){

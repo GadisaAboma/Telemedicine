@@ -101,7 +101,8 @@ class _SearchDoctorState extends State<SearchDoctor> {
                     }
                   });
 
-                  
+                  // print(patientData["messages"]);
+
                   chat.setUserName(myUsername);
                   chat.setReciever(doctor["username"]);
                   chat.setSender(myUsername);

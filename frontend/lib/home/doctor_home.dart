@@ -98,6 +98,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                       // print(data);
                       chat.addToChatHistory(data);
                     });
+                    print(chat.chatHistory);
 
                     chat.connectAndListen(doctorInfo["username"]);
                     Navigator.of(ctx).push(MaterialPageRoute(

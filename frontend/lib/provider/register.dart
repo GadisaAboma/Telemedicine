@@ -9,7 +9,7 @@ import '../utils/helpers.dart';
 class RegisterProvider extends ChangeNotifier {
   List _userData = [];
   bool isLoading = false;
-  List? unApprovedDoctorsList;
+  var unApprovedDoctorsList;
   late String me;
   late dynamic doctordInfo;
 
@@ -80,6 +80,9 @@ class RegisterProvider extends ChangeNotifier {
           "Accept": "application/json",
         });
     print(json.decode(response.body));
+    unApprovedDoctorsList = [];
+    await unApprovedDoctors();
+    notifyListeners();
   }
 
   Future fetchMessage(String username) async {
@@ -118,9 +121,19 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   Future<void> unApprovedDoctors() async {
-    final response = await http.get(Uri.parse("$serverUrl/api/admin/requests"));
-    // print(json.decode(response.body));
-    unApprovedDoctorsList = json.decode(response.body);
+    try {
+      final response =
+          await http.get(Uri.parse("$serverUrl/api/admin/requests"));
+      // print(json.decode(response.body));
+      unApprovedDoctorsList = json.decode(response.body);
+      print(json.decode(response.body));
+      notifyListeners();
+    } catch (e) {
+      unApprovedDoctorsList = [
+        null,
+      ];
+      notifyListeners();
+    }
   }
 
   Future login(String username, String password) async {

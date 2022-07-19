@@ -28,14 +28,13 @@ class _AdminHomeState extends State<AdminHome> {
   Widget bodyWidget(BuildContext ctx) {
     Widget returnedwidget = Container();
     if (index == 1) {
-      // returnedwidget = Center(
-      //   child: Text("There is unapproved doctors"),
-      // );
-      unApprovedDoctorsList = Provider.of<RegisterProvider>(ctx, listen: false)
+      unApprovedDoctorsList = Provider.of<RegisterProvider>(ctx, listen: true)
           .unApprovedDoctorsList;
       print(unApprovedDoctorsList);
-      return unApprovedDoctorsList == null
-          ? Center(child: Text("There is no unapproved doctor"))
+      return unApprovedDoctorsList[0] == null
+          ? returnedwidget = Center(
+              child: Text("There is unapproved doctors"),
+            )
           : ListView.builder(
               itemCount: unApprovedDoctorsList.length,
               itemBuilder: ((_, index) {

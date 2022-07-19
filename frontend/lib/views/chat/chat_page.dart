@@ -8,15 +8,19 @@ import 'chat_text_input.dart';
 import 'user_list_view.dart';
 
 class ChatPage extends StatelessWidget {
-  ChatPage({Key? key});
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<PreviousChat>(context, listen: true);
     final previousChat = provider.chatHistory;
-    ScrollController _scrollController = ScrollController();
 
-    String title = provider.getUsername() 
-    != previousChat[0].reciever?previousChat[0].reciever:previousChat[0].sender;
+    ScrollController _scrollController = ScrollController();
+    String title = '';
+    // print("prvies chat : " + previousChat);
+    if (previousChat.length != 0) {
+      title = provider.getUsername() != previousChat[0].reciever
+          ? previousChat[0].reciever
+          : previousChat[0].sender;
+    }
 
     void _scrollDown() {
       try {
@@ -41,82 +45,93 @@ class ChatPage extends StatelessWidget {
             },
           ),
           centerTitle: true,
-          title:  Text(title)),
-      body: previousChat == null?Container(child:Center(child:Text("welcome "))):Padding(
+          title: Text(title == "" ? "message" : title)),
+      body: Padding(
           padding: const EdgeInsets.all(8.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             // const UserListView(),
-            Expanded(
-              child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: previousChat.length,
-                  itemBuilder: (contex, index) {
-                    bool isSendByUser = previousChat[index].sender ==
-                        Provider.of<PreviousChat>(context, listen: false)
-                            .getUsername();
-                    _scrollDown();
-                    return Align(
-                      alignment: isSendByUser
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Container(
-                        margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
-                        child: Column(
-                          crossAxisAlignment: isSendByUser
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              (previousChat[index].sender ?? ''),
-                              style: const TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
+            previousChat.length == 0
+                ? Expanded(
+                    child: Center(
+                      child: Text("welcome"),
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: previousChat.length,
+                        itemBuilder: (contex, index) {
+                          bool isSendByUser = previousChat[index].sender ==
+                              Provider.of<PreviousChat>(context, listen: false)
+                                  .getUsername();
+                          _scrollDown();
+                          return Align(
+                            alignment: isSendByUser
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: Container(
+                              margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+                              child: Column(
+                                crossAxisAlignment: isSendByUser
+                                    ? CrossAxisAlignment.end
+                                    : CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (previousChat[index].sender ?? ''),
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Container(
+                                      padding: const EdgeInsets.all(8),
+                                      constraints: BoxConstraints(
+                                        maxWidth: size.width * 0.5,
+                                        minWidth: size.width * 0.01,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: isSendByUser
+                                              ? Colors.blue
+                                              : Colors.grey.shade500),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (!isSendByUser)
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 8),
+                                              child: CircleAvatar(
+                                                child: Icon(Icons.person,
+                                                    size: 10),
+                                                radius: 8,
+                                              ),
+                                            ),
+                                          Flexible(
+                                            child: Text(
+                                              previousChat[index].message ??
+                                                  'none',
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 4),
+                                  // Text(
+                                  //   f.format(DateTime.parse(chat.time ?? '')),
+                                  //   style: const TextStyle(fontSize: 10),
+                                  // )
+                                  const SizedBox(height: 40),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 4),
-                            Container(
-                                padding: const EdgeInsets.all(8),
-                                constraints: BoxConstraints(
-                                  maxWidth: size.width * 0.5,
-                                  minWidth: size.width * 0.01,
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: isSendByUser
-                                        ? Colors.blue
-                                        : Colors.grey.shade500),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    if (!isSendByUser)
-                                      const Padding(
-                                        padding: EdgeInsets.only(right: 8),
-                                        child: CircleAvatar(
-                                          child: Icon(Icons.person, size: 10),
-                                          radius: 8,
-                                        ),
-                                      ),
-                                    Flexible(
-                                      child: Text(
-                                        previousChat[index].message ?? 'none',
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                        softWrap: true,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            const SizedBox(height: 4),
-                            // Text(
-                            //   f.format(DateTime.parse(chat.time ?? '')),
-                            //   style: const TextStyle(fontSize: 10),
-                            // )
-                            const SizedBox(height: 40),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            ),
+                          );
+                        }),
+                  ),
             SizedBox(height: 6),
 
             ChatTextInput(),
