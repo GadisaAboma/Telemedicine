@@ -44,38 +44,48 @@ class _LoginState extends State<Login> {
   }
 
   void login(BuildContext ctx) async {
-   
-
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       loadingSpinner(ctx);
 
-       //////////////////////////////////////////////////////
-    /// FOR VIDEO CHAT
-      final data = await HttpUtil().login();
-      print('login: $data');
-      print('username: $username');
+      //////////////////////////////////////////////////////
+      /// FOR VIDEO CHAT
+      // final data = await HttpUtil().login();
+      // print('login: $data');
+      // print('username: $username');
 
       ///////////////////////////////////////////////////////
-      final loginResponse =
-          await Provider.of<RegisterProvider>(ctx, listen: false)
-              .login(username, password);
-      // LocalStorage.write('userid', loginResponse["user"]["_id"]);
-      // LocalStorage.write('username', username);
-      switch (loginResponse['role']) {
-        case "admin":
-          Navigator.pushReplacementNamed(ctx, adminHomeRoute);
-          break;
-        case "doctor":
-          Navigator.pushReplacementNamed(ctx, doctorHomeRoute,
-              arguments: loginResponse["user"]["_id"]);
+      ///
+      try {
+        final loginResponse =
+            await Provider.of<RegisterProvider>(ctx, listen: false)
+                .login(username, password);
+        // LocalStorage.write('userid', loginResponse["user"]["_id"]);
+        // LocalStorage.write('username', username);
+        switch (loginResponse['role']) {
+          case "admin":
+            Navigator.pushReplacementNamed(ctx, adminHomeRoute);
+            break;
+          case "doctor":
+            Navigator.pushReplacementNamed(ctx, doctorHomeRoute,
+                arguments: loginResponse["user"]["_id"]);
 
-          break;
-        case "patient":
-          Navigator.pushReplacementNamed(ctx, patientHomeRoute);
-          break;
-        default:
-          Navigator.pop(ctx);
+            break;
+          case "patient":
+            Navigator.pushReplacementNamed(ctx, patientHomeRoute);
+            break;
+          default:
+            Navigator.pop(ctx);
+        }
+      } catch (e) {
+        Navigator.pop(ctx);
+        showDialog(
+            context: ctx,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(e.toString()),
+              );
+            });
       }
     }
   }

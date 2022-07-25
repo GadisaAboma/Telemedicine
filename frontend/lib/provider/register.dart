@@ -51,8 +51,8 @@ class RegisterProvider extends ChangeNotifier {
           });
 
       final responseData = json.decode(response.body);
-
-      currentUser = responseData["_doc"];
+      print(responseData);
+      currentUser = responseData;
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
