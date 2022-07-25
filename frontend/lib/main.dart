@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blueGrey,
-          primaryColor: const Color.fromARGB(199, 4, 14, 26),
+          primaryColor: Color.fromARGB(198, 7, 21, 97),
           appBarTheme: const AppBarTheme(
             backgroundColor: Color.fromARGB(199, 4, 14, 26),
           ),

@@ -71,6 +71,7 @@ const fetchChattedDoctor = asyncHandler(async (req, res) => {
 })
 
 const searchDoctor = asyncHandler(async (req, res) => {
+    
     const { username } = req.body
 
     const doctor = await Doctor.findOne({ username })
@@ -86,10 +87,29 @@ const searchDoctor = asyncHandler(async (req, res) => {
 
 
 })
+const patient = asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const { username } = req.body
+
+    const patientData = await Patient.findOne({ username })
+
+    if (patientData) {
+        res.send(patientData)
+
+    } else {
+        res.status(400)
+        throw new Error('patientData not found!')
+    }
+
+
+
+})
 
 module.exports = {
     registerPatient,
     searchDoctor,
     fetchMessage,
-    fetchChattedDoctor
+    fetchChattedDoctor,
+    patient
+
 }

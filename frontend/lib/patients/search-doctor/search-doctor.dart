@@ -111,7 +111,8 @@ class _SearchDoctorState extends State<SearchDoctor> {
                   // Navigator.of(context).push(MaterialPageRoute(
                   //   builder: (context) =>  ChatPage(),
                   // ));
-                  Navigator.pushNamed(context, chatPageRoute);
+                  Navigator.pushNamed(context, chatPageRoute,
+                      arguments: {"id": doctor["_id"]});
                 },
               ),
               onTap: () {},

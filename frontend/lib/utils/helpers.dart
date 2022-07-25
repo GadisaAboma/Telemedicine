@@ -1,4 +1,4 @@
-// const serverUrl = "http://192.168.1.102:3000";
+// const serverUrl = "http://192.168.1.189:3000";
 String serverUrl = "http://127.0.0.1:3000";
 // 3000
 String patientHomeRoute = "/PatientHome";

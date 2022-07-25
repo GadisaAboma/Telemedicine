@@ -19,6 +19,28 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
+  dynamic patientData;
+  Future patient(String username) async {
+    try {
+      final response =
+          await http.post(Uri.parse("$serverUrl/api/patients/patient"),
+              headers: {
+                "Content-type": "application/json",
+                "Accept": "application/json",
+              },
+              body: json.encode({"username": username}));
+      final data = json.decode(response.body);
+      // (data["_docs"]);
+      patientData = data;
+      print(patientData);
+      notifyListeners();
+      return data;
+    } catch (e) {
+      print("error   " + e.toString());
+      // return e;
+    }
+  }
+
   Future searchDoctor(String username) async {
     try {
       final response = await http.post(

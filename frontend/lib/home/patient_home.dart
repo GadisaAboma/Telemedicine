@@ -5,6 +5,7 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import "../video_call/rtc/client_io.dart";
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../patients/messages/messages.dart';
@@ -18,6 +19,13 @@ class PatientHome extends StatefulWidget {
 
 class _PatientHomeState extends State<PatientHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
+  @override
+  void initState() {
+    super.initState();
+    final loggedInUser =
+        Provider.of<RegisterProvider>(context, listen: false).currentUser;
+    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
+  }
 
   Widget chat(BuildContext ctx) {
     return Container(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/provider/message.dart';
 import 'package:frontend/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -11,7 +13,7 @@ class DrawerWidget extends StatelessWidget {
         Container(
           height: 200,
           padding: EdgeInsets.all(20),
-          color: Theme.of(context).primaryColor,
+          color: Colors.blueGrey,
           child: Column(
             children: [
               ListTile(
@@ -33,6 +35,7 @@ class DrawerWidget extends StatelessWidget {
               title: Text("logout"),
               leading: Icon(Icons.logout),
               onTap: () {
+                Provider.of<PreviousChat>(context, listen: false).dispose();
                 Navigator.pushReplacementNamed(context, loginRoute);
               },
             )
