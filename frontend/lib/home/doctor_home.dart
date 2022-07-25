@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
+import 'package:frontend/home/patient_home.dart';
+import 'package:frontend/provider/patient.dart';
 import 'package:frontend/utils/helpers.dart';
+import "../video_call/rtc/client_io.dart";
 import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
@@ -25,7 +28,9 @@ class _DoctorHomeState extends State<DoctorHome> {
     doctorInfo =
         Provider.of<RegisterProvider>(context, listen: false).doctordInfo;
 
-    // TODO: implement initState
+    final loggedInUser =
+        Provider.of<RegisterProvider>(context, listen: false).currentUser;
+    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
     super.initState();
   }
 
@@ -84,9 +89,12 @@ class _DoctorHomeState extends State<DoctorHome> {
                 height: 60,
                 margin: EdgeInsets.only(top: 6, right: 15, left: 15),
                 child: ListTile(
-                  onTap: () {
+                  onTap: () async {
                     // SocketService.init();
                     final chat = Provider.of<PreviousChat>(ctx, listen: false);
+                    final patient = await Provider.of<PatientProvider>(context,
+                            listen: false)
+                        .patient(doctorInfo["messages"][index]["user"]);
 
                     chat.setUserName(doctorInfo["username"]);
                     chat.setReciever(doctorInfo["messages"][index]["user"]);
@@ -101,9 +109,10 @@ class _DoctorHomeState extends State<DoctorHome> {
                     print(chat.chatHistory);
 
                     chat.connectAndListen(doctorInfo["username"]);
-                    Navigator.of(ctx).push(MaterialPageRoute(
-                      builder: (ctx) => ChatPage(),
-                    ));
+
+                    // print("patient" + patient);
+                    Navigator.pushNamed(context, chatPageRoute,
+                        arguments: {"id": patient["_id"]});
                   },
                   title: Text(doctorInfo["messages"][index]["user"]),
                   leading: CircleAvatar(backgroundColor: Colors.blueAccent),
@@ -134,7 +143,7 @@ class _DoctorHomeState extends State<DoctorHome> {
         ),
       );
     } else if (index == 1) {
-      returnedWidget = Center(
+      returnedWidget = const Center(
         child: Text("Notification"),
       );
     } else {
@@ -149,7 +158,6 @@ class _DoctorHomeState extends State<DoctorHome> {
   @override
   Widget build(BuildContext context) {
     Object? id = ModalRoute.of(context)?.settings.arguments;
-    // print(doctorInfo);
 
     return Scaffold(
       appBar: AppBar(
@@ -158,7 +166,7 @@ class _DoctorHomeState extends State<DoctorHome> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
               size: 30,
             ),

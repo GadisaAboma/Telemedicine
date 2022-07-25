@@ -43,6 +43,7 @@ var senderSocketId
 var userName 
 io.on('connection', function (socket) {
     console.log(socket.request._query.userName)
+    console.log("resuest ", socket.request)
 
     socket.on("connected", function(username){
         userName = username

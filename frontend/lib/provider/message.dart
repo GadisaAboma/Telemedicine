@@ -5,7 +5,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 import '../model/chat.dart';
 
 class PreviousChat extends ChangeNotifier {
-  final List<Chat> _chatHistory = [];
+  List<Chat> _chatHistory = [];
   late io.Socket _socket;
   get chatHistory {
     return _chatHistory;
@@ -76,9 +76,12 @@ class PreviousChat extends ChangeNotifier {
   }
 
   void dispose() {
+    _chatHistory = [];
     _socket.dispose();
     _socket.destroy();
     _socket.close();
     _socket.disconnect();
+    _socket;
+    notifyListeners();
   }
 }

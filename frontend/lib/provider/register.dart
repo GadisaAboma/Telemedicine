@@ -11,6 +11,7 @@ class RegisterProvider extends ChangeNotifier {
   bool isLoading = false;
   var unApprovedDoctorsList;
   late String me;
+  dynamic currentUser;
   late dynamic doctordInfo;
 
   void setLoading() {
@@ -38,34 +39,28 @@ class RegisterProvider extends ChangeNotifier {
           };
 
     try {
-      // final result = await InternetAddress.lookup('google.com');
-      // if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      //   print('connected');
-      // }
-
       final String routeType = accountType == "patient"
           ? "patients/registerPatient"
           : "doctors/registerDoctor";
-      print("object $accountType");
+
       final response = await http.post(Uri.parse("$serverUrl/api/$routeType"),
           body: json.encode(jsonData),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
-      final responseData = json.decode(response.body);
-      print(responseData);
 
+      final responseData = json.decode(response.body);
+
+      currentUser = responseData["_doc"];
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
 
       setLoading();
-      // notifyListeners();
+      notifyListeners();
       return "success";
-      // print(jsonData);
     } on SocketException catch (e) {
-      print('not connected');
       return e;
     } catch (e) {
       return e;
@@ -142,6 +137,7 @@ class RegisterProvider extends ChangeNotifier {
       "password": password
     };
     try {
+      print(loginData);
       final response = await http.post(Uri.parse("$serverUrl/api/user/login"),
           body: json.encode(loginData),
           headers: {
@@ -150,16 +146,16 @@ class RegisterProvider extends ChangeNotifier {
           });
       final responseData = json.decode(response.body);
       setLoading();
-      // print(responseData);
+      print(responseData);
       me = responseData["_doc"]["username"];
+      currentUser = responseData["_doc"];
       // me.add(User(responseData["_doc"]["username"], responseData["_doc"]["_id"]));
 
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
-      return {
-        "role": responseData["role"],
-      };
+      print(responseData["_doc"]);
+      return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
       print(e);
       return e;

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/provider/register.dart';
+import 'package:frontend/register/register.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/chat.dart';
+import '../../video_call/utils/http_util.dart';
+import '../../video_call/rtc/rtc_media_screen.dart';
 import '../../provider/message.dart';
 import 'message_view.dart';
 import 'chat_text_input.dart';
@@ -11,6 +15,8 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<PreviousChat>(context, listen: true);
+    var loggedInUser =
+        Provider.of<RegisterProvider>(context, listen: false).currentUser;
     final previousChat = provider.chatHistory;
 
     ScrollController _scrollController = ScrollController();
@@ -31,21 +37,49 @@ class ChatPage extends StatelessWidget {
       } on Exception catch (_) {}
     }
 
+    dynamic route = ModalRoute.of(context)!.settings.arguments;
     var size = MediaQuery.of(context).size;
-
+    bool isVideo = true;
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () {
-              Provider.of<PreviousChat>(context, listen: false).dispose();
-              Navigator.pop(context);
-            },
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
           ),
-          centerTitle: true,
-          title: Text(title == "" ? "message" : title)),
+          onPressed: () {
+            Provider.of<PreviousChat>(context, listen: false).dispose();
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: true,
+        title: Text(title == "" ? "message" : title),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.video_call),
+            onPressed: () async {
+              final res =
+                  await HttpUtil().createRoom(isVideo ? 'video' : 'audio');
+              final String room = res['room'];
+              final String type = res['type'];
+
+              print('callee: $loggedInUser["_id"]');
+              print('room: $room');
+
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => RTCVideo(
+                    room: room,
+                    callee: route["id"],
+                    caller: loggedInUser["_id"],
+                    isCaller: true,
+                    type: type,
+                  ),
+                ),
+              );
+            },
+          )
+        ],
+      ),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child:
@@ -125,7 +159,7 @@ class ChatPage extends StatelessWidget {
                                   //   f.format(DateTime.parse(chat.time ?? '')),
                                   //   style: const TextStyle(fontSize: 10),
                                   // )
-                                  const SizedBox(height: 40),
+                                  const SizedBox(height: 10),
                                 ],
                               ),
                             ),

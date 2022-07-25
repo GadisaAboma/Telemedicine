@@ -4,6 +4,7 @@ import 'package:frontend/admin/doctor_detail_info.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:provider/provider.dart';
 
+import "../video_call/rtc/client_io.dart";
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../posts/posts.dart';
@@ -21,7 +22,11 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   void initState() {
     Provider.of<RegisterProvider>(context, listen: false).unApprovedDoctors();
+    final loggedInUser =
+        Provider.of<RegisterProvider>(context, listen: false).currentUser;
+    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
 
+    ClientIO().rootContext = context;
     super.initState();
   }
 

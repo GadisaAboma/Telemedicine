@@ -1,5 +1,5 @@
 const express = require('express')
-const { registerPatient, searchDoctor,fetchMessage ,fetchChattedDoctor} = require('../controllers/patientControllers')
+const { registerPatient, searchDoctor,fetchMessage ,fetchChattedDoctor, patient} = require('../controllers/patientControllers')
 
 const router = express.Router()
 
@@ -7,6 +7,7 @@ router.post('/registerPatient', registerPatient)
 router.post('/searchDoctor', searchDoctor)
 router.post('/fetchMessage', fetchMessage)
 router.post('/fetchChattedDoctor', fetchChattedDoctor)
+router.post('/patient', patient)
 
 router.get('/doctorsList', async (req, res)=> {
       const doctors =  await Doctor.find({})
