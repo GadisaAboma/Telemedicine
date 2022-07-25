@@ -55,25 +55,37 @@ class _LoginState extends State<Login> {
       print('username: $username');
 
       ///////////////////////////////////////////////////////
-      final loginResponse =
-          await Provider.of<RegisterProvider>(ctx, listen: false)
-              .login(username, password);
-      // LocalStorage.write('userid', loginResponse["user"]["_id"]);
-      // LocalStorage.write('username', username);
-      switch (loginResponse['role']) {
-        case "admin":
-          Navigator.pushReplacementNamed(ctx, adminHomeRoute);
-          break;
-        case "doctor":
-          Navigator.pushReplacementNamed(ctx, doctorHomeRoute,
-              arguments: loginResponse["user"]["_id"]);
+      ///
+      try {
+        final loginResponse =
+            await Provider.of<RegisterProvider>(ctx, listen: false)
+                .login(username, password);
+        // LocalStorage.write('userid', loginResponse["user"]["_id"]);
+        // LocalStorage.write('username', username);
+        switch (loginResponse['role']) {
+          case "admin":
+            Navigator.pushReplacementNamed(ctx, adminHomeRoute);
+            break;
+          case "doctor":
+            Navigator.pushReplacementNamed(ctx, doctorHomeRoute,
+                arguments: loginResponse["user"]["_id"]);
 
-          break;
-        case "patient":
-          Navigator.pushReplacementNamed(ctx, patientHomeRoute);
-          break;
-        default:
-          Navigator.pop(ctx);
+            break;
+          case "patient":
+            Navigator.pushReplacementNamed(ctx, patientHomeRoute);
+            break;
+          default:
+            Navigator.pop(ctx);
+        }
+      } catch (e) {
+        Navigator.pop(ctx);
+        showDialog(
+            context: ctx,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(e.toString()),
+              );
+            });
       }
     }
   }
@@ -104,7 +116,6 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  
                   padding: EdgeInsets.only(top: 30, bottom: 20),
                   decoration: BoxDecoration(
                       image: DecorationImage(

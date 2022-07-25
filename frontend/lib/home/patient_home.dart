@@ -24,6 +24,7 @@ class _PatientHomeState extends State<PatientHome> {
     super.initState();
     final loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
+    print(loggedInUser);
     ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
   }
 
@@ -62,7 +63,7 @@ class _PatientHomeState extends State<PatientHome> {
   int index = 0;
   late dynamic provider;
   late dynamic doctors;
-  
+
   void fetchDoctor(BuildContext ctx) async {
     provider = Provider.of<RegisterProvider>(ctx, listen: false)
         .fetchChattedDoctor(provider.me);

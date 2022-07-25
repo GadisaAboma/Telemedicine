@@ -88,7 +88,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
                       Provider.of<RegisterProvider>(context, listen: false);
                   final chat =
                       Provider.of<PreviousChat>(context, listen: false);
-                  String myUsername = provider.me;
+                  String myUsername = provider.currentUser["username"];
                   final patientData = await provider.fetchMessage(myUsername);
 
                   (patientData["messages"] as List).forEach((element) {
