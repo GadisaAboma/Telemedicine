@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
-import 'package:frontend/patients/doctor-list/doctor-list.dart';
-import 'package:frontend/provider/register.dart';
+import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
-import 'package:provider/provider.dart';
 
 import "../video_call/rtc/client_io.dart";
 import '../chatbot/chatbot.dart';
@@ -61,6 +59,7 @@ class _PatientHomeState extends State<PatientHome> {
   }
 
   int index = 0;
+<<<<<<< HEAD
   late dynamic provider;
   late dynamic doctors;
 
@@ -81,10 +80,11 @@ class _PatientHomeState extends State<PatientHome> {
     }
     return homeWidget;
   }
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
 
   @override
   Widget build(BuildContext context) {
-    fetchDoctor(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -105,7 +105,15 @@ class _PatientHomeState extends State<PatientHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: SingleChildScrollView(child: home(context)),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            if (index == 0) Posts(),
+            if (index == 1) Notifications(),
+            if (index == 2) DoctorsList()
+          ],
+        ),
+      ),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
           fabButtons: <Widget>[

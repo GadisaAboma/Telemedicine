@@ -8,7 +8,6 @@ import 'package:frontend/provider/message.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
-import 'package:frontend/views/chat/chat_page.dart';
 import 'package:provider/provider.dart';
 
 import 'home/patient_home.dart';
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
           "/doctorHome": (context) => DoctorHome(),
           "/adminHome": (context) => AdminHome(),
           "/searchDoctor": (context) => SearchDoctor(),
-          "/chatPage": (context) => ChatPage()
+          // "/chatPage": (context) => ChatPage()
         },
         // home: Login(),
       ),

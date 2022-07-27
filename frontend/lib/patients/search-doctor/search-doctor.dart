@@ -88,8 +88,20 @@ class _SearchDoctorState extends State<SearchDoctor> {
                       Provider.of<RegisterProvider>(context, listen: false);
                   final chat =
                       Provider.of<PreviousChat>(context, listen: false);
+<<<<<<< HEAD
                   String myUsername = provider.currentUser["username"];
                   final patientData = await provider.fetchMessage(myUsername);
+=======
+                  String myUsername = provider.me;
+                  final patientData = await provider.fetchPatient(myUsername);
+                  // Map<String, String> data = json.decode(patientData);
+// (patientData["messages"]["content"] as List)
+//                         .forEach((data) {
+//                       (data as Map).remove("_id");
+//                       print(data);
+//                       chat.addToChatHistory(data);
+//                     });
+>>>>>>> parent of c6d9ecc (chatbot added)
 
                   (patientData["messages"] as List).forEach((element) {
                     if (element["user"] == doctor["username"]) {
@@ -108,11 +120,18 @@ class _SearchDoctorState extends State<SearchDoctor> {
                   chat.setSender(myUsername);
                   chat.connectAndListen(myUsername);
 
+<<<<<<< HEAD
                   // Navigator.of(context).push(MaterialPageRoute(
                   //   builder: (context) =>  ChatPage(),
                   // ));
                   Navigator.pushNamed(context, chatPageRoute,
                       arguments: {"id": doctor["_id"]});
+=======
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ChatPage(),
+                  ));
+                  // Navigator.pushNamed(context, chatPageRoute);
+>>>>>>> parent of c6d9ecc (chatbot added)
                 },
               ),
               onTap: () {},

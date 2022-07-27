@@ -3,10 +3,13 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 
 import '../video_call/utils/http_util.dart';
 import '../video_call/utils/sotre_util.dart';
 // import '../service/socket_service.dart';
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
 
 class Login extends StatefulWidget {
   static String loginRoute = "/";

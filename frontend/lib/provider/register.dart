@@ -80,36 +80,17 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future fetchMessage(String username) async {
+  Future fetchPatient(String username) async {
     try {
       final response = await http.post(
-          Uri.parse("$serverUrl/api/patients/fetchMessage"),
+          Uri.parse("$serverUrl/api/patients/fetchPatient"),
           body: json.encode({"username": username}),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
       // print("response data  " + response.body);
-      return json.decode(response.body);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  late Map<String, dynamic> chattedDoctor;
-
-  Future fetchChattedDoctor(String username) async {
-    try {
-      final response = await http.post(
-          Uri.parse("$serverUrl/api/patients/fetchChattedDoctor"),
-          body: json.encode({"username": username}),
-          headers: {
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          });
-      // print("response data  " + response.body);
-      chattedDoctor = json.decode(response.body);
-      notifyListeners();
+      return json.decode( response.body);
     } catch (e) {
       print(e);
     }

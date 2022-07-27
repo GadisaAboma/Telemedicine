@@ -80,9 +80,6 @@ class _DoctorHomeState extends State<DoctorHome> {
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
-          if (index == 0) {
-            return Container();
-          }
           return Column(
             children: [
               Container(
@@ -92,22 +89,27 @@ class _DoctorHomeState extends State<DoctorHome> {
                   onTap: () async {
                     // SocketService.init();
                     final chat = Provider.of<PreviousChat>(ctx, listen: false);
+<<<<<<< HEAD
                     final patient = await Provider.of<PatientProvider>(context,
                             listen: false)
                         .patient(doctorInfo["messages"][index]["user"]);
 
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
                     chat.setUserName(doctorInfo["username"]);
                     chat.setReciever(doctorInfo["messages"][index]["user"]);
                     chat.setSender(doctorInfo["username"]);
-
                     (doctorInfo["messages"][index]["content"] as List)
                         .forEach((data) {
                       (data as Map).remove("_id");
                       // print(data);
                       chat.addToChatHistory(data);
                     });
+<<<<<<< HEAD
                     print(chat.chatHistory);
 
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
                     chat.connectAndListen(doctorInfo["username"]);
 
                     // print("patient" + patient);

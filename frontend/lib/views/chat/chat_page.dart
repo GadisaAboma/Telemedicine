@@ -12,6 +12,7 @@ import 'chat_text_input.dart';
 import 'user_list_view.dart';
 
 class ChatPage extends StatelessWidget {
+<<<<<<< HEAD
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<PreviousChat>(context, listen: true);
@@ -28,6 +29,16 @@ class ChatPage extends StatelessWidget {
           : previousChat[0].sender;
     }
 
+=======
+  //  ChatPage({Key? key}));
+  @override
+  Widget build(BuildContext context) {
+    // dynamic previousChat = SocketService.getChatHistory();
+    var previousChat =
+        Provider.of<PreviousChat>(context, listen: true).chatHistory;
+    ScrollController _scrollController = ScrollController();
+
+>>>>>>> parent of c6d9ecc (chatbot added)
     void _scrollDown() {
       try {
         Future.delayed(
@@ -46,6 +57,7 @@ class ChatPage extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back,
           ),
+<<<<<<< HEAD
           onPressed: () {
             Provider.of<PreviousChat>(context, listen: false).dispose();
             Navigator.pop(context);
@@ -80,11 +92,16 @@ class ChatPage extends StatelessWidget {
           )
         ],
       ),
+=======
+          centerTitle: true,
+          title: const Text("chat")),
+>>>>>>> parent of c6d9ecc (chatbot added)
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             // const UserListView(),
+<<<<<<< HEAD
             previousChat.length == 0
                 ? Expanded(
                     child: Center(
@@ -162,6 +179,32 @@ class ChatPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                 ],
                               ),
+=======
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                  itemCount: previousChat.length,
+                  itemBuilder: (contex, index) {
+                    bool isSendByUser = previousChat[index].sender ==
+                        Provider.of<PreviousChat>(context, listen: false)
+                            .getUsername();
+                    _scrollDown();
+                    return Align(
+                      alignment: isSendByUser
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+                        child: Column(
+                          crossAxisAlignment: isSendByUser
+                              ? CrossAxisAlignment.end
+                              : CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              (previousChat[index].sender ?? ''),
+                              style: const TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+>>>>>>> parent of c6d9ecc (chatbot added)
                             ),
                           );
                         }),
