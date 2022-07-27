@@ -58,27 +58,19 @@ class RegisterProvider extends ChangeNotifier {
       }
 
       setLoading();
-      notifyListeners();
+      // notifyListeners();
       return "success";
+      // print(jsonData);
     } on SocketException catch (e) {
+      print('not connected');
       return e;
     } catch (e) {
       return e;
     }
   }
 
-  Future approveRequest(String id) async {
-    final response = await http.post(Uri.parse("$serverUrl/api/admin/approve"),
-        body: json.encode({"id": id}),
-        headers: {
-          "Content-type": "application/json",
-          "Accept": "application/json",
-        });
-    print(json.decode(response.body));
-    unApprovedDoctorsList = [];
-    await unApprovedDoctors();
-    notifyListeners();
-  }
+  late String me;
+  late dynamic doctordInfo;
 
   Future fetchPatient(String username) async {
     try {
@@ -91,7 +83,7 @@ class RegisterProvider extends ChangeNotifier {
           });
       // print("response data  " + response.body);
       return json.decode( response.body);
-<<<<<<< HEAD
+
     } catch (e) {
       print(e);
     }
@@ -105,8 +97,7 @@ class RegisterProvider extends ChangeNotifier {
       unApprovedDoctorsList = json.decode(response.body);
       print(json.decode(response.body));
       notifyListeners();
-=======
->>>>>>> parent of c6d9ecc (chatbot added)
+
     } catch (e) {
       unApprovedDoctorsList = [
         null,

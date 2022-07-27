@@ -41,8 +41,8 @@ class DoctorDetailInfo extends StatelessWidget {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      Provider.of<RegisterProvider>(context, listen: false)
-                          .approveRequest(doctorInfo["_id"]);
+                      // Provider.of<RegisterProvider>(context, listen: false)
+                      //     .approveRequest(doctorInfo["_id"]);
                     },
                     child: Text("Approve")),
                 SizedBox(

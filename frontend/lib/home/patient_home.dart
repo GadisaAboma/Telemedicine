@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/register.dart';
 import "../video_call/rtc/client_io.dart";
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
@@ -59,15 +61,14 @@ class _PatientHomeState extends State<PatientHome> {
   }
 
   int index = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   late dynamic provider;
   late dynamic doctors;
 
-  void fetchDoctor(BuildContext ctx) async {
-    provider = Provider.of<RegisterProvider>(ctx, listen: false)
-        .fetchChattedDoctor(provider.me);
-  }
+  // void fetchDoctor(BuildContext ctx) async {
+  //   provider = Provider.of<RegisterProvider>(ctx, listen: false)
+  //       .fetchChattedDoctor(provider.me);
+  // }
 
   Widget home(BuildContext ctx) {
     Widget homeWidget = Container();
@@ -76,16 +77,11 @@ class _PatientHomeState extends State<PatientHome> {
     } else if (index == 1) {
       homeWidget = Notifications();
     } else if (index == 2) {
-      fetchDoctor(ctx);
-      homeWidget = DoctorList();
+      // fetchDoctor(ctx);
+      // homeWidget = DoctorList();
     }
     return homeWidget;
   }
-=======
->>>>>>> parent of c6d9ecc (chatbot added)
-=======
->>>>>>> parent of c6d9ecc (chatbot added)
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

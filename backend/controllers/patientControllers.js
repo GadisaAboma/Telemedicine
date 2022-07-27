@@ -95,7 +95,7 @@ const patient = asyncHandler(async (req, res) => {
 
 module.exports = {
     registerPatient,
-    searchDoctor,fetchPatient
+    searchDoctor,fetchPatient,patient,
 
 
 }
