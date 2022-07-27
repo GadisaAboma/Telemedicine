@@ -12,7 +12,7 @@ import 'chat_text_input.dart';
 import 'user_list_view.dart';
 
 class ChatPage extends StatelessWidget {
-<<<<<<< HEAD
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<PreviousChat>(context, listen: true);
@@ -29,7 +29,10 @@ class ChatPage extends StatelessWidget {
           : previousChat[0].sender;
     }
 
-=======
+
+  //  ChatPage({Key? key}));
+  @override
+  Widget build(BuildContext context) {
   //  ChatPage({Key? key}));
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,9 @@ class ChatPage extends StatelessWidget {
         Provider.of<PreviousChat>(context, listen: true).chatHistory;
     ScrollController _scrollController = ScrollController();
 
+<<<<<<< HEAD
+>>>>>>> parent of c6d9ecc (chatbot added)
+=======
 >>>>>>> parent of c6d9ecc (chatbot added)
     void _scrollDown() {
       try {
@@ -95,6 +101,9 @@ class ChatPage extends StatelessWidget {
 =======
           centerTitle: true,
           title: const Text("chat")),
+<<<<<<< HEAD
+>>>>>>> parent of c6d9ecc (chatbot added)
+=======
 >>>>>>> parent of c6d9ecc (chatbot added)
       body: Padding(
           padding: const EdgeInsets.all(8.0),

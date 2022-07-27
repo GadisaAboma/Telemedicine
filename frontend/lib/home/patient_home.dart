@@ -60,6 +60,7 @@ class _PatientHomeState extends State<PatientHome> {
 
   int index = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
   late dynamic provider;
   late dynamic doctors;
 
@@ -80,6 +81,8 @@ class _PatientHomeState extends State<PatientHome> {
     }
     return homeWidget;
   }
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
 =======
 >>>>>>> parent of c6d9ecc (chatbot added)
 

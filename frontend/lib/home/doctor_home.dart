@@ -90,10 +90,13 @@ class _DoctorHomeState extends State<DoctorHome> {
                     // SocketService.init();
                     final chat = Provider.of<PreviousChat>(ctx, listen: false);
 <<<<<<< HEAD
+<<<<<<< HEAD
                     final patient = await Provider.of<PatientProvider>(context,
                             listen: false)
                         .patient(doctorInfo["messages"][index]["user"]);
 
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
 =======
 >>>>>>> parent of c6d9ecc (chatbot added)
                     chat.setUserName(doctorInfo["username"]);
@@ -106,8 +109,11 @@ class _DoctorHomeState extends State<DoctorHome> {
                       chat.addToChatHistory(data);
                     });
 <<<<<<< HEAD
+<<<<<<< HEAD
                     print(chat.chatHistory);
 
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
 =======
 >>>>>>> parent of c6d9ecc (chatbot added)
                     chat.connectAndListen(doctorInfo["username"]);

@@ -91,6 +91,7 @@ class RegisterProvider extends ChangeNotifier {
           });
       // print("response data  " + response.body);
       return json.decode( response.body);
+<<<<<<< HEAD
     } catch (e) {
       print(e);
     }
@@ -104,6 +105,8 @@ class RegisterProvider extends ChangeNotifier {
       unApprovedDoctorsList = json.decode(response.body);
       print(json.decode(response.body));
       notifyListeners();
+=======
+>>>>>>> parent of c6d9ecc (chatbot added)
     } catch (e) {
       unApprovedDoctorsList = [
         null,

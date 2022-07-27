@@ -95,13 +95,7 @@ const patient = asyncHandler(async (req, res) => {
 
 module.exports = {
     registerPatient,
-<<<<<<< HEAD
-    searchDoctor,
-    fetchMessage,
-    fetchChattedDoctor,
-    patient
-
-=======
     searchDoctor,fetchPatient
->>>>>>> parent of c6d9ecc (chatbot added)
+
+
 }
