@@ -24,13 +24,14 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late final StreamSubscription<ContactEvent> _sub;
   List<String> contacts = [];
- dynamic currentContact ;
+  dynamic currentContact;
   bool isVideo = true;
 
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<PreviousChat>(context, listen: false);
+    Future.delayed(Duration.zero, (){
+        final provider = Provider.of<PreviousChat>(context, listen: false);
     contacts = provider.contacts;
      currentContact =
         Provider.of<RegisterProvider>(context, listen: true).currentUser;
@@ -50,6 +51,7 @@ class _ChatPageState extends State<ChatPage> {
       } else {
         if (contacts.remove(contact)) setState(() {});
       }
+    });
     });
   }
 
@@ -102,8 +104,11 @@ class _ChatPageState extends State<ChatPage> {
                   // var callee = contacts[index].split(':').last;
                   var callee = "";
                   contacts.forEach((element) {
-                    if(element == currentContact["username"]+":"+currentContact["_id"]){
-                        callee = element.split(':').last;
+                    if (element ==
+                        currentContact["username"] +
+                            ":" +
+                            currentContact["_id"]) {
+                      callee = element.split(':').last;
                     }
                   });
 
