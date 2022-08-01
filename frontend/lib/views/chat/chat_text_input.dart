@@ -19,7 +19,6 @@ class ChatTextInput extends StatelessWidget {
       Provider.of<PreviousChat>(context, listen: false)
           .sendMessage(message);
       textController.text = '';
-      focusCode.requestFocus();
     }
 
     return Container(

@@ -19,6 +19,22 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future fetchMessage(String username) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$serverUrl/api/patients/fetchPatient"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json.encode({"username": username}),
+      );
+      return json.decode(response.body);
+    } catch (e) {
+      return e;
+    }
+  }
+
   Future register(String name, String username, String password,
       String accountType, String specializedIn, String gender) async {
     print("object");
@@ -51,26 +67,27 @@ class RegisterProvider extends ChangeNotifier {
           });
 
       final responseData = json.decode(response.body);
-      print(responseData);
+      if (response.statusCode == 400) {
+        return Future.error(responseData["error"]);
+      }
       currentUser = responseData;
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
 
       setLoading();
-      // notifyListeners();
+      notifyListeners();
       return "success";
-      // print(jsonData);
     } on SocketException catch (e) {
-      print('not connected');
-      return e;
+      print(e.message);
+      return Future.error(e.message);
     } catch (e) {
-      return e;
+      throw Exception("Error happened");
     }
   }
 
-  late String me;
-  late dynamic doctordInfo;
+  // late String me;
+  // late dynamic doctordInfo;
 
   Future fetchPatient(String username) async {
     try {
@@ -82,8 +99,7 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       // print("response data  " + response.body);
-      return json.decode( response.body);
-
+      return json.decode(response.body);
     } catch (e) {
       print(e);
     }
@@ -97,7 +113,6 @@ class RegisterProvider extends ChangeNotifier {
       unApprovedDoctorsList = json.decode(response.body);
       print(json.decode(response.body));
       notifyListeners();
-
     } catch (e) {
       unApprovedDoctorsList = [
         null,
@@ -112,16 +127,18 @@ class RegisterProvider extends ChangeNotifier {
       "password": password
     };
     try {
-      print(loginData);
       final response = await http.post(Uri.parse("$serverUrl/api/user/login"),
           body: json.encode(loginData),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
+      if (response.statusCode == 404) {
+        return Future.error((json.decode(response.body)["error"]));
+      }
       final responseData = json.decode(response.body);
       setLoading();
-      print(responseData);
+
       me = responseData["_doc"]["username"];
       currentUser = responseData["_doc"];
       // me.add(User(responseData["_doc"]["username"], responseData["_doc"]["_id"]));
@@ -129,11 +146,10 @@ class RegisterProvider extends ChangeNotifier {
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
-      print(responseData["_doc"]);
+
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
-      print(e);
-      return e;
+      return Future.error("Error happened");
     }
   }
 }

@@ -11,8 +11,14 @@ import 'message_view.dart';
 import 'chat_text_input.dart';
 import 'user_list_view.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   ChatPage({Key? key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<PreviousChat>(context, listen: true);
@@ -20,10 +26,13 @@ class ChatPage extends StatelessWidget {
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
-
-    String title = provider.getUsername() != previousChat[0].reciever
-        ? previousChat[0].reciever
-        : previousChat[0].sender;
+    String title = "messaging";
+    // print("prievs chat  " + previousChat);
+    // if (previousChat != null) {
+    //   title = provider.getUsername() != previousChat[0].reciever
+    //       ? previousChat[0].reciever
+    //       : previousChat[0].sender;
+    // }
 
     void _scrollDown() {
       try {
@@ -40,7 +49,10 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<PreviousChat>(context, listen: false).dispose();
+              Navigator.pop(context);
+            },
             icon: Icon(
               Icons.arrow_back,
             ),
@@ -119,12 +131,12 @@ class ChatPage extends StatelessWidget {
                                             ),
                                           ],
                                         )),
-                                    const SizedBox(height: 4),
+                                    // const SizedBox(height: 4),
                                     // Text(
                                     //   f.format(DateTime.parse(chat.time ?? '')),
                                     //   style: const TextStyle(fontSize: 10),
                                     // )
-                                    const SizedBox(height: 40),
+                                    const SizedBox(height: 10),
                                   ],
                                 ),
                               ),
@@ -139,45 +151,4 @@ class ChatPage extends StatelessWidget {
   }
 }
 
-//     class _ChatBody extends StatelessWidget {
-//   const _ChatBody({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     var chats = <Chat>[];
-//     ScrollController _scrollController = ScrollController();
-
-//     ///scrolls to the bottom of page
-//     void _scrollDown() {
-//       try {
-//         Future.delayed(
-//             const Duration(milliseconds: 300),
-//             () => _scrollController
-//                 .jumpTo(_scrollController.position.maxScrollExtent));
-//       } on Exception catch (_) {}
-//     }
-
-//     return Expanded(
-//       child: StreamBuilder(
-//         stream: SocketService.getResponse,
-//         builder: (BuildContext context, AsyncSnapshot<Chat> snapshot) {
-//           if (snapshot.connectionState == ConnectionState.none) {
-//             return const Center(child: CircularProgressIndicator());
-//           }
-//           if (snapshot.hasData && snapshot.data != null) {
-//             chats.add(snapshot.data!);
-//             print(snapshot.data!.message);
-//           }
-//           _scrollDown();
-
-//           return ListView.builder(
-//             controller: _scrollController,
-//             itemCount: chats.length,
-//             itemBuilder: (BuildContext context, int index) =>
-//                 MessageView(chat: chats[index]),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

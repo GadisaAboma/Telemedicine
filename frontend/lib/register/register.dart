@@ -25,35 +25,60 @@ class _RegisterState extends State<Register> {
   bool isDoctor = false;
 
   void register(BuildContext ctx) async {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      // isLoading = Provider.of<RegisterProvider>(context, listen: true).isLoading;
-      loadingSpinner(ctx);
-      final registerResponse =
-          await Provider.of<RegisterProvider>(context, listen: false).register(
-              fullname,
-              username,
-              password,
-              accountType,
-              specializedIn,
-              gender.toString());
-      print("registerResponse: $registerResponse");
-      if (registerResponse == "success" && accountType == "patient") {
-        // Navigator.pop(ctx);
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, patientHomeRoute);
+    try {
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        // isLoading = Provider.of<RegisterProvider>(context, listen: true).isLoading;
+        loadingSpinner(ctx);
+        final registerResponse =
+            await Provider.of<RegisterProvider>(context, listen: false)
+                .register(fullname, username, password, accountType,
+                    specializedIn, gender.toString());
+        print("registerResponse: $registerResponse");
+        if (registerResponse == "success" && accountType == "patient") {
+          // Navigator.pop(ctx);
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacementNamed(context, patientHomeRoute);
+        }
+        if (registerResponse == "success" && accountType == "doctor") {
+          // Navigator.pop(ctx);
+          Navigator.pushReplacementNamed(context, doctorHomeRoute);
+        }
       }
-      if (registerResponse == "success" && accountType == "doctor") {
-        // Navigator.pop(ctx);
-        Navigator.pushReplacementNamed(context, doctorHomeRoute);
-      }
-      // Navigator.pop(ctx);
+    } catch (e) {
+      Navigator.pop(ctx);
+      showDialog(
+          context: ctx,
+          builder: (context) {
+            return AlertDialog(
+              title: Row(
+                children: [
+                  Icon(Icons.info),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text("info"),
+                ],
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Ok"),
+                )
+              ],
+              content: Text(e.toString()),
+            );
+          });
     }
   }
 
   Future loadingSpinner(BuildContext ctx) {
     return showDialog(
         context: (ctx),
+        barrierDismissible: false,
+        barrierLabel: "Loading......",
         builder: (ctx) {
           return AlertDialog(
             // alignment: Alignment.center,
@@ -133,13 +158,14 @@ class _RegisterState extends State<Register> {
                                 print(accountType);
                               }),
                         ])),
-                        Container(
-                            margin: EdgeInsets.only(top: 20),
-                            child: Text("Full Name")),
+                        SizedBox(
+                          height: 20,
+                        ),
                         TextFormField(
                           decoration: InputDecoration(
+                              label: Text("Full Name"),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
+                                  borderRadius: BorderRadius.circular(0))),
                           validator: ((value) {
                             String fullname = value.toString().trim();
                             if (fullname.isEmpty) {
@@ -183,13 +209,14 @@ class _RegisterState extends State<Register> {
                         //   ],
                         // ),
 
-                        Container(
-                            margin: EdgeInsets.only(top: 20),
-                            child: Text("Username")),
+                        SizedBox(
+                          height: 20,
+                        ),
                         TextFormField(
                           decoration: InputDecoration(
+                              label: Text("Username"),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
+                                  borderRadius: BorderRadius.circular(0))),
                           validator: ((value) {
                             String username = value.toString().trim();
                             if (username.isEmpty) {
@@ -276,14 +303,15 @@ class _RegisterState extends State<Register> {
                               ],
                             ),
                           ]),
-                        Container(
-                            margin: EdgeInsets.only(top: 20),
-                            child: Text("Password")),
+                        SizedBox(
+                          height: 20,
+                        ),
                         TextFormField(
                           obscureText: true,
                           decoration: InputDecoration(
+                              label: Text("Password"),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
+                                  borderRadius: BorderRadius.circular(0))),
                           validator: ((value) {
                             String password = value.toString().trim();
                             if (password.isEmpty) {

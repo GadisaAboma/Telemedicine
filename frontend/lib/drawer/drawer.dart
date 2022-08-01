@@ -9,6 +9,7 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      // backgroundColor: Color.fromARGB(255, 8, 4, 4),
       child: Column(children: [
         Container(
           height: 200,
@@ -35,7 +36,7 @@ class DrawerWidget extends StatelessWidget {
               title: Text("logout"),
               leading: Icon(Icons.logout),
               onTap: () {
-                Provider.of<PreviousChat>(context, listen: false).dispose();
+                // Provider.of<PreviousChat>(context, listen: false).dispose();
                 Navigator.pushReplacementNamed(context, loginRoute);
               },
             )

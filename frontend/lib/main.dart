@@ -11,6 +11,7 @@ import 'package:frontend/register/register.dart';
 import 'package:provider/provider.dart';
 
 import 'home/patient_home.dart';
+import 'views/chat/chat_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,9 +42,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blueGrey,
-          primaryColor: Color.fromARGB(198, 7, 21, 97),
+          primaryColor: Color.fromARGB(197, 6, 57, 116),
           appBarTheme: const AppBarTheme(
-            backgroundColor: Color.fromARGB(199, 4, 14, 26),
+            backgroundColor: Color.fromARGB(197, 6, 57, 116),
           ),
         ),
 
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         // static String adminHomeRoute = "/adminHome";
         // static String loginRoute = "/";
         // static String registerRoute = "/register";
+
         routes: {
           '/': (context) => Login(),
           "/register": (context) => Register(),
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
           "/doctorHome": (context) => DoctorHome(),
           "/adminHome": (context) => AdminHome(),
           "/searchDoctor": (context) => SearchDoctor(),
-          // "/chatPage": (context) => ChatPage()
+          "/chatPage": (context) => ChatPage()
         },
         // home: Login(),
       ),

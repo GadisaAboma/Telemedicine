@@ -41,36 +41,30 @@ var connectedUser = []
 var reciverSocketId
 var senderSocketId
 var userName 
+
 io.on('connection', function (socket) {
     console.log(socket.request._query.userName)
-    console.log("resuest ", socket.request)
 
-    socket.on("connected", function(username){
-        userName = username
-        // console.log(username, "join the group")
-        
-    })
+    
     userName = socket.request._query.userName;
-    // allUsers.push(userName);
-    allUsers.push(userName);
+    if(userName != "" && !allUsers.includes(userName)){
+        allUsers.push(userName);
+    }
+    socket.request._query.userName = ""
     emitUsers();
+
     var msg = `🔥👤 ${userName} has joined! 😎🔥`;
     console.log(msg)
 
     // attach incoming listener for new user
-    // var userName = socket.request._query.userName;
-
     connectedUser[userName] = socket.id
-    // console.log(connectedUser)
-    //broadcast when a user connects
-    io.emit('message', {
-        "message": msg
-    }
-    );
 
-    socket.on("send_message", async function(data){
+    //broadcast when a user connects
+    
+
+    socket.on("send_message", async (data) => {
         console.log(data)
-console.log(connectedUser) 
+        console.log(connectedUser) 
 
 
 

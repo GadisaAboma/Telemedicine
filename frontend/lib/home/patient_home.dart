@@ -24,8 +24,8 @@ class _PatientHomeState extends State<PatientHome> {
     super.initState();
     final loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-    print(loggedInUser);
-    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
+    // print(loggedInUser);
+    // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
   }
 
   Widget chat(BuildContext ctx) {
@@ -82,10 +82,12 @@ class _PatientHomeState extends State<PatientHome> {
     }
     return homeWidget;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        
         actions: [
           Container(
             height: 40,
@@ -104,6 +106,7 @@ class _PatientHomeState extends State<PatientHome> {
         ],
       ),
       drawer: DrawerWidget(),
+      backgroundColor: Color.fromRGBO(224, 217, 217, 0.87),
       body: SingleChildScrollView(
         child: Column(
           children: [
