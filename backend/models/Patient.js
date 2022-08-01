@@ -22,6 +22,15 @@ const patientSchema = new Schema({
         required: true,
     },
 
+    appointments: [{
+      description: {
+        type: String, 
+      },
+      date: {
+        type: String,
+      },
+    }],
+
      messages: [{
         user:{
             type:String,

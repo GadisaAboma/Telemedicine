@@ -66,7 +66,49 @@ res.send(doctors)
 
 })
 
+const searchPatient = asyncHandler(async (req, res) => {
+    
+    const { username } = req.body
+
+    const patient = await Patient.findOne({ username })
+
+    if (patient) {
+        res.send(patient)
+
+    } else {
+        res.status(400)
+        throw new Error('Doctor not found!')
+    }
+
+})
+
+const setAppointment = asyncHandler(async (req, res) => {
+    console.log('comin')
+    const { id, date, description } = req.body
+    const user = await Patient.findById(id)
+
+    user.appoitment.push({
+       date,
+       description 
+    })
+
+  const saved =  await user.save()
+
+  console.log(saved)
+    
+if(saved) {
+    res.status(201).send("Success")
+} else {
+    res.status(404)
+    res.send("failed to save")
+}
+
+})
+
 module.exports = {
 
-registerDoctor,messages
+registerDoctor,
+messages,
+searchPatient,
+setAppointment
 }

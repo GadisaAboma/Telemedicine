@@ -84,8 +84,6 @@ const searchDoctor = asyncHandler(async (req, res) => {
         throw new Error('Doctor not found!')
     }
 
-
-
 })
 const patient = asyncHandler(async (req, res) => {
     console.log(req.body)
