@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import '../peer/peer_base.dart';
-import '../client_io.dart';
+import 'package:frontend/video%20chat/rtc/client_io.dart';
+
+import 'peer_base.dart';
 
 mixin PeerHelper on PeerBase {
   void onTrack(String peerId, RTCTrackEvent event) {

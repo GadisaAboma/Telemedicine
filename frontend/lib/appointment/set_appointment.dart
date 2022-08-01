@@ -25,23 +25,21 @@ class _SetAppointmentState extends State<SetAppointment> {
     print("init state");
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration.zero, () {
+     Future.delayed(Duration.zero, () {
       fetchAppointments();
-    });
+   });
   }
 
   void fetchAppointments() async {
     print("'sdsfsdfsdfsdfs");
-    var loggedId =
-        Provider.of<RegisterProvider>(context, listen: false).loggedUserId;
-    var loggedType =
-        Provider.of<RegisterProvider>(context, listen: false).loggedUserType;
+    var loggedId = Provider.of<RegisterProvider>(context, listen: false).loggedUserId;
+    var loggedType = Provider.of<RegisterProvider>(context, listen: false).loggedUserType;
 
-    // List appointments = await Provider.of<PatientProvider>(context, listen: false)
-    // .fetchAppointment(loggedId, loggedType);
+    List appointments = await Provider.of<PatientProvider>(context, listen: false)
+    .fetchAppointment(loggedId, loggedType);
   }
-
-  @override
+ 
+ @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();

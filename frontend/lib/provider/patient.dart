@@ -101,21 +101,21 @@ class PatientProvider extends ChangeNotifier {
 
   Future fetchAppointment(String id, String userType) async {
     print("coming");
-    // try {
-    //   final response = await http.post(
-    //       Uri.parse("$serverUrl/api/$userType/setAppointment"),
-    //       body: (json.encode({"id": id})),
-    //       headers: {
-    //         "Content-type": "application/json",
-    //         "Accept": "application/json",
-    //       });
-    //   final data = json.decode(response.body);
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/$userType/setAppointment"),
+          body: (json.encode({"id": id})),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      final data = json.decode(response.body);
 
-    //   notifyListeners();
-    //   return data;
-    // } catch (e) {
-    //   print(e);
-    //   return e;
-    // }
+      notifyListeners();
+      return data;
+    } catch (e) {
+      print(e);
+      return e;
+    }
   }
 }

@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import '../rtc/peer/peer_event.dart';
-import '../rtc/peer/peer_service.dart';
-import '../rtc/rtc_view.dart';
+
 
 import 'client_io.dart';
 import '../utils/sotre_util.dart';
+import 'peer/peer_event.dart';
+import 'peer/peer_service.dart';
+import 'rtc_view.dart';
 import 'video_calling.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,7 @@ class _RTCVideoState extends State<RTCVideo> {
       type: widget.type,
     );
 
-    // _sub = _service.watchServiceEvent().listen(_handlePeerEvent);
+    _sub = _service.watchServiceEvent().listen(_handlePeerEvent);
   }
 
   void _handlePeerEvent(PeerEvent event) {
