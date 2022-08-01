@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+
 import '../client_io.dart';
-import '../peer/peer_event.dart';
+import 'peer_event.dart';
 
 abstract class PeerBase {
   Map<String, dynamic> get mediaConstraints;

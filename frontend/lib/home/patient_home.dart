@@ -5,7 +5,6 @@ import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/register.dart';
-import "../video_call/rtc/client_io.dart";
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../patients/messages/messages.dart';

@@ -3,7 +3,6 @@ import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:frontend/home/patient_home.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/utils/helpers.dart';
-import "../video_call/rtc/client_io.dart";
 import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import '../peer/peer_event.dart';
 
 import 'peer_base.dart';
+import 'peer_event.dart';
 import 'peer_helper.dart';
 
 class PeerService extends PeerBase with PeerHelper {
@@ -52,11 +52,13 @@ class PeerService extends PeerBase with PeerHelper {
 
   final RTCConfig config;
 
+
   PeerService({
     required this.config,
     this.type = 'video',
   }) : super(config.room) {
     if (kDebugMode) {
+ 
       print('peer service for $type');
     }
 

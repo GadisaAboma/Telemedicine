@@ -4,8 +4,8 @@ import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
-import '../video_call/utils/http_util.dart';
-import '../video_call/utils/sotre_util.dart';
+import '../video chat/utils/sotre_util.dart';
+
 // import '../service/socket_service.dart';
 
 class Login extends StatefulWidget {
@@ -59,8 +59,11 @@ class _LoginState extends State<Login> {
         final loginResponse =
             await Provider.of<RegisterProvider>(ctx, listen: false)
                 .login(username, password);
-        // LocalStorage.write('userid', loginResponse["user"]["_id"]);
-        // LocalStorage.write('username', username);
+
+                ////////// storing username and password to local storage
+        LocalStorage.write('userid', loginResponse["user"]["_id"]);
+        LocalStorage.write('username', username);
+
         switch (loginResponse['role']) {
           case "admin":
             Navigator.pushReplacementNamed(ctx, adminHomeRoute);
