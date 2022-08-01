@@ -23,10 +23,10 @@ class _LoginState extends State<Login> {
 
   FocusNode? focusNode;
   TextStyle textStyle() {
-    return TextStyle(
+    return const TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.bold,
-        color: Color.fromARGB(255, 4, 54, 146));
+        color: const Color.fromARGB(255, 4, 54, 146));
   }
 
   @override
@@ -52,7 +52,6 @@ class _LoginState extends State<Login> {
       /// FOR VIDEO CHAT
       // final data = await HttpUtil().login();
       // print('login: $data');
-      // print('username: $username');
 
       ///////////////////////////////////////////////////////
       ///
@@ -83,21 +82,57 @@ class _LoginState extends State<Login> {
             context: ctx,
             builder: (context) {
               return AlertDialog(
-                title: Text(e.toString()),
+                title: Row(
+                  children: [
+                    const Icon(Icons.info),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Text("info"),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * .8,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor)),
+                        child: Text("Ok")),
+                  ),
+                ],
+                content: Text(e.toString()),
               );
             });
       }
     }
   }
 
+  List<Color> _colors = [
+    Color.fromARGB(199, 51, 105, 255),
+    Color.fromARGB(101, 144, 203, 255),
+    Color.fromARGB(131, 0, 204, 250)
+  ];
+  List<double> _stops = [0.0, 0.7];
   Future loadingSpinner(BuildContext ctx) {
     return showDialog(
+        barrierDismissible: false,
         context: (ctx),
         builder: (ctx) {
           return AlertDialog(
             // alignment: Alignment.center,
+
             content: Container(
-                height: 50, child: Center(child: CircularProgressIndicator())),
+              height: 50,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           );
         });
   }
@@ -109,6 +144,7 @@ class _LoginState extends State<Login> {
         child: Form(
           key: formKey,
           child: Container(
+            padding: const EdgeInsets.only(top: 20),
             height: MediaQuery.of(context).size.height * 0.95,
             // height: 500,
 
@@ -116,8 +152,9 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 30, bottom: 20),
-                  decoration: BoxDecoration(
+                  height: 300,
+                  padding: const EdgeInsets.only(top: 30, bottom: 20),
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                     fit: BoxFit.fill,
                     opacity: 0.9,
@@ -126,21 +163,21 @@ class _LoginState extends State<Login> {
                   child: Column(children: [
                     Container(
                       alignment: Alignment.topRight,
-                      margin: EdgeInsets.only(right: 20),
+                      margin: const EdgeInsets.only(right: 20),
                       child: ElevatedButton(
                           onPressed: () {
                             Navigator.pushReplacementNamed(
                                 context, registerRoute);
                           },
-                          child: Text(
+                          child: const Text(
                             "Register here!",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color.fromARGB(255, 233, 235, 238),
                                 decorationStyle: TextDecorationStyle.dashed),
                           )),
                     ),
                     Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       alignment: Alignment.topLeft,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,31 +198,53 @@ class _LoginState extends State<Login> {
                     ),
                   ]),
                 ),
-                // SizedBox(h)
+                const SizedBox(
+                  height: 20,
+                ),
                 Expanded(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(19, 7, 7, 185),
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      // color: const Color.fromARGB(37, 79, 79, 124),
+                      gradient: LinearGradient(
+                        colors: _colors,
+                        begin: const FractionalOffset(0.0, 0.9),
+                        end: const FractionalOffset(1.0, 0.0),
+                        // stops: [0.0, 2.0],
+                        // stops: [0.0, 0.6],
+                        tileMode: TileMode.clamp,
+                      ),
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
+                        topRight: const Radius.circular(40),
                       ),
                     ),
                     child: Container(
-                      margin: EdgeInsets.only(top: 50, left: 30, right: 30),
+                      margin:
+                          const EdgeInsets.only(top: 50, left: 30, right: 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Username"),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextFormField(
+                            onTap: () {
+                              print("helloo");
+                            },
                             // focusNode: focusNode,
                             decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.person),
+                                label: const Text(
+                                  "username",
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                fillColor: Colors.white,
+                                filled: true,
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))),
+                                    borderRadius: BorderRadius.circular(0))),
                             validator: ((value) {
                               String username = value.toString().trim();
                               if (username.isEmpty) {
@@ -201,17 +260,22 @@ class _LoginState extends State<Login> {
                               });
                             },
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text("Password"),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextFormField(
                               decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(Icons.lock),
+                                  label: const Text(
+                                    "password",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  filled: true,
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10))),
+                                      borderRadius: BorderRadius.circular(0))),
                               obscureText: true,
                               validator: ((value) {
                                 String password = value.toString().trim();

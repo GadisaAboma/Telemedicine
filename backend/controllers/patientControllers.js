@@ -48,7 +48,7 @@ const registerPatient = asyncHandler(async (req, res) => {
     res.send(newPatient)
 })
 
-const fetchMessage = asyncHandler(async (req, res) => {
+const fetchPatient = asyncHandler(async (req, res) => {
    try {
     const patient = await Patient.findOne(req.body)
     if(patient != null){
@@ -58,18 +58,6 @@ const fetchMessage = asyncHandler(async (req, res) => {
         res.send(e)
     }
 })
-
-const fetchChattedDoctor = asyncHandler(async (req, res) => {
-   try {
-    const patient = await Patient.findOne(req.body)
-    if(patient != null){
-        res.send(patient)
-    }
-    }catch(e){
-        res.send(e)
-    }
-})
-
 const searchDoctor = asyncHandler(async (req, res) => {
     
     const { username } = req.body
@@ -105,9 +93,7 @@ const patient = asyncHandler(async (req, res) => {
 
 module.exports = {
     registerPatient,
-    searchDoctor,
-    fetchMessage,
-    fetchChattedDoctor,
-    patient
+    searchDoctor,fetchPatient,patient,
+
 
 }

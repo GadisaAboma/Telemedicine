@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:frontend/provider/patient.dart';
+import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import './styles/styles.dart';
@@ -18,6 +19,33 @@ class SetAppointment extends StatefulWidget {
 
 class _SetAppointmentState extends State<SetAppointment> {
   var date;
+
+  @override
+  void initState() {
+    print("init state");
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      fetchAppointments();
+    });
+  }
+
+  void fetchAppointments() async {
+    print("'sdsfsdfsdfsdfs");
+    var loggedId =
+        Provider.of<RegisterProvider>(context, listen: false).loggedUserId;
+    var loggedType =
+        Provider.of<RegisterProvider>(context, listen: false).loggedUserType;
+
+    // List appointments = await Provider.of<PatientProvider>(context, listen: false)
+    // .fetchAppointment(loggedId, loggedType);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

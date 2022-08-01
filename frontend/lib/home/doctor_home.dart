@@ -30,7 +30,7 @@ class _DoctorHomeState extends State<DoctorHome> {
 
     final loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
+    // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
     super.initState();
   }
 
@@ -80,9 +80,6 @@ class _DoctorHomeState extends State<DoctorHome> {
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
-          if (index == 0) {
-            return Container();
-          }
           return Column(
             children: [
               Container(
@@ -95,11 +92,9 @@ class _DoctorHomeState extends State<DoctorHome> {
                     final patient = await Provider.of<PatientProvider>(context,
                             listen: false)
                         .patient(doctorInfo["messages"][index]["user"]);
-
                     chat.setUserName(doctorInfo["username"]);
                     chat.setReciever(doctorInfo["messages"][index]["user"]);
                     chat.setSender(doctorInfo["username"]);
-
                     (doctorInfo["messages"][index]["content"] as List)
                         .forEach((data) {
                       (data as Map).remove("_id");
@@ -161,21 +156,30 @@ class _DoctorHomeState extends State<DoctorHome> {
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            Container(height: 40, child: Text("hi, Dr. ${doctorInfo["name"]}")),
+        elevation: 0,
+        // backgroundColor: Colors.white,
+        title: Container(
+            height: 40,
+            child: Text(
+              "hi, Dr. ${doctorInfo["name"]}",
+              // style: TextStyle(color: Colors.black),
+            )),
         actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(
               Icons.person,
+              // color: Colors.black,
               size: 30,
             ),
           )
         ],
       ),
       drawer: DrawerWidget(),
+      drawerScrimColor: Colors.black,
       body: SetBody(context),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
           currentIndex: index,
           onTap: (value) {
             setState(() {

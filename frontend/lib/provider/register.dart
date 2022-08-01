@@ -14,9 +14,28 @@ class RegisterProvider extends ChangeNotifier {
   dynamic currentUser;
   late dynamic doctordInfo;
 
+  String loggedId = '';
+  String userType = '';
+
   void setLoading() {
     isLoading = !isLoading;
     notifyListeners();
+  }
+
+  Future fetchMessage(String username) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$serverUrl/api/patients/fetchPatient"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json.encode({"username": username}),
+      );
+      return json.decode(response.body);
+    } catch (e) {
+      return e;
+    }
   }
 
   Future register(String name, String username, String password,
@@ -51,7 +70,9 @@ class RegisterProvider extends ChangeNotifier {
           });
 
       final responseData = json.decode(response.body);
-      print(responseData);
+      if (response.statusCode == 400) {
+        return Future.error(responseData["error"]);
+      }
       currentUser = responseData;
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
@@ -61,29 +82,20 @@ class RegisterProvider extends ChangeNotifier {
       notifyListeners();
       return "success";
     } on SocketException catch (e) {
-      return e;
+      print(e.message);
+      return Future.error(e.message);
     } catch (e) {
-      return e;
+      throw Exception("Error happened");
     }
   }
 
-  Future approveRequest(String id) async {
-    final response = await http.post(Uri.parse("$serverUrl/api/admin/approve"),
-        body: json.encode({"id": id}),
-        headers: {
-          "Content-type": "application/json",
-          "Accept": "application/json",
-        });
-    print(json.decode(response.body));
-    unApprovedDoctorsList = [];
-    await unApprovedDoctors();
-    notifyListeners();
-  }
+  // late String me;
+  // late dynamic doctordInfo;
 
-  Future fetchMessage(String username) async {
+  Future fetchPatient(String username) async {
     try {
       final response = await http.post(
-          Uri.parse("$serverUrl/api/patients/fetchMessage"),
+          Uri.parse("$serverUrl/api/patients/fetchPatient"),
           body: json.encode({"username": username}),
           headers: {
             "Content-type": "application/json",
@@ -91,25 +103,6 @@ class RegisterProvider extends ChangeNotifier {
           });
       // print("response data  " + response.body);
       return json.decode(response.body);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  late Map<String, dynamic> chattedDoctor;
-
-  Future fetchChattedDoctor(String username) async {
-    try {
-      final response = await http.post(
-          Uri.parse("$serverUrl/api/patients/fetchChattedDoctor"),
-          body: json.encode({"username": username}),
-          headers: {
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          });
-      // print("response data  " + response.body);
-      chattedDoctor = json.decode(response.body);
-      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -137,16 +130,18 @@ class RegisterProvider extends ChangeNotifier {
       "password": password
     };
     try {
-      print(loginData);
       final response = await http.post(Uri.parse("$serverUrl/api/user/login"),
           body: json.encode(loginData),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
+      if (response.statusCode == 404) {
+        return Future.error((json.decode(response.body)["error"]));
+      }
       final responseData = json.decode(response.body);
       setLoading();
-      print(responseData);
+
       me = responseData["_doc"]["username"];
       currentUser = responseData["_doc"];
       // me.add(User(responseData["_doc"]["username"], responseData["_doc"]["_id"]));
@@ -154,11 +149,21 @@ class RegisterProvider extends ChangeNotifier {
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
-      print(responseData["_doc"]);
+
+      loggedId = responseData['role'] + 's';
+      loggedId = responseData['_id'];
+
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
-      print(e);
-      return e;
+      return Future.error("Error happened");
     }
+  }
+
+  String get loggedUserId {
+    return loggedId;
+  }
+
+  String get loggedUserType {
+    return userType;
   }
 }

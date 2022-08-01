@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
-import 'package:frontend/patients/doctor-list/doctor-list.dart';
-import 'package:frontend/provider/register.dart';
+import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/register.dart';
 import "../video_call/rtc/client_io.dart";
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
@@ -24,8 +24,8 @@ class _PatientHomeState extends State<PatientHome> {
     super.initState();
     final loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-    print(loggedInUser);
-    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
+    // print(loggedInUser);
+    // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
   }
 
   Widget chat(BuildContext ctx) {
@@ -61,13 +61,14 @@ class _PatientHomeState extends State<PatientHome> {
   }
 
   int index = 0;
+
   late dynamic provider;
   late dynamic doctors;
 
-  void fetchDoctor(BuildContext ctx) async {
-    provider = Provider.of<RegisterProvider>(ctx, listen: false)
-        .fetchChattedDoctor(provider.me);
-  }
+  // void fetchDoctor(BuildContext ctx) async {
+  //   provider = Provider.of<RegisterProvider>(ctx, listen: false)
+  //       .fetchChattedDoctor(provider.me);
+  // }
 
   Widget home(BuildContext ctx) {
     Widget homeWidget = Container();
@@ -76,17 +77,17 @@ class _PatientHomeState extends State<PatientHome> {
     } else if (index == 1) {
       homeWidget = Notifications();
     } else if (index == 2) {
-      fetchDoctor(ctx);
-      homeWidget = DoctorList();
+      // fetchDoctor(ctx);
+      // homeWidget = DoctorList();
     }
     return homeWidget;
   }
 
   @override
   Widget build(BuildContext context) {
-    fetchDoctor(context);
     return Scaffold(
       appBar: AppBar(
+        
         actions: [
           Container(
             height: 40,
@@ -105,7 +106,16 @@ class _PatientHomeState extends State<PatientHome> {
         ],
       ),
       drawer: DrawerWidget(),
-      body: SingleChildScrollView(child: home(context)),
+      backgroundColor: Color.fromRGBO(224, 217, 217, 0.87),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            if (index == 0) Posts(),
+            if (index == 1) Notifications(),
+            if (index == 2) DoctorsList()
+          ],
+        ),
+      ),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
           fabButtons: <Widget>[

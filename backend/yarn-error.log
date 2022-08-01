@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Hirpha\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Users\Hirpha\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add socket_io_client 2.0.0-beta.4-nullsafety.0
 
 PATH: 
-  C:\Program Files\PowerShell\7;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\flutter\bin;C:\flutter\.git;C:\Program Files\Android\Android Studio\bin;C:\Users\Hirpha\AppData\Local\Android\Sdk;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\Users\Hirpha\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\PowerShell\7\;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Hirpha\AppData\Local\Microsoft\WindowsApps;C:\Users\Hirpha\AppData\Local\Android\Sdk;C:\flutter\bin;C:\Users\Hirpha\AppData\Roaming\npm;C:\flutter\flutter\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\flutter\.git;C:\Users\Hirpha\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Hirpha\AppData\Local\GitHubDesktop\bin;C:\Users\Hirpha\AppData\Local\Programs\vs code\Microsoft VS Code\bin;
+  C:\Program Files\PowerShell\7;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\flutter\bin;C:\flutter\.git;C:\Program Files\Android\Android Studio\bin;C:\Users\Hirpha\AppData\Local\Android\Sdk;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\Users\Hirpha\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files\PowerShell\7\;C:\Users\Hirpha\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Hirpha\AppData\Local\Programs\Python\Python310\;C:\Users\Hirpha\AppData\Local\Microsoft\WindowsApps;C:\Users\Hirpha\AppData\Local\Android\Sdk;C:\flutter\bin;C:\Users\Hirpha\AppData\Roaming\npm;C:\flutter\flutter\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\flutter\.git;C:\Users\Hirpha\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Hirpha\AppData\Local\GitHubDesktop\bin;C:\Users\Hirpha\AppData\Local\Programs\vs code\Microsoft VS Code\bin;C:\Program Files\heroku\bin
 
 Yarn version: 
   1.22.18
@@ -14,8 +14,12 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: connect ETIMEDOUT 104.16.18.35:443
-      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1161:16)
+  SyntaxError: D:\TELEMEDICINE FINAL PROJECT\Telemedicine\backend\package.json: Unexpected token } in JSON at position 557
+      at JSON.parse (<anonymous>)
+      at C:\Users\Hirpha\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\Hirpha\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\Hirpha\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
@@ -25,7 +29,7 @@ npm manifest:
     "main": "server.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js",
+      "chat": "nodemon app.js",
       "server": "nodemon server.js"
     },
     "keywords": [],
@@ -35,13 +39,13 @@ npm manifest:
       "bcrypt": "^5.0.1",
       "cors": "^2.8.5",
       "dotenv": "^16.0.1",
-      "express": "^4.18.1",
+      "express": "^4.17.3",
       "express-async-handler": "^1.2.0",
       "jsonwebtoken": "^8.5.1",
       "mongoose": "^6.4.0",
       "multer": "^1.4.5-lts.1",
       "nodemon": "^2.0.18",
-      "socket.io": "^4.5.1"
+  
     }
   }
 
@@ -615,7 +619,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/express-async-handler/-/express-async-handler-1.2.0.tgz#ffc9896061d90f8d2e71a2d2b8668db5b0934391"
     integrity sha512-rCSVtPXRmQSW8rmik/AIb2P0op6l7r1fMW538yyvTMltCO4xQEWMmobfrIxN2V1/mVrgxB8Az3reYF6yUZw37w==
   
-  express@^4.18.1:
+  express@^4.17.3:
     version "4.18.1"
     resolved "https://registry.yarnpkg.com/express/-/express-4.18.1.tgz#7797de8b9c72c857b9cd0e14a5eea80666267caf"
     integrity sha512-zZBcOX9TfehHQhtupq57OF8lFZ3UZi08Y97dwFCkD8p9d/d2Y3M+ykKcwaMDEL+4qyUolgBDX6AblpR3fL212Q==

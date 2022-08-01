@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-String serverUrl = "192.168.19.154:3000";
+String serverUrl = "http://192.168.19.154:3000";
 
 String patientHomeRoute = "/PatientHome";
 String doctorHomeRoute = "/doctorHome";
@@ -11,7 +11,7 @@ String loginRoute = "/";
 String registerRoute = "/register";
 String searchDoctorRoute = "/searchDoctor";
 String chatPageRoute = '/chatPage';
-String chatbotUrl = '192.168.19.154:5000/bot';
+String chatbotUrl = 'http://192.168.19.154:5000/bot';
 String appointmentPage = '/appointment';
 String setAppointment = '/setAppointment';
 // static String url = "http://10.141.214.82:3000";

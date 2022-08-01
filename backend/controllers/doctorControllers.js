@@ -87,7 +87,7 @@ const setAppointment = asyncHandler(async (req, res) => {
     const { id, date, description } = req.body
     const user = await Patient.findById(id)
 
-    user.appoitment.push({
+    user.appointments.push({
        date,
        description 
     })

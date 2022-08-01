@@ -37,6 +37,7 @@ class PreviousChat extends ChangeNotifier {
         {"reciever": _reciever, "message": message, "sender": _sender});
     addToChatHistory(
         {"reciever": _reciever, "message": message, "sender": _sender});
+    notifyListeners();
   }
 
   void addToChatHistory(dynamic message) {
@@ -48,16 +49,17 @@ class PreviousChat extends ChangeNotifier {
     print(username);
 
     _socket = io.io(
-        "http://10.141.219.222:8080",
-        // "http://192.168.1.44:8080",
+        "http://192.168.1.189:8080",
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
-            .enableAutoConnect()
+            .disableAutoConnect()
             .setQuery({'userName': username})
             .build());
 
     _socket.connect();
-    _socket.emit("connected", username);
+    _socket.on("message", (data) {
+      print(data.toString());
+    });
 
     _socket.on("new_message", (data) {
       if (((_reciever == data["reciever"]) || (_reciever == data["sender"])) &&
@@ -79,9 +81,10 @@ class PreviousChat extends ChangeNotifier {
     _chatHistory = [];
     _socket.dispose();
     _socket.destroy();
+    _socket.query = null;
     _socket.close();
     _socket.disconnect();
-    _socket;
+
     notifyListeners();
   }
 }

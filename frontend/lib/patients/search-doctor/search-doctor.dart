@@ -51,7 +51,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
           child: Row(
             children: [
               Container(
-                width: 100,
+                width: 166,
                 child: TextFormField(
                   controller: edit,
                   decoration: const InputDecoration(
@@ -91,6 +91,17 @@ class _SearchDoctorState extends State<SearchDoctor> {
                   String myUsername = provider.currentUser["username"];
                   final patientData = await provider.fetchMessage(myUsername);
 
+                  // String myUsername = provider.me;
+                  // final patientData = await provider.fetchPatient(myUsername);
+                  // Map<String, String> data = json.decode(patientData);
+// (patientData["messages"]["content"] as List)
+//                         .forEach((data) {
+//                       (data as Map).remove("_id");
+//                       print(data);
+//                       chat.addToChatHistory(data);
+//                     });
+
+                  print(patientData);
                   (patientData["messages"] as List).forEach((element) {
                     if (element["user"] == doctor["username"]) {
                       (element["content"] as List).forEach((message) {
@@ -101,16 +112,11 @@ class _SearchDoctorState extends State<SearchDoctor> {
                     }
                   });
 
-                  // print(patientData["messages"]);
-
                   chat.setUserName(myUsername);
                   chat.setReciever(doctor["username"]);
                   chat.setSender(myUsername);
                   chat.connectAndListen(myUsername);
 
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) =>  ChatPage(),
-                  // ));
                   Navigator.pushNamed(context, chatPageRoute,
                       arguments: {"id": doctor["_id"]});
                 },
