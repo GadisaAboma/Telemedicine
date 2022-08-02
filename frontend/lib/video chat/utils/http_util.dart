@@ -74,7 +74,6 @@ class HttpUtil {
     final url = Uri.parse(_baseUri + '/login');
 
     final res = await http.get(url);
-   
 
     return json.decode(res.body);
   }

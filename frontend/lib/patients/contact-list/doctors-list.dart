@@ -14,9 +14,14 @@ class DoctorsList extends StatelessWidget {
       child: ListView.builder(
           itemCount: 5,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text("doctors"),
-              focusColor: Colors.blue,
+            return Container(
+              margin: EdgeInsets.all(10),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10),color:Colors.white),
+              child: ListTile(
+                title: Text("doctors"),
+                focusColor: Colors.blue,
+              ),
             );
           }),
     );
