@@ -39,18 +39,24 @@ class _PostsState extends State<Posts> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
+
       child: isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              itemCount: places.length,
-              itemBuilder: (context, index) {
-                return EachPlace(
-                    places[index]['description'], places[index]['imageUrl'], places[index]['date']);
-              },
-            ),
+          : SizedBox(
+            height: 700,
+            child: ListView.builder(
+                itemCount: places.length,
+                itemBuilder: (context, index) {
+                  return EachPlace(
+                      places[index]['description'],
+                      places[index]['imageUrl'].toString().replaceAll('\\', '/'),
+                      places[index]['date']);
+                },
+              ),
+          ),
     );
   }
 }

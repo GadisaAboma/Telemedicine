@@ -47,7 +47,7 @@ class EachPlace extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Image.asset(
-                  'assets/gado.jpg',
+                  'assets/image/doctor.jpg',
                   width: 35,
                 ),
               ),

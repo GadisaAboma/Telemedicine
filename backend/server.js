@@ -31,6 +31,7 @@ const Doctor = require('./models/Doctor')
 
 // Server Configuration
 dotenv.config()
+app.use('/uploads', express.static('uploads'))
 app.use(cors())
 connectDB()
 
