@@ -23,6 +23,21 @@ class DoctorProfile extends StatelessWidget {
         Row(
           children: [
             Icon(
+              Icons.perm_identity,
+            ),
+            SizedBox(
+              width: 10,
+            ),Text("Full name: "),SizedBox(width: 10,),
+
+            Text(doctorinfo["name"])
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: [
+            Icon(
               Icons.book,
             ),
             SizedBox(
@@ -31,7 +46,22 @@ class DoctorProfile extends StatelessWidget {
 
             Text(doctorinfo["specializedIn"])
           ],
-        )
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.g_mobiledata,
+            ),
+            SizedBox(
+              width: 10,
+            ),Text("Gender: "),SizedBox(width: 10,),
+
+            Text(doctorinfo["gender"])
+          ],
+        ),
       ]),
     );
   }

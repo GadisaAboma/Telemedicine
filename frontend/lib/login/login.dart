@@ -188,7 +188,7 @@ class _LoginState extends State<Login> {
           key: formKey,
           child: Container(
             padding: const EdgeInsets.only(top: 20),
-            height: MediaQuery.of(context).size.height * 0.95,
+            height: MediaQuery.of(context).size.height,
             // height: 500,
 
             child: Column(
@@ -355,9 +355,13 @@ class _LoginState extends State<Login> {
                           Container(
                             child: TextButton(
                               onPressed: () {},
-                              child: const Text("Forget password"),
+                              child: const Text(
+                                "Forget password",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
+                          
                         ],
                       ),
                     ),

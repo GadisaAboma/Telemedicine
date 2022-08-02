@@ -105,7 +105,7 @@ class _PatientHomeState extends State<PatientHome> {
           )
         ],
       ),
-      drawer: DrawerWidget(),
+      drawer: DrawerWidget(userInfo: loggedInUser,),
       backgroundColor: Color.fromRGBO(224, 217, 217, 0.87),
       body: SingleChildScrollView(
         child: Column(

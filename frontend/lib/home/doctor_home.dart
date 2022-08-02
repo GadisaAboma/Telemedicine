@@ -79,49 +79,58 @@ class _DoctorHomeState extends State<DoctorHome> {
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Container(
-                height: 60,
-                margin: EdgeInsets.only(top: 6, right: 15, left: 15),
-                child: ListTile(
-                  onTap: () async {
-                    // SocketService.init();
-                    final chat = Provider.of<PreviousChat>(ctx, listen: false);
-                    final patient = await Provider.of<PatientProvider>(context,
-                            listen: false)
-                        .patient(doctorInfo["messages"][index]["user"]);
-                    chat.setUserName(doctorInfo["username"]);
-                    chat.setReciever(doctorInfo["messages"][index]["user"]);
-                    chat.setSender(doctorInfo["username"]);
-                    (doctorInfo["messages"][index]["content"] as List)
-                        .forEach((data) {
-                      (data as Map).remove("_id");
-                      // print(data);
-                      chat.addToChatHistory(data);
-                    });
-                    print(chat.chatHistory);
+          Widget listOfPatient = Container();
+          (doctorInfo["messages"] as List).length == 1
+              ? listOfPatient = Center(child: Text("There is no user yet"))
+              : listOfPatient = Column(
+                  children: [
+                   if(index != 0) Container(
+                      height: 60,
+                      margin: EdgeInsets.only(top: 6, right: 15, left: 15),
+                      child: ListTile(
+                        onTap: () async {
+                          // SocketService.init();
+                          final chat =
+                              Provider.of<PreviousChat>(ctx, listen: false);
+                          final patient = await Provider.of<PatientProvider>(
+                                  context,
+                                  listen: false)
+                              .patient(doctorInfo["messages"][index]["user"]);
+                          chat.setUserName(doctorInfo["username"]);
+                          chat.setReciever(
+                              doctorInfo["messages"][index]["user"]);
+                          chat.setSender(doctorInfo["username"]);
+                          (doctorInfo["messages"][index]["content"] as List)
+                              .forEach((data) {
+                            (data as Map).remove("_id");
+                            // print(data);
+                            chat.addToChatHistory(data);
+                          });
+                          print(chat.chatHistory);
 
-                    chat.connectAndListen(doctorInfo["username"]);
+                          chat.connectAndListen(doctorInfo["username"]);
 
-                    // print("patient" + patient);
-                    Navigator.pushNamed(context, chatPageRoute, arguments: {
-                      "id": patient["_id"],
-                      "username": patient["username"]
-                    });
-                  },
-                  title: Text(doctorInfo["messages"][index]["user"]),
-                  leading: CircleAvatar(backgroundColor: Colors.blueAccent),
-                  trailing: Icon(
-                    Icons.done_all,
-                  ),
-                ),
-              ),
-              Divider(
-                height: 2,
-              )
-            ],
-          );
+                          // print("patient" + patient);
+                          Navigator.pushNamed(context, chatPageRoute,
+                              arguments: {
+                                "id": patient["_id"],
+                                "username": patient["username"]
+                              });
+                        },
+                        title: Text(doctorInfo["messages"][index]["user"]),
+                        leading:
+                            CircleAvatar(backgroundColor: Colors.blueAccent),
+                        trailing: Icon(
+                          Icons.done_all,
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 2,
+                    )
+                  ],
+                );
+          return listOfPatient;
         });
   }
 
@@ -160,7 +169,7 @@ class _DoctorHomeState extends State<DoctorHome> {
         elevation: 0,
         // backgroundColor: Colors.white,
         title: Container(
-            height: 40,
+            
             child: Text(
               "hi, Dr. ${doctorInfo["name"]}",
               // style: TextStyle(color: Colors.black),
@@ -169,7 +178,7 @@ class _DoctorHomeState extends State<DoctorHome> {
           IconButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return DoctorProfile(doctorinfo:doctorInfo);
+                return DoctorProfile(doctorinfo: doctorInfo);
               }));
             },
             icon: const Icon(
@@ -180,23 +189,24 @@ class _DoctorHomeState extends State<DoctorHome> {
           )
         ],
       ),
-      drawer: DrawerWidget(),
-      drawerScrimColor: Colors.black,
+      drawer: DrawerWidget(userInfo: doctorInfo,),
       body: SetBody(context),
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
           currentIndex: index,
+          selectedItemColor: Colors.white,
+          showUnselectedLabels: false,
           onTap: (value) {
             setState(() {
               index = value;
             });
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white,), label: "home", ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home), label: "Notification"),
+                icon: Icon(Icons.notifications, color: Colors.white,), label: "Notification"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.message), label: "message"),
+                icon: Icon(Icons.message, color: Colors.white,), label: "message"),
           ]),
       floatingActionButton: AnimatedFloatingActionButton(
           key: fabKey,
