@@ -155,7 +155,7 @@ class RegisterProvider extends ChangeNotifier {
 
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
-    
+    print(e);
       return Future.error("Error happened");
     }
   }
