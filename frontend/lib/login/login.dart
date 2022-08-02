@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
             await Provider.of<RegisterProvider>(ctx, listen: false)
                 .login(username, password);
 
-                ////////// storing username and password to local storage
+        ////////// storing username and password to local storage
         LocalStorage.write('userid', loginResponse["user"]["_id"]);
         LocalStorage.write('username', username);
 
@@ -131,9 +131,19 @@ class _LoginState extends State<Login> {
             // alignment: Alignment.center,
 
             content: Container(
-              height: 50,
-              child: const Center(
-                child: CircularProgressIndicator(),
+              height: 65,
+              child: Column(
+                children: const [
+                  Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.green,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text("Please wait")
+                ],
               ),
             ),
           );
@@ -201,8 +211,8 @@ class _LoginState extends State<Login> {
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 40,
                 ),
                 Expanded(
                   child: Container(

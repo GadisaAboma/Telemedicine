@@ -30,15 +30,18 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, (){
-        final provider = Provider.of<PreviousChat>(context, listen: false);
-    contacts = provider.contacts;
-     currentContact =
-        Provider.of<RegisterProvider>(context, listen: true).currentUser;
+    Future.delayed(Duration.zero, () {
+      // final provider = Provider.of<PreviousChat>(context, listen: false);
+      // contacts = provider.contacts;
+      currentContact =
+          Provider.of<RegisterProvider>(context, listen: true).currentUser;
+    });
+  }
 
+  void initVideo(BuildContext ctx) {
     ClientIO().init(currentContact["_id"], currentContact["username"]);
 
-    ClientIO().rootContext = context;
+    ClientIO().rootContext = ctx;
 
     _sub = ClientIO().watchMain().listen((event) {
       final contact = event.username + ':' + event.userid;
@@ -52,11 +55,13 @@ class _ChatPageState extends State<ChatPage> {
         if (contacts.remove(contact)) setState(() {});
       }
     });
-    });
+
+    print("current contacts is :" + contacts.toString());
   }
 
   @override
   Widget build(BuildContext context) {
+    initVideo(context);
     var provider = Provider.of<PreviousChat>(context, listen: true);
     var loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
@@ -109,6 +114,7 @@ class _ChatPageState extends State<ChatPage> {
                             ":" +
                             currentContact["_id"]) {
                       callee = element.split(':').last;
+                      return;
                     }
                   });
 

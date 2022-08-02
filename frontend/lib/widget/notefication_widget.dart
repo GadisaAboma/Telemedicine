@@ -5,18 +5,22 @@ class NotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title:Text( "Abib Ali"),
-          subtitle: Text("abibi ali set appointement to june 14 2022"),
-          leading: CircleAvatar(
-            radius: 30,
-            backgroundImage: AssetImage("assets/image/doctor.jpg"),
+    return Container(
+      margin: EdgeInsets.all(10),
+      decoration:BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        children: const [
+          ListTile(
+            title:Text( "Abib Ali"),
+            subtitle: Text("abibi ali set appointement to june 14 2022"),
+            leading: CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage("assets/image/doctor.jpg"),
+            ),
           ),
-        ),
-        Divider()
-      ],
+          Divider(height: 5,)
+        ],
+      ),
     );
   }
 }
