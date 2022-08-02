@@ -85,20 +85,27 @@ const searchPatient = asyncHandler(async (req, res) => {
 })
 
 const setAppointment = asyncHandler(async (req, res) => {
-    console.log('comin')
-    const { id, date, description } = req.body
-    const user = await Patient.findById(id)
 
-    user.appointments.push({
+    const { id, date, description, doctorId } = req.body
+    const patient = await Patient.findById(id)
+    const doctor = await Doctor.findById(doctorId)
+
+
+    patient.appointments.push({
         date,
-        description
+        description,
+        doctorId
     })
 
-    const saved = await user.save()
+    doctor.appointments.push({
+        date,
+        description,
+        patientId: id
+    })
 
-    console.log(saved)
-
-    if (saved) {
+    const saved = await patient.save()
+    const newSaved = await doctor.save()
+    if (saved && newSaved) {
         res.status(201).send("Success")
     } else {
         res.status(404)

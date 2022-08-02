@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/appointment/appointment_home.dart';
+import 'package:frontend/appointment/select_user.dart';
 import 'package:frontend/appointment/set_appointment.dart';
 // import 'package:frontend/chat-page/chatpage.dart';
 import 'package:frontend/home/admin_home.dart';
@@ -65,7 +66,8 @@ class MyApp extends StatelessWidget {
           "/searchDoctor": (context) => SearchDoctor(),
           "/chatPage": (context) => ChatPage(),
           "/appointment": (context) => AppointmentHome(),
-          "/setAppointment": (context) => SetAppointment()
+          "/setAppointment": (context) => SetAppointment(),
+          "/selectUser": (context) => SelectUser(),
           
         },
         // home: Login(),

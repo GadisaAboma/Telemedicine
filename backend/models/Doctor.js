@@ -28,6 +28,20 @@ const doctorSchema = new Schema({
         type: Boolean,
         default: false
     },
+    appointments: [{
+        description: {
+          type: String, 
+          required: true,
+        },
+        date: {
+          type: String,
+          required: true,
+        },
+        patientId: {
+            type: String,
+            required: true,
+        }
+      }],
 
     messages: [{
         user:{

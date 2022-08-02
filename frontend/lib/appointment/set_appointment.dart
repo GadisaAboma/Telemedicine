@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
+import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import './styles/styles.dart';
@@ -18,7 +19,6 @@ class SetAppointment extends StatefulWidget {
 }
 
 class _SetAppointmentState extends State<SetAppointment> {
-
   var date;
   var appointments;
 
@@ -32,11 +32,13 @@ class _SetAppointmentState extends State<SetAppointment> {
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var id = args['id'];
-    var description = "";
+    String description = "";
 
     void setAppointmentDate() async {
+      String doctorId =
+          Provider.of<RegisterProvider>(context, listen: false).loggedId;
       appointments = await Provider.of<PatientProvider>(listen: false, context)
-          .setAppointment(id, date.toString(), description);
+          .setAppointment(id, date.toString(), doctorId, description);
     }
 
     return Scaffold(
@@ -88,7 +90,9 @@ class _SetAppointmentState extends State<SetAppointment> {
                     ),
                     Expanded(
                       child: TextField(
-                        onChanged: (value) => description = value,
+                        onChanged: (value) {
+                          description = value;
+                        },
                         minLines: 2,
                         maxLines: 5,
                         decoration: InputDecoration(

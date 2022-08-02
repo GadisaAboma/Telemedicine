@@ -1,127 +1,43 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:frontend/provider/patient.dart';
-import 'package:frontend/utils/helpers.dart';
-import 'package:intl/intl.dart';
-import '../provider/register.dart';
-import './styles/styles.dart';
-import './styles/colors.dart';
-import '../utils/helpers.dart';
 import 'package:provider/provider.dart';
+import '../provider/patient.dart';
+import './styles/colors.dart';
+import './styles/styles.dart';
+import '../utils/helpers.dart';
 
-class AppointmentHome extends StatefulWidget {
-  const AppointmentHome({Key? key}) : super(key: key);
+class SelectUser extends StatefulWidget {
+  const SelectUser({Key? key}) : super(key: key);
 
   @override
-  State<AppointmentHome> createState() => _AppointmentHomeState();
+  State<SelectUser> createState() => _SelectUserState();
 }
 
-class _AppointmentHomeState extends State<AppointmentHome> {
-  bool isLoading = true;
-  List<dynamic> appointments = [];
+class _SelectUserState extends State<SelectUser> {
+  dynamic patient = {};
+  var username;
+  TextEditingController _controller = new TextEditingController();
 
-  var loggedType;
-  var loggedId;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      fetchAppointments();
-    });
-  }
-
-  void fetchAppointments() async {
-    loggedId =
-        Provider.of<RegisterProvider>(context, listen: false).loggedUserId;
-    loggedType =
-        Provider.of<RegisterProvider>(context, listen: false).loggedUserType;
-
-    appointments = await Provider.of<PatientProvider>(context, listen: false)
-        .fetchAppointment(loggedId, loggedType);
-
-    setState(() {
-      isLoading = false;
-    });
+  void _searchDoctor(BuildContext context) async {
+    dynamic returnedPatient =
+        await Provider.of<PatientProvider>(listen: false, context)
+            .searchPatient(username);
+    if (returnedPatient != null) {
+      setState(() {
+        patient = returnedPatient;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Appointments"),
-        actions: [
-          loggedType == 'doctors'
-              ? IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, selectUser);
-                  },
-                  icon: const Icon(Icons.add))
-              : Container()
-        ],
+        title: const Text("Select user"),
       ),
       body: SingleChildScrollView(
-          child: isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : appointments.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "Empty Appointment",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  : SizedBox(
-                      height: 300,
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(25),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          appointments[index]['description'],
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        Text(
-                                          appointments[index]['date'],
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.edit),
-                                        Icon(Icons.delete),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: appointments.length,
-                      ),
-                    )
-
-          /* Column(
+        child: Column(
           children: [
             Container(
               width: double.infinity,
@@ -187,8 +103,7 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                           'name': patient['name']
                         }),
                     child: Card(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                       child: Padding(
                         padding: EdgeInsets.all(25),
                         child: Column(
@@ -235,8 +150,8 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                   )
                 : const Text("No patient found"),
           ],
-        ), */
-          ),
+        ),
+      ),
     );
   }
 }
