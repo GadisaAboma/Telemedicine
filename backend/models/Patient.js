@@ -23,12 +23,18 @@ const patientSchema = new Schema({
     },
 
     appointments: [{
-      description: {
-        type: String, 
-      },
-      date: {
-        type: String,
-      },
+        description: {
+            type: String, 
+            required: true,
+          },
+          date: {
+            type: String,
+            required: true,
+          },
+          doctorId: {
+              type: String,
+              required: true,
+          }
     }],
 
      messages: [{
