@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
-import '../posts/posts.dart';
 import '../video chat/rtc/client_io.dart';
 
 class AdminHome extends StatefulWidget {

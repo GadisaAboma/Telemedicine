@@ -1,14 +1,9 @@
-<<<<<<< HEAD
-const serverUrl = "http://192.168.1.189:3000";
-// String serverUrl = "http://127.0.0.1:3000";
-=======
 // const serverUrl = "http://192.168.1.102:3000";
 
-import 'dart:io';
+
 
 String serverUrl = "http://192.168.1.51:3000";
 
->>>>>>> 5470e03f2f34d2fbace0e48dfef4f4ff27234298
 String patientHomeRoute = "/PatientHome";
 String doctorHomeRoute = "/doctorHome";
 String adminHomeRoute = "/adminHome";

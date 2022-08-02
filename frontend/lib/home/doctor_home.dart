@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
-import '../posts/posts.dart';
 import '../provider/message.dart';
 import '../provider/register.dart';
 import '../views/chat/chat_page.dart';

@@ -4,12 +4,12 @@ import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../patients/search-doctor/posts/posts.dart';
 import '../provider/register.dart';
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../patients/messages/messages.dart';
 import '../patients/notifications/notification.dart';
-import '../posts/posts.dart';
 
 class PatientHome extends StatefulWidget {
   @override
