@@ -1,5 +1,6 @@
 /backend/node_modules/
 /chatServer/node_modules/
+/video-server/node_modules/
 # /chat-server/node_modules/
 # /chat-server/build/
 # /chat-server/npm-debug.log

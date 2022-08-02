@@ -2,7 +2,7 @@
 
 
 
-String serverUrl = "http://192.168.1.51:3000";
+String serverUrl = "http://192.168.1.41:3000";
 
 String patientHomeRoute = "/PatientHome";
 String doctorHomeRoute = "/doctorHome";
