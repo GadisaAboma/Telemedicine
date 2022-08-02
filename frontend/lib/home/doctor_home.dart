@@ -6,6 +6,7 @@ import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../chatbot/chatbot.dart';
+import '../doctor/doctor_profile.dart';
 import '../drawer/drawer.dart';
 import '../provider/message.dart';
 import '../provider/register.dart';
@@ -104,8 +105,10 @@ class _DoctorHomeState extends State<DoctorHome> {
                     chat.connectAndListen(doctorInfo["username"]);
 
                     // print("patient" + patient);
-                    Navigator.pushNamed(context, chatPageRoute,
-                        arguments: {"id": patient["_id"]});
+                    Navigator.pushNamed(context, chatPageRoute, arguments: {
+                      "id": patient["_id"],
+                      "username": patient["username"]
+                    });
                   },
                   title: Text(doctorInfo["messages"][index]["user"]),
                   leading: CircleAvatar(backgroundColor: Colors.blueAccent),
@@ -164,7 +167,11 @@ class _DoctorHomeState extends State<DoctorHome> {
             )),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return DoctorProfile(doctorinfo:doctorInfo);
+              }));
+            },
             icon: const Icon(
               Icons.person,
               // color: Colors.black,
@@ -177,7 +184,7 @@ class _DoctorHomeState extends State<DoctorHome> {
       drawerScrimColor: Colors.black,
       body: SetBody(context),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           currentIndex: index,
           onTap: (value) {
             setState(() {

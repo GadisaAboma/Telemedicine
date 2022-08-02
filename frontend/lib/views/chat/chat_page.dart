@@ -35,10 +35,12 @@ class _ChatPageState extends State<ChatPage> {
     // contacts = provider.contacts;
     currentContact =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
+
+        Provider.of<PreviousChat>(context, listen: false).initVideo(context, currentContact["_id"], currentContact["username"]);
+
     // });
   }
 
-  
   @override
   Widget build(BuildContext context) {
     // currentContact =
@@ -53,12 +55,12 @@ class _ChatPageState extends State<ChatPage> {
     final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
     String title = "messaging";
-    print("prievs chat  " + previousChat.toString());
-    if (previousChat != null) {
-      title = provider.getUsername() != previousChat[0].reciever
-          ? previousChat[0].reciever
-          : previousChat[0].sender;
-    }
+    // print("prievs chat  " + previousChat.toString());
+    // if (previousChat != null) {
+    //   title = provider.getUsername() != previousChat[0].reciever
+    //       ? previousChat[0].reciever
+    //       : previousChat[0].sender;
+    // }
 
     void _scrollDown() {
       try {
@@ -93,12 +95,11 @@ class _ChatPageState extends State<ChatPage> {
 
                   // var callee = contacts[index].split(':').last;
                   var callee = "";
-                  Provider.of<PreviousChat>(context, listen: false).contacts.forEach((element) {
+                  Provider.of<PreviousChat>(context, listen: false)
+                      .contacts
+                      .forEach((element) {
                     print("username is : " + element);
-                    if (element ==
-                        currentContact["username"] +
-                            ":" +
-                            currentContact["_id"]) {
+                    if (element.split(":").contains(route["username"])) {
                       callee = element.split(':').last;
                       return;
                     }
@@ -106,6 +107,15 @@ class _ChatPageState extends State<ChatPage> {
 
                   print('callee: $callee');
                   print('room: $room');
+
+                  if (callee.isEmpty) {
+                    AlertDialog(
+                      title: Row(children: [Icon(Icons.warning), Text("user is offline")],),
+                      actions: [
+                        Container(child: Text("ok"),)
+                      ],
+                    );
+                  } else{
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -118,11 +128,18 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ),
                   );
+                  }
+
                 },
                 icon: Icon(Icons.video_call))
           ],
-          centerTitle: true,
-          title: Text(title)),
+          // centerTitle: true,
+          title: Row(
+            children: [
+              CircleAvatar(backgroundColor: Colors.white,),SizedBox(width: 10,),
+              Text(route["username"]),
+            ],
+          )),
       body: previousChat == null
           ? Container(child: Center(child: Text("welcome ")))
           : Padding(

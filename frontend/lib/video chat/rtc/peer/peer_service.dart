@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
@@ -6,16 +7,22 @@ import 'peer_event.dart';
 import 'peer_helper.dart';
 
 class PeerService extends PeerBase with PeerHelper {
+  var front = true;
+
+  void changeCamera() {
+    front = !front;
+  }
+
   @override
   Map<String, dynamic> get mediaConstraints => {
         'audio': true,
         'video': {
           'mandatory': {
-            'minWidth': '640',
-            'minHeight': '480',
+            "width": {"min": 1024, "ideal": 1280, "max": 2520},
+            "height": {"min": 576, "ideal": 720, "max": 2280},
             'minFrameRate': '30',
           },
-          'facingMode': 'user',
+          'facingMode': front ? 'user' : "environment",
           'optional': [],
         }
       };
@@ -52,13 +59,11 @@ class PeerService extends PeerBase with PeerHelper {
 
   final RTCConfig config;
 
-
   PeerService({
     required this.config,
     this.type = 'video',
   }) : super(config.room) {
     if (kDebugMode) {
- 
       print('peer service for $type');
     }
 

@@ -135,6 +135,13 @@ class _RTCVideoState extends State<RTCVideo> {
                   onPressed: () => _service.toggleMedia('audio'),
                   icon: const Icon(Icons.mic),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
+                IconButton(
+                  onPressed: () => _service.changeCamera(),
+                  icon: const Icon(Icons.camera_rear_outlined),
+                ),
               ],
             ),
           ),

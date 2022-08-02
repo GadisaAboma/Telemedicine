@@ -154,9 +154,11 @@ class RegisterProvider extends ChangeNotifier {
       loggedId = responseData['_doc']['_id'];
 
       return {"role": responseData["role"], "user": responseData["_doc"]};
+    } on SocketException catch (e) {
+      print(e.message);
+      return Future.error(e.message);
     } catch (e) {
-    
-      return Future.error("Error happened");
+      return Future.error("something is wrong");
     }
   }
 

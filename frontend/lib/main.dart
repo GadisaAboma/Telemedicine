@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Telemedicine application',
         theme: ThemeData(
           primarySwatch: Colors.blueGrey,
           primaryColor: Color.fromARGB(197, 6, 57, 116),
@@ -50,12 +50,6 @@ class MyApp extends StatelessWidget {
             backgroundColor: Color.fromARGB(197, 6, 57, 116),
           ),
         ),
-
-        //         static String patientHomeRoute = "/PatientHome";
-        // static String doctorHomeRoute = "/doctorHome";
-        // static String adminHomeRoute = "/adminHome";
-        // static String loginRoute = "/";
-        // static String registerRoute = "/register";
 
         routes: {
           '/': (context) => Login(),
@@ -68,7 +62,6 @@ class MyApp extends StatelessWidget {
           "/appointment": (context) => AppointmentHome(),
           "/setAppointment": (context) => SetAppointment(),
           "/selectUser": (context) => SelectUser(),
-          
         },
         // home: Login(),
       ),

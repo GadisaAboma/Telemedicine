@@ -18,10 +18,11 @@ class PatientHome extends StatefulWidget {
 
 class _PatientHomeState extends State<PatientHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
+  dynamic loggedInUser ;
   @override
   void initState() {
     super.initState();
-    final loggedInUser =
+  loggedInUser  =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     // print(loggedInUser);
     // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
@@ -86,7 +87,7 @@ class _PatientHomeState extends State<PatientHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+        title: Text(loggedInUser['name']),
         actions: [
           Container(
             height: 40,
@@ -128,7 +129,7 @@ class _PatientHomeState extends State<PatientHome> {
           animatedIconData: AnimatedIcons.menu_close //To principal button
           ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).primaryColor,
         currentIndex: index,
         selectedItemColor: Colors.white,
         showUnselectedLabels: false,

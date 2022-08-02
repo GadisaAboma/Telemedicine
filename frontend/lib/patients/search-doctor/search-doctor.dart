@@ -117,8 +117,10 @@ class _SearchDoctorState extends State<SearchDoctor> {
                   chat.setSender(myUsername);
                   chat.connectAndListen(myUsername);
 
-                  Navigator.pushNamed(context, chatPageRoute,
-                      arguments: {"id": doctor["_id"]});
+                  Navigator.pushNamed(context, chatPageRoute, arguments: {
+                    "id": doctor["_id"],
+                    "username": doctor["username"]
+                  });
                 },
               ),
               onTap: () {},

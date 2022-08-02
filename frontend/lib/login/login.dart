@@ -93,7 +93,6 @@ class _LoginState extends State<Login> {
         ////////// storing username and password to local storage
         LocalStorage.write('userid', loginResponse["user"]["_id"]);
         LocalStorage.write('username', username);
-        Provider.of<PreviousChat>(context, listen: false).initVideo(ctx, loginResponse["user"]["_id"], username);
 
         switch (loginResponse['role']) {
           case "admin":
