@@ -103,12 +103,14 @@ class PatientProvider extends ChangeNotifier {
     print("coming");
     try {
       final response = await http.post(
-          Uri.parse("$serverUrl/api/$userType/setAppointment"),
-          body: (json.encode({"id": id})),
+          Uri.parse("$serverUrl/api/user/fetchAppointments"),
+          body: (json.encode({"id": id, "userType": userType})),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
+
+      print(response.body);
       final data = json.decode(response.body);
 
       notifyListeners();

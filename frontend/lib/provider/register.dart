@@ -150,12 +150,12 @@ class RegisterProvider extends ChangeNotifier {
         doctordInfo = responseData["_doc"];
       }
 
-      loggedId = responseData['role'] + 's';
-      loggedId = responseData['_id'];
+      userType = responseData['role'] + 's';
+      loggedId = responseData['_doc']['_id'];
 
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
-      print(e);
+    
       return Future.error("Error happened");
     }
   }

@@ -37,6 +37,22 @@ const loginUser = asyncHandler(async (req, res) => {
 
 })
 
+const fetchAppointments = asyncHandler(async (req, res) => {
+   const { id, userType } = req.body
+
+   let user
+
+   if(userType === 'patients') {
+        user = await Patient.findById(id)
+
+   } else {
+    user = await Doctor.findById(id)
+   }
+
+   res.send(user.appointments)
+  
+})
+
 
 // const startTextChat = asyncHandler( async (req, res) => {
 
@@ -44,5 +60,6 @@ const loginUser = asyncHandler(async (req, res) => {
 
 module.exports = {
     loginUser,
+    fetchAppointments
     // startTextChat
 }

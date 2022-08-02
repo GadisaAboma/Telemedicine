@@ -18,28 +18,11 @@ class SetAppointment extends StatefulWidget {
 }
 
 class _SetAppointmentState extends State<SetAppointment> {
+
   var date;
+  var appointments;
 
   @override
-  void initState() {
-    print("init state");
-    // TODO: implement initState
-    super.initState();
-     Future.delayed(Duration.zero, () {
-      fetchAppointments();
-   });
-  }
-
-  void fetchAppointments() async {
-    print("'sdsfsdfsdfsdfs");
-    var loggedId = Provider.of<RegisterProvider>(context, listen: false).loggedUserId;
-    var loggedType = Provider.of<RegisterProvider>(context, listen: false).loggedUserType;
-
-    List appointments = await Provider.of<PatientProvider>(context, listen: false)
-    .fetchAppointment(loggedId, loggedType);
-  }
- 
- @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -52,7 +35,7 @@ class _SetAppointmentState extends State<SetAppointment> {
     var description = "";
 
     void setAppointmentDate() async {
-      await Provider.of<PatientProvider>(listen: false, context)
+      appointments = await Provider.of<PatientProvider>(listen: false, context)
           .setAppointment(id, date.toString(), description);
     }
 

@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/utils/helpers.dart';
+import '../provider/register.dart';
 import './styles/styles.dart';
 import './styles/colors.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +18,11 @@ class AppointmentHome extends StatefulWidget {
 
 class _AppointmentHomeState extends State<AppointmentHome> {
   dynamic patient = {};
+  bool isLoading = true;
+  var appointments;
   var username;
   void _searchDoctor(BuildContext context) async {
-    dynamic returnedPatient =
+    dynamic returnedPatient = appointments =
         await Provider.of<PatientProvider>(listen: false, context)
             .searchPatient(username);
     if (returnedPatient != null) {
@@ -27,6 +30,30 @@ class _AppointmentHomeState extends State<AppointmentHome> {
         patient = returnedPatient;
       });
     }
+  }
+
+  @override
+  void initState() {
+    print("init state");
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      fetchAppointments();
+    });
+  }
+
+  void fetchAppointments() async {
+    var loggedId =
+        Provider.of<RegisterProvider>(context, listen: false).loggedUserId;
+    var loggedType =
+        Provider.of<RegisterProvider>(context, listen: false).loggedUserType;
+
+    appointments = await Provider.of<PatientProvider>(context, listen: false)
+        .fetchAppointment(loggedId, loggedType);
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   TextEditingController _controller = new TextEditingController();
@@ -38,7 +65,43 @@ class _AppointmentHomeState extends State<AppointmentHome> {
         title: const Text("Make Appointment"),
       ),
       body: SingleChildScrollView(
-        child: Column(
+          child: isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : appointments == null
+                  ? const Text("empty appointment")
+                  : 
+                     SizedBox(
+                        height: 300,
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Card(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(appointments[index]['description']),
+                                        Text(appointments[index]['date'])
+                                      ],
+                                    ),
+
+                                    Row(children: [
+                                      Icon(Icons.edit),
+                                      Icon(Icons.delete),
+                                    ],)
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: appointments.length,
+                        ),
+                      
+                    )
+
+          /* Column(
           children: [
             Container(
               width: double.infinity,
@@ -152,8 +215,8 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                   )
                 : const Text("No patient found"),
           ],
-        ),
-      ),
+        ), */
+          ),
     );
   }
 }
