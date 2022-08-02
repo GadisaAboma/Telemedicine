@@ -5,7 +5,7 @@
 },
     {
      "tag" : "nagaa",
-     "patterns" : ["akkam", "fayyumaa", "jirtaa", "nagumaa"],
+     "patterns" : ["akkam", "fayyumaa", "jirtaa", "nagumaa"], 
      "responses" : ["nagaa akkam!", "galatasaa"]
 },
 {
@@ -17,7 +17,5 @@
      "tag" : "hojii",
      "patterns" : ["hojiinke maali", "dalagaan ke maali", "maalif hojjetamte", "maal nama gargaarta","maal na gargaaruu dandeessaa"],
      "responses" : ["dhukkuuboota daa'immani irratti odeessannoo kennaa!", "fayyaa daa'immaniif odeeffannoo kenna"]
-}
-    
-]
+}]
 }

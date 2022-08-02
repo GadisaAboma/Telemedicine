@@ -39,7 +39,16 @@ class DrawerWidget extends StatelessWidget {
                 // Provider.of<PreviousChat>(context, listen: false).dispose();
                 Navigator.pushReplacementNamed(context, loginRoute);
               },
-            )
+            ),
+            ListTile(
+              title: Text("Appointment"),
+              leading: Icon(Icons.event),
+              onTap: () {
+                // Provider.of<PreviousChat>(context, listen: false).dispose();
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, appointmentPage);
+              },
+            ),
           ],
         )
       ]),

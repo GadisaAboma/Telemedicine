@@ -14,6 +14,9 @@ class RegisterProvider extends ChangeNotifier {
   dynamic currentUser;
   late dynamic doctordInfo;
 
+  String loggedId = '';
+  String userType = '';
+
   void setLoading() {
     isLoading = !isLoading;
     notifyListeners();
@@ -147,9 +150,21 @@ class RegisterProvider extends ChangeNotifier {
         doctordInfo = responseData["_doc"];
       }
 
+      userType = responseData['role'] + 's';
+      loggedId = responseData['_doc']['_id'];
+
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
+    
       return Future.error("Error happened");
     }
+  }
+
+  String get loggedUserId {
+    return loggedId;
+  }
+
+  String get loggedUserType {
+    return userType;
   }
 }

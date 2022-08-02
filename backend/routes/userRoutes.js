@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { loginUser, startTextChat } = require('../controllers/userControllers')
+const { loginUser, startTextChat, fetchAppointments } = require('../controllers/userControllers')
 
 router.post('/login', loginUser)
 //router.post('/startTextChat', startTextChat);
+router.post('/fetchAppointments', fetchAppointments)
 
 
 
