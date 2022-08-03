@@ -7,6 +7,7 @@ import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../video chat/rtc/client_io.dart';
 import '../video chat/rtc/contact_event.dart';
@@ -36,7 +37,6 @@ class _LoginState extends State<Login> {
     return const TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.bold,
-        
         color: Color.fromARGB(255, 2, 11, 29));
   }
 
@@ -75,6 +75,7 @@ class _LoginState extends State<Login> {
     });
   }
 
+  // SharedPreferences sharedPreferences;
   void login(BuildContext ctx) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -95,6 +96,10 @@ class _LoginState extends State<Login> {
         ////////// storing username and password to local storage
         LocalStorage.write('userid', loginResponse["user"]["_id"]);
         LocalStorage.write('username', username);
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+         sharedPreferences.setString("username",username);
+         sharedPreferences.setString("password", password);
 
         switch (loginResponse['role']) {
           case "admin":

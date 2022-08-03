@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/provider/message.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../doctor/doctor_profile.dart';
 
@@ -37,7 +38,8 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text(userInfo["name"], style: TextStyle(color: Colors.white)),
+                title: Text(userInfo["name"],
+                    style: TextStyle(color: Colors.white)),
                 // subtitle: Text(
                 //   "phone number +251950488766",
                 //   style: TextStyle(color: Colors.white),
@@ -48,7 +50,6 @@ class DrawerWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            
             ListTile(
               title: Text("Appointment"),
               leading: Icon(Icons.event),
@@ -61,8 +62,14 @@ class DrawerWidget extends StatelessWidget {
             ListTile(
               title: Text("logout"),
               leading: Icon(Icons.logout),
-              onTap: () {
+              onTap: () async {
                 // Provider.of<PreviousChat>(context, listen: false).dispose();
+                SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                    
+                sharedPreferences.remove("username");
+                sharedPreferences.remove("password");
+
                 Navigator.pushReplacementNamed(context, loginRoute);
               },
             ),

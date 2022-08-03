@@ -11,6 +11,7 @@ import 'package:frontend/provider/message.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
+import 'package:frontend/route.dart';
 import 'package:provider/provider.dart';
 import './posts/pages/create_place.dart';
 
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/': (context) => Login(),
+          '/': (context) => RouteApp(),
           "/register": (context) => Register(),
           "/PatientHome": (context) => PatientHome(),
           "/doctorHome": (context) => DoctorHome(),
