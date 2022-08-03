@@ -15,17 +15,23 @@ class SelectUser extends StatefulWidget {
 }
 
 class _SelectUserState extends State<SelectUser> {
-  dynamic patient = {};
+  bool isLoading = false;
+  List<dynamic> patient = [];
   var username;
   TextEditingController _controller = new TextEditingController();
 
   void _searchDoctor(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
     dynamic returnedPatient =
         await Provider.of<PatientProvider>(listen: false, context)
             .searchPatient(username);
     if (returnedPatient != null) {
       setState(() {
+        print(returnedPatient);
         patient = returnedPatient;
+        isLoading = false;
       });
     }
   }
@@ -95,60 +101,74 @@ class _SelectUserState extends State<SelectUser> {
                 ),
               ),
             ),
-            patient.isNotEmpty
-                ? GestureDetector(
-                    onTap: () => Navigator.of(context).pushNamed(setAppointment,
-                        arguments: {
-                          'id': patient['_id'],
-                          'name': patient['name']
-                        }),
-                    child: Card(
-                      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      child: Padding(
-                        padding: EdgeInsets.all(25),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Row(
-                              children: [
-                                const CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage("assets/image/doctor.jpg"),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      patient['name'],
-                                      style: TextStyle(
-                                        color: Color(MyColors.header01),
-                                        fontWeight: FontWeight.w700,
+            isLoading
+                ? const CircularProgressIndicator()
+                : patient.isEmpty
+                    ? const Center(
+                        child: Text("No patient found with this username"),
+                      )
+                    : Container(
+                      height: 400,
+                      child: ListView.builder(
+                          itemCount: patient.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(setAppointment, arguments: {
+                                'id': patient[index]._id,
+                                'name': patient[index].name
+                              }),
+                              child: Card(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 20),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(25),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                                "assets/image/doctor.jpg"),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                patient[index].name,
+                                                style: TextStyle(
+                                                  color: Color(MyColors.header01),
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "patient",
+                                                style: TextStyle(
+                                                  color: Color(MyColors.grey02),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "patient",
-                                      style: TextStyle(
-                                        color: Color(MyColors.grey02),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                : const Text("No patient found"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    )
           ],
         ),
       ),

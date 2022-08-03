@@ -71,7 +71,7 @@ class PatientProvider extends ChangeNotifier {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
-      final data = json.decode(response.body);
+      List data = json.decode(response.body);
 
       notifyListeners();
       return data;

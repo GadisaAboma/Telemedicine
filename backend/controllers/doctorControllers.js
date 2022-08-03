@@ -72,14 +72,14 @@ const searchPatient = asyncHandler(async (req, res) => {
 
     const { username } = req.body
 
-    const patient = await Patient.findOne({ username })
+    const patient = await Patient.find({ username })
 
     if (patient) {
         res.send(patient)
 
     } else {
         res.status(400)
-        throw new Error('Doctor not found!')
+        throw new Error('Patient not found!')
     }
 
 })
