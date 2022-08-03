@@ -76,6 +76,7 @@ class _DoctorHomeState extends State<DoctorHome> {
   // SocketService? s;
 
   Widget listOfPatient(BuildContext ctx) {
+   dynamic doctor = doctorInfo["messages"].reversed.toList();
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
@@ -128,7 +129,6 @@ class _DoctorHomeState extends State<DoctorHome> {
                           ),
                         ),
                       ),
-                    
                   ],
                 );
           return listOfPatient;
