@@ -108,67 +108,69 @@ class _SelectUserState extends State<SelectUser> {
                         child: Text("No patient found with this username"),
                       )
                     : Container(
-                      height: 400,
-                      child: ListView.builder(
-                          itemCount: patient.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () => Navigator.of(context)
-                                  .pushNamed(setAppointment, arguments: {
-                                'id': patient[index]._id,
-                                'name': patient[index].name
-                              }),
-                              child: Card(
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(25),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                                "assets/image/doctor.jpg"),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                patient[index].name,
-                                                style: TextStyle(
-                                                  color: Color(MyColors.header01),
-                                                  fontWeight: FontWeight.w700,
+                        height: 400,
+                        child: ListView.builder(
+                            itemCount: patient.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(setAppointment, arguments: {
+                                  'id': patient[index]["_id"],
+                                  'name': patient[index]["name"]
+                                }),
+                                child: Card(
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(25),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,     
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const CircleAvatar(
+                                              backgroundImage: AssetImage(
+                                                  "assets/image/doctor.jpg"),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  patient[index]["name"],
+                                                  style: TextStyle(
+                                                    color: Color(
+                                                        MyColors.header01),
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                "patient",
-                                                style: TextStyle(
-                                                  color: Color(MyColors.grey02),
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
+                                                SizedBox(
+                                                  height: 5,
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                                Text(
+                                                  "patient",
+                                                  style: TextStyle(
+                                                    color:
+                                                        Color(MyColors.grey02),
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }),
-                    )
+                              );
+                            }),
+                      )
           ],
         ),
       ),

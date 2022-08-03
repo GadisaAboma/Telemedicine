@@ -157,7 +157,7 @@ class _ChatPageState extends State<ChatPage> {
                                 Provider.of<PreviousChat>(context,
                                         listen: false)
                                     .getUsername();
-                            _scrollDown();
+                            //_scrollDown();
                             return Align(
                               alignment: isSendByUser
                                   ? Alignment.centerRight

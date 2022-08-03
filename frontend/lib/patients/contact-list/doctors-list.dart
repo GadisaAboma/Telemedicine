@@ -93,8 +93,30 @@ class _DoctorsListState extends State<DoctorsList> {
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white),
                               child: ListTile(
-                                leading: CircleAvatar(),
+                                leading: CircleAvatar(
+                                  radius: 5,
+                                  backgroundColor:(Provider.of<PreviousChat>(context,
+                                                listen: false)
+                                            .contacts
+                                            .any((element) => element
+                                                .split(":")
+                                                .contains(
+                                                    doctors![index]["user"]))? Colors.green:Colors.yellow)),
+                                
                                 title: Text(doctors?[index]["user"]),
+                                subtitle: Row(
+                                  children: [
+                                    Text((Provider.of<PreviousChat>(context,
+                                                listen: false)
+                                            .contacts
+                                            .any((element) => element
+                                                .split(":")
+                                                .contains(
+                                                    doctors![index]["user"]))
+                                        ? "online"
+                                        : "offline")),
+                                  ],
+                                ),
                                 focusColor: Colors.blue,
                               ),
                             ),
