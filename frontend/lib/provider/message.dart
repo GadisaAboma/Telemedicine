@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../model/chat.dart';
+import '../utils/helpers.dart';
 import '../video chat/rtc/client_io.dart';
 import '../video chat/rtc/contact_event.dart';
 
@@ -12,7 +15,7 @@ class PreviousChat extends ChangeNotifier {
   List<Chat> _chatHistory = [];
   late io.Socket _socket;
 
-  late final StreamSubscription<ContactEvent> _sub;
+  late  StreamSubscription<ContactEvent> _sub;
   List<String> contacts = [];
   dynamic currentContact;
 
@@ -54,6 +57,20 @@ class PreviousChat extends ChangeNotifier {
     notifyListeners();
   }
 
+Future<void> contactedDoctor(String username)async {
+  try{
+    final response = await http
+          .get(Uri.parse("$serverUrl/patients/doctorsList"), headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+      });
+      final data = json.decode(response.body);
+      print(data["_docs"]);
+  }catch(e){
+
+  }
+
+}
   void initVideo(BuildContext ctx,String id, String username) {
     ClientIO().init(id, username);
 

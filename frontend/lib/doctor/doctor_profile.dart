@@ -35,7 +35,7 @@ class DoctorProfile extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        Row(
+       if(doctorinfo["specializedIn"].toString().isNotEmpty) Row(
           children: [
             Icon(
               Icons.book,

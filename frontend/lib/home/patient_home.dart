@@ -18,46 +18,14 @@ class PatientHome extends StatefulWidget {
 
 class _PatientHomeState extends State<PatientHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
-  dynamic loggedInUser ;
+  dynamic loggedInUser;
   @override
   void initState() {
     super.initState();
-  loggedInUser  =
+    loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     // print(loggedInUser);
     // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
-  }
-
-  Widget chat(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn1",
-        tooltip: 'Second button',
-        child: Icon(Icons.chat),
-      ),
-    );
-  }
-
-  Widget add(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn2",
-        tooltip: 'Second button',
-        child: Icon(Icons.chat),
-      ),
-    );
   }
 
   int index = 0;
@@ -83,6 +51,18 @@ class _PatientHomeState extends State<PatientHome> {
     return homeWidget;
   }
 
+  Widget setBody() {
+    Widget body = Container();
+    if (index == 0) body = Posts();
+    if (index == 1) body = Notifications();
+    if (index == 2)
+      body = DoctorsList(
+        username: loggedInUser["username"],
+      );
+
+    return body;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,31 +85,20 @@ class _PatientHomeState extends State<PatientHome> {
           )
         ],
       ),
-      drawer: DrawerWidget(userInfo: loggedInUser,),
-      backgroundColor: Color.fromRGBO(224, 217, 217, 0.87),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (index == 0) Posts(),
-            if (index == 1) Notifications(),
-            if (index == 2) DoctorsList()
-          ],
-        ),
+      drawer: DrawerWidget(
+        userInfo: loggedInUser,
       ),
-      floatingActionButton: AnimatedFloatingActionButton(
-          key: fabKey,
-          fabButtons: <Widget>[
-            // add(),
-            chat(context),
-            add(context),
-            // inbox(),
-          ],
-          colorStartAnimation: Theme.of(context).primaryColor,
-          colorEndAnimation: Colors.red,
-          animatedIconData: AnimatedIcons.menu_close //To principal button
-          ),
+      body: setBody(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.chat_sharp),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ChatBot();
+          }));
+        }, //To principal button
+      ),
       bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         currentIndex: index,
         selectedItemColor: Colors.white,
         showUnselectedLabels: false,
