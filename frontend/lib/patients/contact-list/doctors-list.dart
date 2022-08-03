@@ -93,15 +93,22 @@ class _DoctorsListState extends State<DoctorsList> {
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white),
                               child: ListTile(
-                                leading: CircleAvatar(
-                                  radius: 5,
-                                  backgroundColor:(Provider.of<PreviousChat>(context,
-                                                listen: false)
-                                            .contacts
-                                            .any((element) => element
-                                                .split(":")
-                                                .contains(
-                                                    doctors![index]["user"]))? Colors.green:Colors.yellow)),
+                                leading: Stack(
+                                  children: [
+                                    CircleAvatar(radius: 30,),
+                                    Positioned(bottom: 1,right: 5,
+                                      child: CircleAvatar(
+                                        radius: 5,
+                                        backgroundColor:(Provider.of<PreviousChat>(context,
+                                                      listen: false)
+                                                  .contacts
+                                                  .any((element) => element
+                                                      .split(":")
+                                                      .contains(
+                                                          doctors![index]["user"]))? Colors.green:Colors.yellow)),
+                                    ),
+                                  ],
+                                ),
                                 
                                 title: Text(doctors?[index]["user"]),
                                 subtitle: Row(
