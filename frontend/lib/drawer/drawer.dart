@@ -37,11 +37,11 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text("Abib Ali", style: TextStyle(color: Colors.white)),
-                subtitle: Text(
-                  "phone number +251950488766",
-                  style: TextStyle(color: Colors.white),
-                ),
+                title: Text(userInfo["name"], style: TextStyle(color: Colors.white)),
+                // subtitle: Text(
+                //   "phone number +251950488766",
+                //   style: TextStyle(color: Colors.white),
+                // ),
               ),
             ],
           ),

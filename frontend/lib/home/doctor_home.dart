@@ -5,6 +5,7 @@ import 'package:frontend/provider/patient.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../appointment/appointment_home.dart';
 import '../chatbot/chatbot.dart';
 import '../doctor/doctor_profile.dart';
 import '../drawer/drawer.dart';
@@ -58,43 +59,10 @@ class _DoctorHomeState extends State<DoctorHome> {
       index = 1;
     }
   }
-
-  Widget chat(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn2",
-        tooltip: 'Second button',
-        child: Icon(Icons.chat),
-      ),
-    );
-  }
-
-  Widget add(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn1",
-        tooltip: 'Second button',
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
   // SocketService? s;
 
   Widget listOfPatient(BuildContext ctx) {
-   dynamic doctor = doctorInfo["messages"].reversed.toList();
+    dynamic doctor = doctorInfo["messages"].reversed.toList();
     return ListView.builder(
         itemCount: doctorInfo["messages"].length,
         itemBuilder: (context, index) {
@@ -105,48 +73,74 @@ class _DoctorHomeState extends State<DoctorHome> {
                   children: [
                     if (index != 0)
                       Container(
-                        height: 60,
+                        height: 80,
                         margin: EdgeInsets.only(top: 6, right: 15, left: 15),
                         child: Card(
+                          elevation: 5,
                           child: ListTile(
-                            onTap: () async {
-                              // SocketService.init();
-                              final chat =
-                                  Provider.of<PreviousChat>(ctx, listen: false);
-                              final patient = await Provider.of<
-                                      PatientProvider>(context, listen: false)
-                                  .patient(
-                                      doctorInfo["messages"][index]["user"]);
-                              chat.setUserName(doctorInfo["username"]);
-                              chat.setReciever(
-                                  doctorInfo["messages"][index]["user"]);
-                              chat.setSender(doctorInfo["username"]);
-                              (doctorInfo["messages"][index]["content"] as List)
-                                  .forEach((data) {
-                                (data as Map).remove("_id");
-                                // print(data);
-                                chat.addToChatHistory(data);
-                              });
-                              print(chat.chatHistory);
+                              onTap: () async {
+                                // SocketService.init();
+                                final chat = Provider.of<PreviousChat>(ctx,
+                                    listen: false);
+                                final patient = await Provider.of<
+                                        PatientProvider>(context, listen: false)
+                                    .patient(
+                                        doctorInfo["messages"][index]["user"]);
+                                chat.setUserName(doctorInfo["username"]);
+                                chat.setReciever(
+                                    doctorInfo["messages"][index]["user"]);
+                                chat.setSender(doctorInfo["username"]);
+                                (doctorInfo["messages"][index]["content"]
+                                        as List)
+                                    .forEach((data) {
+                                  (data as Map).remove("_id");
+                                  // print(data);
+                                  chat.addToChatHistory(data);
+                                });
+                                print(chat.chatHistory);
 
-                              chat.connectAndListen(doctorInfo["username"]);
+                                chat.connectAndListen(doctorInfo["username"]);
 
-                              // print("patient" + patient);
-                              Navigator.pushNamed(context, chatPageRoute,
-                                  arguments: {
-                                    "id": patient["_id"],
-                                    "username": patient["username"]
-                                  });
-                            },
-                            title: Text(doctorInfo["messages"][index]["user"]),
-                            leading: CircleAvatar(
-                                backgroundColor: Colors.blueAccent),
-                            trailing: Icon(
-                              Icons.done_all,
+                                // print("patient" + patient);
+                                Navigator.pushNamed(context, chatPageRoute,
+                                    arguments: {
+                                      "id": patient["_id"],
+                                      "name": patient["name"]
+                                    });
+                              },
+                              title:
+                                  Text(doctorInfo["messages"][index]["user"]),
+                              leading: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 30,
+                                  ),
+                                  Positioned(
+                                    bottom: 1,
+                                    right: 5,
+                                    child: CircleAvatar(
+                                        radius: 5,
+                                        backgroundColor: (Provider.of<
+                                                        PreviousChat>(context,
+                                                    listen: false)
+                                                .contacts
+                                                .any((element) => element
+                                                    .split(":")
+                                                    .contains(doctorInfo[
+                                                            "messages"]![index]
+                                                        ["user"]))
+                                            ? Colors.green
+                                            : Colors.yellow)),
+                                  ),
+                                ],
+                              ),
+                              trailing: Icon(
+                                Icons.done_all,
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      
                   ],
                 );
           return listOfPatient;
@@ -166,15 +160,12 @@ class _DoctorHomeState extends State<DoctorHome> {
                     places[i]['description'],
                     places[i]['imageUrl'].toString().replaceAll('\\', '/'),
                     places[i]['date'],
-                    places[i]['doctorName']
-                    ),
+                    places[i]['doctorName']),
                 itemCount: places.length,
               ),
             );
     } else if (index == 1) {
-      returnedWidget = const Center(
-        child: Text("Notification"),
-      );
+      returnedWidget = AppointmentHome(home: "yes");
     } else {
       returnedWidget = Center(
         child: listOfPatient(ctx),

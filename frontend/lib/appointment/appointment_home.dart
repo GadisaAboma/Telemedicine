@@ -12,7 +12,8 @@ import '../utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 class AppointmentHome extends StatefulWidget {
-  const AppointmentHome({Key? key}) : super(key: key);
+  String? home;
+  AppointmentHome({this.home});
 
   @override
   State<AppointmentHome> createState() => _AppointmentHomeState();
@@ -48,33 +49,24 @@ class _AppointmentHomeState extends State<AppointmentHome> {
     });
   }
 
+  DateTime now = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Appointments"),
-        actions: [
-          loggedType == 'doctors'
-              ? IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, selectUser);
-                  },
-                  icon: const Icon(Icons.add))
-              : Container()
-        ],
-      ),
-      body: SingleChildScrollView(
-          child: isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : appointments.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "Empty Appointment",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  : SizedBox(
+    Widget body = SingleChildScrollView(
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : appointments.isEmpty
+                ? const Center(
+                    child: Text(
+                      "Empty Appointment",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                : Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: SizedBox(
                       height: 300,
                       child: ListView.builder(
                         itemBuilder: (context, index) {
@@ -119,9 +111,10 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                         },
                         itemCount: appointments.length,
                       ),
-                    )
+                    ),
+                  )
 
-          /* Column(
+        /* Column(
           children: [
             Container(
               width: double.infinity,
@@ -236,7 +229,22 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                 : const Text("No patient found"),
           ],
         ), */
-          ),
-    );
+        );
+    return widget.home != "yes"
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text("Appointments"),
+              actions: [
+                loggedType == 'doctors'
+                    ? IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, selectUser);
+                        },
+                        icon: const Icon(Icons.add))
+                    : Container()
+              ],
+            ),
+            body: body)
+        : body;
   }
 }

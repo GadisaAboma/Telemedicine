@@ -36,18 +36,15 @@ class _ChatPageState extends State<ChatPage> {
     currentContact =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
 
-        Provider.of<PreviousChat>(context, listen: false).initVideo(context, currentContact["_id"], currentContact["username"]);
+    Provider.of<PreviousChat>(context, listen: false)
+        .initVideo(context, currentContact["_id"], currentContact["username"]);
 
     // });
   }
 
   @override
   Widget build(BuildContext context) {
-    // currentContact =
-    //     Provider.of<RegisterProvider>(context, listen: true).currentUser;
-    // initVideo(context);
-    // print("current " + contacts.toString());
-    // initVideo(context);
+    
 
     var provider = Provider.of<PreviousChat>(context, listen: true);
     var loggedInUser =
@@ -55,12 +52,7 @@ class _ChatPageState extends State<ChatPage> {
     final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
     String title = "messaging";
-    // print("prievs chat  " + previousChat.toString());
-    // if (previousChat != null) {
-    //   title = provider.getUsername() != previousChat[0].reciever
-    //       ? previousChat[0].reciever
-    //       : previousChat[0].sender;
-    // }
+    
 
     void _scrollDown() {
       try {
@@ -110,34 +102,44 @@ class _ChatPageState extends State<ChatPage> {
 
                   if (callee.isEmpty) {
                     AlertDialog(
-                      title: Row(children: [Icon(Icons.warning), Text("user is offline")],),
+                      title: Row(
+                        children: [
+                          Icon(Icons.warning),
+                          Text("user is offline")
+                        ],
+                      ),
                       actions: [
-                        Container(child: Text("ok"),)
+                        Container(
+                          child: Text("ok"),
+                        )
                       ],
                     );
-                  } else{
-
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => RTCVideo(
-                        room: room,
-                        callee: callee,
-                        caller: currentContact["_id"],
-                        isCaller: true,
-                        type: type,
+                  } else {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => RTCVideo(
+                          room: room,
+                          callee: callee,
+                          caller: currentContact["_id"],
+                          isCaller: true,
+                          type: type,
+                        ),
                       ),
-                    ),
-                  );
+                    );
                   }
-
                 },
                 icon: Icon(Icons.video_call))
           ],
           // centerTitle: true,
           title: Row(
             children: [
-              CircleAvatar(backgroundColor: Colors.white,),SizedBox(width: 10,),
-              Text(route["username"]),
+              CircleAvatar(
+                backgroundColor: Colors.white,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(route["name"]),
             ],
           )),
       body: previousChat == null
@@ -157,7 +159,7 @@ class _ChatPageState extends State<ChatPage> {
                                 Provider.of<PreviousChat>(context,
                                         listen: false)
                                     .getUsername();
-                            //_scrollDown();
+                            _scrollDown();
                             return Align(
                               alignment: isSendByUser
                                   ? Alignment.centerRight

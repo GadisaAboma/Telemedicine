@@ -112,7 +112,7 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Create Place"),),
+      appBar: AppBar(title: const Text("Create Post"),),
       body: SingleChildScrollView(
         child: Container(
           height: 600,

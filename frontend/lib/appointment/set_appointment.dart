@@ -43,7 +43,7 @@ class _SetAppointmentState extends State<SetAppointment> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("calander will appear here"),
+        title: const Text("Set Appointement"),
       ),
       body: SingleChildScrollView(
         child: Card(
@@ -78,16 +78,16 @@ class _SetAppointmentState extends State<SetAppointment> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: Icon(
-                        Icons.description,
-                        color: Color(MyColors.purple02),
-                      ),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.only(top: 3),
+                    //   child: Icon(
+                    //     Icons.description,
+                    //     color: Color(MyColors.purple02),
+                    //   ),
+                    // ),
                     const SizedBox(
                       width: 15,
-                    ),
+                    ),   
                     Expanded(
                       child: TextField(
                         onChanged: (value) {
@@ -141,7 +141,7 @@ class _SetAppointmentState extends State<SetAppointment> {
                   child: ElevatedButton.icon(
                     onPressed: setAppointmentDate,
                     icon: const Icon(Icons.save),
-                    label: const Text("Save"),
+                    label: const Text("Send Appointement"),
 
                     // style: ElevatedButton.styleFrom(primary: Colors.blue),
                   ),

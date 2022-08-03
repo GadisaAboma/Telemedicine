@@ -4,6 +4,7 @@ import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../appointment/appointment_home.dart';
 import '../patients/search-doctor/posts/posts.dart';
 import '../provider/register.dart';
 import '../chatbot/chatbot.dart';
@@ -54,7 +55,7 @@ class _PatientHomeState extends State<PatientHome> {
   Widget setBody() {
     Widget body = Container();
     if (index == 0) body = Posts();
-    if (index == 1) body = Notifications();
+    if (index == 1) body = AppointmentHome(home: "yes");
     if (index == 2)
       body = DoctorsList(
         username: loggedInUser["username"],

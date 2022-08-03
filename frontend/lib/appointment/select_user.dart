@@ -40,7 +40,7 @@ class _SelectUserState extends State<SelectUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Select user"),
+        title: const Text("Select patient"),
       ),
       body: SingleChildScrollView(
         child: Column(

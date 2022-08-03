@@ -27,26 +27,33 @@ class DoctorProfile extends StatelessWidget {
             ),
             SizedBox(
               width: 10,
-            ),Text("Full name: "),SizedBox(width: 10,),
-
+            ),
+            Text("Full name: "),
+            SizedBox(
+              width: 10,
+            ),
             Text(doctorinfo["name"])
           ],
         ),
         SizedBox(
           height: 20,
         ),
-       if(doctorinfo["specializedIn"].toString().isNotEmpty) Row(
-          children: [
-            Icon(
-              Icons.book,
-            ),
-            SizedBox(
-              width: 10,
-            ),Text("spacializedIn: "),SizedBox(width: 10,),
-
-            Text(doctorinfo["specializedIn"])
-          ],
-        ),
+        // if (doctorinfo.contains("spacializedIn"))
+        //   Row(
+        //     children: [
+        //       Icon(
+        //         Icons.book,
+        //       ),
+        //       SizedBox(
+        //         width: 10,
+        //       ),
+        //       Text("spacializedIn: "),
+        //       SizedBox(
+        //         width: 10,
+        //       ),
+        //       Text(doctorinfo["specializedIn"])
+        //     ],
+        //   ),
         SizedBox(
           height: 20,
         ),
@@ -57,8 +64,11 @@ class DoctorProfile extends StatelessWidget {
             ),
             SizedBox(
               width: 10,
-            ),Text("Gender: "),SizedBox(width: 10,),
-
+            ),
+            Text("Gender: "),
+            SizedBox(
+              width: 10,
+            ),
             Text(doctorinfo["gender"])
           ],
         ),

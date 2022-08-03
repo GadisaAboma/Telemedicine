@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend/provider/message.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
@@ -35,7 +36,8 @@ class _LoginState extends State<Login> {
     return const TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 4, 54, 146));
+        
+        color: Color.fromARGB(255, 2, 11, 29));
   }
 
   @override
@@ -147,9 +149,9 @@ class _LoginState extends State<Login> {
   }
 
   List<Color> _colors = [
-    Color.fromARGB(198, 1, 43, 106),
-    Color.fromARGB(99, 64, 130, 6),
-    Color.fromARGB(131, 3, 93, 113)
+    Color.fromARGB(197, 188, 199, 215),
+    Color.fromARGB(98, 224, 227, 222),
+    Color.fromARGB(131, 216, 225, 227)
   ];
   List<double> _stops = [0.0, 0.7];
   Future loadingSpinner(BuildContext ctx) {
@@ -195,7 +197,7 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 300,
+                  height: 350,
                   padding: const EdgeInsets.only(top: 30, bottom: 20),
                   decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -235,6 +237,10 @@ class _LoginState extends State<Login> {
                             ),
                             Text(
                               "Telemedicine",
+                              style: textStyle(),
+                            ),
+                            Text(
+                              "For Babycare",
                               style: textStyle(),
                             ),
                           ]),
@@ -361,7 +367,6 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-                          
                         ],
                       ),
                     ),
