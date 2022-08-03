@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import '../utils/helpers.dart';
@@ -26,8 +25,10 @@ class _ChatBotState extends State<ChatBot> {
       var newUrl = Uri.parse(chatbotUrl);
 
       try {
-        client.post(newUrl, body: {"query": queryController.text}, ).then(
-            (response) {
+        client.post(
+          newUrl,
+          body: {"query": queryController.text},
+        ).then((response) {
           print(response.body);
           Map<String, dynamic> data = jsonDecode(response.body);
           insertSingleItem(data['response'] + "<bot>");
@@ -62,7 +63,7 @@ class _ChatBotState extends State<ChatBot> {
               initialItemCount: _data.length,
               itemBuilder:
                   (BuildContext ctx, int index, Animation<double> animation) {
-                return buildItem(_data[index], animation, index);
+                return buildItem(ctx, _data[index], animation, index);
               },
             ),
             Align(
@@ -99,20 +100,37 @@ class _ChatBotState extends State<ChatBot> {
   }
 }
 
-Widget buildItem(String item, Animation<double> animation, int index) {
+ScrollController _scrollController = ScrollController();
+void _scrollDown() {
+  try {
+    Future.delayed(
+        const Duration(milliseconds: 300),
+        () => _scrollController
+            .jumpTo(_scrollController.position.maxScrollExtent));
+  } on Exception catch (_) {}
+}
+
+Widget buildItem(
+    BuildContext context, String item, Animation<double> animation, int index) {
   bool mine = item.endsWith('<bot>');
+  _scrollDown();
   return SizeTransition(
     sizeFactor: animation,
-    child: Padding(
+    child: Container(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
+        margin: EdgeInsets.only(right: 20, left: 20),
         alignment: mine ? Alignment.topLeft : Alignment.topRight,
         child: Bubble(
           color: mine ? Colors.blue : Colors.black,
           padding: const BubbleEdges.all(10),
-          child: Text(
-            item.replaceAll("<bot>", ""),
-            style: const TextStyle(color :Colors.white),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: Text(
+              item.replaceAll("<bot>", ""),
+              softWrap: true,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),

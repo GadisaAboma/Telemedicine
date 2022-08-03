@@ -58,29 +58,22 @@ class _DoctorsListState extends State<DoctorsList> {
                     itemCount: doctors?.length,
                     itemBuilder: (context, index) {
                       Widget listOfDoctor = Container();
-                      if (doctors!.length > 1 && index != doctors!.length -1) {
+                      if (doctors!.length > 1 && index != doctors!.length - 1) {
                         listOfDoctor = Card(
                           elevation: 5,
                           child: InkWell(
                             onTap: () async {
-                              // final provider =
-                              //     Provider.of<RegisterProvider>(context, listen: false);
+                              setState(() {
+                                isLoading = true;
+                              });
+                              fetchPosts();
                               final chat = Provider.of<PreviousChat>(context,
                                   listen: false);
-                              // String myUsername = provider.currentUser["username"];
-                              // final patientData =
-                              //     await provider.fetchMessage(myUsername);
 
-                              // print(patientData);
                               (doctors?[index]["content"] as List)
                                   .forEach((element) {
-                                // if (element["user"] == doctor![index]["username"]) {
-                                //   (element["content"] as List).forEach((message) {
                                 (element as Map).remove("_id");
-                                // print(patientData["messages"]);
                                 chat.addToChatHistory(element);
-                                // });
-                                // }
                               });
 
                               chat.setUserName(widget.username);
