@@ -12,6 +12,7 @@ import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:provider/provider.dart';
+import './posts/pages/create_place.dart';
 
 import 'home/patient_home.dart';
 import 'views/chat/chat_page.dart';
@@ -62,6 +63,8 @@ class MyApp extends StatelessWidget {
           "/appointment": (context) => AppointmentHome(),
           "/setAppointment": (context) => SetAppointment(),
           "/selectUser": (context) => SelectUser(),
+          "/createPost": (context) => CreatePost(),
+          
         },
         // home: Login(),
       ),

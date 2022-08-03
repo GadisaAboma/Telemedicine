@@ -2,6 +2,7 @@ const Patient = require('../models/Patient')
 const Doctor = require('../models/Doctor')
 const Admin = require('../models/Admin')
 const asyncHandler = require('express-async-handler')
+const Post = require('../models/place')
 
 const registerPatient = asyncHandler(async (req, res) => {
     const { name, username, gender, password, } = req.body
@@ -91,9 +92,45 @@ const patient = asyncHandler(async (req, res) => {
 
 })
 
+const getAllPosts = asyncHandler(async (req, res) => {
+    const allPosts = await Post.find()
+
+    var currentIndex = allPosts.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = allPosts[currentIndex];
+      allPosts[currentIndex] = allPosts[randomIndex];
+      allPosts[randomIndex] = temporaryValue;
+    } 
+
+    res.send(allPosts)
+
+})
+
+
+const createPost = asyncHandler(async (req, res) => {
+    const post = new Post({
+        name: req.body.name,
+        description: req.body.description,
+        imageUrl: req.file.path,
+        creator: req.user._id
+    })
+    const newPost = await post.save()
+
+    if (newPost) {
+        res.send('success')
+    } else {
+        res.status(404)
+        throw new Error('Unable to create place!')
+    }
+})
+
 module.exports = {
     registerPatient,
     searchDoctor,fetchPatient,patient,
+    createPost,
+    getAllPosts,
 
 
 }

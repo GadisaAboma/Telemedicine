@@ -63,9 +63,7 @@ def getResponse(intentsList, intentsJson):
             break
     return result
 
-
 app = Flask(__name__)
-
 
 @app.route("/bot", methods=["post"])
 # response

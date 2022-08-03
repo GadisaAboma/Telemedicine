@@ -208,18 +208,11 @@ class _DoctorHomeState extends State<DoctorHome> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.message, color: Colors.white,), label: "message"),
           ]),
-      floatingActionButton: AnimatedFloatingActionButton(
-          key: fabKey,
-          fabButtons: <Widget>[
-            // add(),
-            chat(context),
-            add(context),
-            // inbox(),
-          ],
-          colorStartAnimation: Theme.of(context).primaryColor,
-          colorEndAnimation: Colors.red,
-          animatedIconData: AnimatedIcons.menu_close //To principal button
-          ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, createPost);
+          },    
+          child: Icon(Icons.add),),
     );
   }
 }

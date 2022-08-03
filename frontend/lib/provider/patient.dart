@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/appointment/set_appointment.dart';
@@ -6,6 +7,8 @@ import 'package:http/http.dart' as http;
 import '../utils/helpers.dart';
 
 class PatientProvider extends ChangeNotifier {
+  List _places = [];
+
   Future doctors() async {
     try {
       final response = await http
@@ -79,7 +82,7 @@ class PatientProvider extends ChangeNotifier {
 
   Future setAppointment(
       String id, var date, String doctorId, String description) async {
-    print("desc   " +description);
+    print("desc   " + description);
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/doctors/setAppointment"),
@@ -104,7 +107,6 @@ class PatientProvider extends ChangeNotifier {
   }
 
   Future fetchAppointment(String id, String userType) async {
-    print("coming");
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/user/fetchAppointments"),
@@ -123,5 +125,38 @@ class PatientProvider extends ChangeNotifier {
       print(e);
       return e;
     }
+  }
+
+  Future<void> createPlace(var description, File image) async {
+    var url = Uri.parse('$serverUrl/api/user/createPost');
+    try {
+      var request = http.MultipartRequest('post', url);
+      // request.fields['name'] = name.toString();
+      // request.headers['authorization'] = 'Bearer $token';
+      request.fields['description'] = description.toString();
+      var img = await http.MultipartFile.fromPath("postImage", image.path);
+      request.files.add(img);
+      var res = await request.send();
+      var response = await http.Response.fromStream(res);
+      notifyListeners();
+    } catch (err) {
+      print(err);
+      rethrow;
+    }
+  }
+
+  Future<void> fetchPosts() async {
+    var url = Uri.parse('$serverUrl/api/user/fetchPosts');
+    try {
+      var res = await http.get(url);
+        _places = json.decode(res.body);
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  List get places {
+    return [..._places];
   }
 }

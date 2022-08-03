@@ -15,4 +15,6 @@ String chatbotUrl = 'http://192.168.1.51:5000/bot';
 String appointmentPage = '/appointment';
 String setAppointment = '/setAppointment';
 String selectUser = '/selectUser';
+String createPost = '/createPost';
+
 // static String url = "http://10.141.214.82:3000";
