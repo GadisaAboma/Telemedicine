@@ -20,13 +20,17 @@ class _SelectUserState extends State<SelectUser> {
   TextEditingController _controller = new TextEditingController();
 
   void _searchDoctor(BuildContext context) async {
-    dynamic returnedPatient =
-        await Provider.of<PatientProvider>(listen: false, context)
-            .searchPatient(username);
-    if (returnedPatient != null) {
-      setState(() {
-        patient = returnedPatient;
-      });
+    try {
+      dynamic returnedPatient =
+          await Provider.of<PatientProvider>(listen: false, context)
+              .searchPatient(username);
+      if (returnedPatient != null) {
+        setState(() {
+          patient = returnedPatient;
+        });
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -103,7 +107,8 @@ class _SelectUserState extends State<SelectUser> {
                           'name': patient['name']
                         }),
                     child: Card(
-                      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                       child: Padding(
                         padding: EdgeInsets.all(25),
                         child: Column(
