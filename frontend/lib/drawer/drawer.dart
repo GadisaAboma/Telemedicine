@@ -36,6 +36,7 @@ class DrawerWidget extends StatelessWidget {
                     backgroundImage: AssetImage("assets/image/doctor.jpg"),
                   ),
                 ),
+                
               ),
               ListTile(
                 title: Text(userInfo["name"],
@@ -66,7 +67,7 @@ class DrawerWidget extends StatelessWidget {
                 // Provider.of<PreviousChat>(context, listen: false).dispose();
                 SharedPreferences sharedPreferences =
                     await SharedPreferences.getInstance();
-                    
+
                 sharedPreferences.remove("username");
                 sharedPreferences.remove("password");
 
