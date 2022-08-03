@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/provider/message.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+import '../provider/register.dart';
 
 import '../doctor/doctor_profile.dart';
 
@@ -35,9 +36,10 @@ class DrawerWidget extends StatelessWidget {
                     backgroundImage: AssetImage("assets/image/doctor.jpg"),
                   ),
                 ),
+                
               ),
               ListTile(
-                title: Text("Abib Ali", style: TextStyle(color: Colors.white)),
+                title: Text(Provider.of<RegisterProvider>(context, listen: false).loggedName, style: TextStyle(color: Colors.white)),
                 subtitle: Text(
                   "phone number +251950488766",
                   style: TextStyle(color: Colors.white),
