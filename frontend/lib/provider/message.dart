@@ -15,7 +15,7 @@ class PreviousChat extends ChangeNotifier {
   List<Chat> _chatHistory = [];
   late io.Socket _socket;
 
-  late  StreamSubscription<ContactEvent> _sub;
+  late StreamSubscription<ContactEvent> _sub;
   List<String> contacts = [];
   dynamic currentContact;
 
@@ -57,21 +57,19 @@ class PreviousChat extends ChangeNotifier {
     notifyListeners();
   }
 
-Future<void> contactedDoctor(String username)async {
-  try{
-    final response = await http
+  Future<void> contactedDoctor(String username) async {
+    try {
+      final response = await http
           .get(Uri.parse("$serverUrl/patients/doctorsList"), headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
       });
       final data = json.decode(response.body);
       print(data["_docs"]);
-  }catch(e){
-
+    } catch (e) {}
   }
 
-}
-  void initVideo(BuildContext ctx,String id, String username) {
+  void initVideo(BuildContext ctx, String id, String username) {
     ClientIO().init(id, username);
 
     ClientIO().rootContext = ctx;
