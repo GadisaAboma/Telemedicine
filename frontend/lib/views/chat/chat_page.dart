@@ -22,53 +22,40 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  late final StreamSubscription<ContactEvent> _sub;
-  List<String> contacts = [];
+  // late final StreamSubscription<ContactEvent> _sub;
+  // List<String> contacts = [];
   dynamic currentContact;
   bool isVideo = true;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      // final provider = Provider.of<PreviousChat>(context, listen: false);
-      // contacts = provider.contacts;
-      currentContact =
-          Provider.of<RegisterProvider>(context, listen: true).currentUser;
-    });
-  }
+    // Future.delayed(Duration.zero, () {
+    // final provider = Provider.of<PreviousChat>(context, listen: false);
+    // contacts = provider.contacts;
+    currentContact =
+        Provider.of<RegisterProvider>(context, listen: false).currentUser;
 
-  void initVideo(BuildContext ctx) {
-    ClientIO().init(currentContact["_id"], currentContact["username"]);
+        Provider.of<PreviousChat>(context, listen: false).initVideo(context, currentContact["_id"], currentContact["username"]);
 
-    ClientIO().rootContext = ctx;
-
-    _sub = ClientIO().watchMain().listen((event) {
-      final contact = event.username + ':' + event.userid;
-
-      if (event.online) {
-        if (contacts.contains(contact)) return;
-
-        contacts.add(contact);
-        setState(() {});
-      } else {
-        if (contacts.remove(contact)) setState(() {});
-      }
-    });
-
-    print("current contacts is :" + contacts.toString());
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    initVideo(context);
+    // currentContact =
+    //     Provider.of<RegisterProvider>(context, listen: true).currentUser;
+    // initVideo(context);
+    // print("current " + contacts.toString());
+    // initVideo(context);
+
     var provider = Provider.of<PreviousChat>(context, listen: true);
     var loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
     String title = "messaging";
-    // print("prievs chat  " + previousChat);
+    // print("prievs chat  " + previousChat.toString());
     // if (previousChat != null) {
     //   title = provider.getUsername() != previousChat[0].reciever
     //       ? previousChat[0].reciever
@@ -101,18 +88,18 @@ class _ChatPageState extends State<ChatPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  final res =
-                      await HttpUtil().createRoom(isVideo ? 'video' : 'audio');
+                  final res = await HttpUtil()
+                      .createRoom(isVideo == true ? 'video' : 'audio');
                   final String room = res['room'];
                   final String type = res['type'];
 
                   // var callee = contacts[index].split(':').last;
                   var callee = "";
-                  contacts.forEach((element) {
-                    if (element ==
-                        currentContact["username"] +
-                            ":" +
-                            currentContact["_id"]) {
+                  Provider.of<PreviousChat>(context, listen: false)
+                      .contacts
+                      .forEach((element) {
+                    print("username is : " + element);
+                    if (element.split(":").contains(route["username"])) {
                       callee = element.split(':').last;
                       return;
                     }
@@ -120,6 +107,15 @@ class _ChatPageState extends State<ChatPage> {
 
                   print('callee: $callee');
                   print('room: $room');
+
+                  if (callee.isEmpty) {
+                    AlertDialog(
+                      title: Row(children: [Icon(Icons.warning), Text("user is offline")],),
+                      actions: [
+                        Container(child: Text("ok"),)
+                      ],
+                    );
+                  } else{
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -132,11 +128,18 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ),
                   );
+                  }
+
                 },
                 icon: Icon(Icons.video_call))
           ],
-          centerTitle: true,
-          title: Text(title)),
+          // centerTitle: true,
+          title: Row(
+            children: [
+              CircleAvatar(backgroundColor: Colors.white,),SizedBox(width: 10,),
+              Text(route["username"]),
+            ],
+          )),
       body: previousChat == null
           ? Container(child: Center(child: Text("welcome ")))
           : Padding(

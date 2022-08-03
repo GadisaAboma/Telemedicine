@@ -3,8 +3,11 @@ import 'package:frontend/provider/message.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../doctor/doctor_profile.dart';
+
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key}) : super(key: key);
+  final userInfo;
+  DrawerWidget({this.userInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -13,33 +16,39 @@ class DrawerWidget extends StatelessWidget {
       child: Column(children: [
         Container(
           height: 200,
-          padding: EdgeInsets.all(20),
-          color: Colors.blueGrey,
+          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+          color: Theme.of(context).primaryColor,
           child: Column(
             children: [
               ListTile(
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage("assets/image/doctor.jpg"),
+                leading: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return DoctorProfile(doctorinfo: userInfo);
+                      },
+                    ));
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage("assets/image/doctor.jpg"),
+                  ),
                 ),
               ),
               ListTile(
-                title: Text("Abib Ali"),
-                subtitle: Text("phone number +251950488766"),
+                title: Text("Abib Ali", style: TextStyle(color: Colors.white)),
+                subtitle: Text(
+                  "phone number +251950488766",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
         ),
         Column(
           children: [
-            ListTile(
-              title: Text("logout"),
-              leading: Icon(Icons.logout),
-              onTap: () {
-                // Provider.of<PreviousChat>(context, listen: false).dispose();
-                Navigator.pushReplacementNamed(context, loginRoute);
-              },
-            ),
+            
             ListTile(
               title: Text("Appointment"),
               leading: Icon(Icons.event),
@@ -47,6 +56,14 @@ class DrawerWidget extends StatelessWidget {
                 // Provider.of<PreviousChat>(context, listen: false).dispose();
                 Navigator.of(context).pop();
                 Navigator.pushNamed(context, appointmentPage);
+              },
+            ),
+            ListTile(
+              title: Text("logout"),
+              leading: Icon(Icons.logout),
+              onTap: () {
+                // Provider.of<PreviousChat>(context, listen: false).dispose();
+                Navigator.pushReplacementNamed(context, loginRoute);
               },
             ),
           ],

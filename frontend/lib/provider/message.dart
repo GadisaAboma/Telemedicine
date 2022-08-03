@@ -1,13 +1,24 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../model/chat.dart';
+import '../utils/helpers.dart';
+import '../video chat/rtc/client_io.dart';
+import '../video chat/rtc/contact_event.dart';
 
 class PreviousChat extends ChangeNotifier {
   List<Chat> _chatHistory = [];
-  List<String> contacts = [];
   late io.Socket _socket;
+
+  late  StreamSubscription<ContactEvent> _sub;
+  List<String> contacts = [];
+  dynamic currentContact;
+
   get chatHistory {
     return _chatHistory;
   }
@@ -46,11 +57,46 @@ class PreviousChat extends ChangeNotifier {
     notifyListeners();
   }
 
+Future<void> contactedDoctor(String username)async {
+  try{
+    final response = await http
+          .get(Uri.parse("$serverUrl/patients/doctorsList"), headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+      });
+      final data = json.decode(response.body);
+      print(data["_docs"]);
+  }catch(e){
+
+  }
+
+}
+  void initVideo(BuildContext ctx,String id, String username) {
+    ClientIO().init(id, username);
+
+    ClientIO().rootContext = ctx;
+
+    _sub = ClientIO().watchMain().listen((event) {
+      print('listen contact event');
+
+      final contact = event.username + ':' + event.userid;
+
+      if (event.online) {
+        if (contacts.contains(contact)) return;
+
+        contacts.add(contact);
+        notifyListeners();
+      } else {
+        if (contacts.remove(contact)) notifyListeners();
+      }
+    });
+  }
+
   void connectAndListen(String username) {
     print(username);
 
     _socket = io.io(
-        "http:// 192.168.1.189:8080",
+        "http://192.168.1.41:8080",
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()

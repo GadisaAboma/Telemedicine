@@ -1,7 +1,5 @@
 import 'dart:async';
 
-
-
 import 'client_io.dart';
 import '../utils/sotre_util.dart';
 import 'peer/peer_event.dart';
@@ -81,7 +79,7 @@ class _RTCVideoState extends State<RTCVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WebRTC Video Call'),
+        title: const Text('Telemedicine Video Call'),
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -136,6 +134,13 @@ class _RTCVideoState extends State<RTCVideo> {
                 IconButton(
                   onPressed: () => _service.toggleMedia('audio'),
                   icon: const Icon(Icons.mic),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                IconButton(
+                  onPressed: () => _service.changeCamera(),
+                  icon: const Icon(Icons.camera_rear_outlined),
                 ),
               ],
             ),

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HttpUtil {
-  static const _baseUri = 'http://192.168.1.189:8888';
+  static const _baseUri = 'http://192.168.1.41:8888';
 
   Future<Map<String, dynamic>> getTokenWithAccount(
       String account, String channelName) async {

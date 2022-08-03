@@ -22,17 +22,30 @@ class _SearchDoctorState extends State<SearchDoctor> {
 
   String searchedDoctor = "";
   dynamic doctor = {};
+  bool isLoading = false;
   void search(BuildContext ctx) async {
     searchedDoctor = edit.text;
     edit.text = "";
-    final returneddoctor =
-        await Provider.of<PatientProvider>(context, listen: false)
-            .searchDoctor(searchedDoctor);
-    // print(returneddoctor);
-    if (returneddoctor != null) {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final returneddoctor =
+          await Provider.of<PatientProvider>(context, listen: false)
+              .searchDoctor(searchedDoctor);
       setState(() {
-        doctor = returneddoctor;
+        isLoading = false;
       });
+      if (returneddoctor != null) {
+        setState(() {
+          doctor = returneddoctor;
+        });
+      } else {
+        doctor = "doctor not found";
+      }
+    } catch (e) {
+      //  Navigator.pop(context);
+      print(e);
     }
   }
 
@@ -74,26 +87,32 @@ class _SearchDoctorState extends State<SearchDoctor> {
           IconButton(onPressed: () {}, icon: Icon(Icons.person)),
         ],
       ),
-      body: doctor.isNotEmpty
-          ? ListTile(
-              leading: CircleAvatar(),
-              title: Text(doctor['name'].toString()),
-              subtitle: Text(doctor["specializedIn"].toString()),
-              trailing: IconButton(
-                icon: Icon(Icons.message),
-                onPressed: () async {
-                  // print(doctor["_id"]);
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+              color: Colors.green,
+            )):doctor == "doctor not found"?Center(child: Text(doctor),)
+          : doctor.isNotEmpty && doctor['name'] != null
+              ? ListTile(
+                  leading: CircleAvatar(),
+                  title: Text(doctor['name'].toString()),
+                  subtitle: Text(doctor["specializedIn"].toString()),
+                  trailing: IconButton(
+                    icon: Icon(Icons.message),
+                    onPressed: () async {
+                      // print(doctor["_id"]);
 
-                  final provider =
-                      Provider.of<RegisterProvider>(context, listen: false);
-                  final chat =
-                      Provider.of<PreviousChat>(context, listen: false);
-                  String myUsername = provider.currentUser["username"];
-                  final patientData = await provider.fetchMessage(myUsername);
+                      final provider =
+                          Provider.of<RegisterProvider>(context, listen: false);
+                      final chat =
+                          Provider.of<PreviousChat>(context, listen: false);
+                      String myUsername = provider.currentUser["username"];
+                      final patientData =
+                          await provider.fetchMessage(myUsername);
 
-                  // String myUsername = provider.me;
-                  // final patientData = await provider.fetchPatient(myUsername);
-                  // Map<String, String> data = json.decode(patientData);
+                      // String myUsername = provider.me;
+                      // final patientData = await provider.fetchPatient(myUsername);
+                      // Map<String, String> data = json.decode(patientData);
 // (patientData["messages"]["content"] as List)
 //                         .forEach((data) {
 //                       (data as Map).remove("_id");
@@ -101,29 +120,31 @@ class _SearchDoctorState extends State<SearchDoctor> {
 //                       chat.addToChatHistory(data);
 //                     });
 
-                  print(patientData);
-                  (patientData["messages"] as List).forEach((element) {
-                    if (element["user"] == doctor["username"]) {
-                      (element["content"] as List).forEach((message) {
-                        (message as Map).remove("_id");
-                        print(patientData["messages"]);
-                        chat.addToChatHistory(message);
+                      print(patientData);
+                      (patientData["messages"] as List).forEach((element) {
+                        if (element["user"] == doctor["username"]) {
+                          (element["content"] as List).forEach((message) {
+                            (message as Map).remove("_id");
+                            print(patientData["messages"]);
+                            chat.addToChatHistory(message);
+                          });
+                        }
                       });
-                    }
-                  });
 
-                  chat.setUserName(myUsername);
-                  chat.setReciever(doctor["username"]);
-                  chat.setSender(myUsername);
-                  chat.connectAndListen(myUsername);
+                      chat.setUserName(myUsername);
+                      chat.setReciever(doctor["username"]);
+                      chat.setSender(myUsername);
+                      chat.connectAndListen(myUsername);
 
-                  Navigator.pushNamed(context, chatPageRoute,
-                      arguments: {"id": doctor["_id"]});
-                },
-              ),
-              onTap: () {},
-            )
-          : Center(child: Text("search doctor")),
+                      Navigator.pushNamed(context, chatPageRoute, arguments: {
+                        "id": doctor["_id"],
+                        "username": doctor["username"]
+                      });
+                    },
+                  ),
+                  onTap: () {},
+                )
+              : Center(child: Text("search doctor")),
     );
   }
 }

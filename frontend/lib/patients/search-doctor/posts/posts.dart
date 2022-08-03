@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:provider/provider.dart';
-import './widgets/each_place.dart';
+import '../../../posts/widgets/each_place.dart';
 
-import '../widget/post.dart';
+
+import '../../../widget/post.dart';
 
 class Posts extends StatefulWidget {
   const Posts({Key? key}) : super(key: key);

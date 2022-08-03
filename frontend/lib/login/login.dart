@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/provider/message.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../video chat/rtc/client_io.dart';
+import '../video chat/rtc/contact_event.dart';
 import '../video chat/utils/sotre_util.dart';
 
 // import '../service/socket_service.dart';
@@ -18,8 +23,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+  late final StreamSubscription<ContactEvent> _sub;
   String username = "";
   String password = "";
+  List<String> contacts = [];
+  dynamic currentContact;
+  bool isVideo = true;
 
   FocusNode? focusNode;
   TextStyle textStyle() {
@@ -41,6 +50,27 @@ class _LoginState extends State<Login> {
     // TODO: implement dispose
     focusNode?.dispose();
     super.dispose();
+  }
+
+  void initVideo(BuildContext ctx, String id, String username) {
+    ClientIO().init(id, username);
+
+    ClientIO().rootContext = context;
+
+    _sub = ClientIO().watchMain().listen((event) {
+      print('listen contact event');
+
+      final contact = event.username + ':' + event.userid;
+
+      if (event.online) {
+        if (contacts.contains(contact)) return;
+
+        contacts.add(contact);
+        setState(() {});
+      } else {
+        if (contacts.remove(contact)) setState(() {});
+      }
+    });
   }
 
   void login(BuildContext ctx) async {
@@ -117,9 +147,9 @@ class _LoginState extends State<Login> {
   }
 
   List<Color> _colors = [
-    Color.fromARGB(199, 51, 105, 255),
-    Color.fromARGB(101, 144, 203, 255),
-    Color.fromARGB(131, 0, 204, 250)
+    Color.fromARGB(198, 1, 43, 106),
+    Color.fromARGB(99, 64, 130, 6),
+    Color.fromARGB(131, 3, 93, 113)
   ];
   List<double> _stops = [0.0, 0.7];
   Future loadingSpinner(BuildContext ctx) {
@@ -158,7 +188,7 @@ class _LoginState extends State<Login> {
           key: formKey,
           child: Container(
             padding: const EdgeInsets.only(top: 20),
-            height: MediaQuery.of(context).size.height * 0.95,
+            height: MediaQuery.of(context).size.height,
             // height: 500,
 
             child: Column(
@@ -325,9 +355,13 @@ class _LoginState extends State<Login> {
                           Container(
                             child: TextButton(
                               onPressed: () {},
-                              child: const Text("Forget password"),
+                              child: const Text(
+                                "Forget password",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
+                          
                         ],
                       ),
                     ),

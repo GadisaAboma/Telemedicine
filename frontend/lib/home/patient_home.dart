@@ -4,12 +4,12 @@ import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
+import '../patients/search-doctor/posts/posts.dart';
 import '../provider/register.dart';
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
 import '../patients/messages/messages.dart';
 import '../patients/notifications/notification.dart';
-import '../posts/posts.dart';
 
 class PatientHome extends StatefulWidget {
   @override
@@ -18,45 +18,14 @@ class PatientHome extends StatefulWidget {
 
 class _PatientHomeState extends State<PatientHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
+  dynamic loggedInUser;
   @override
   void initState() {
     super.initState();
-    final loggedInUser =
+    loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     // print(loggedInUser);
     // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
-  }
-
-  Widget chat(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn1",
-        tooltip: 'Second button',
-        child: Icon(Icons.chat),
-      ),
-    );
-  }
-
-  Widget add(BuildContext ctx) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          fabKey.currentState!.closeFABs();
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        },
-        heroTag: "btn2",
-        tooltip: 'Second button',
-        child: Icon(Icons.chat),
-      ),
-    );
   }
 
   int index = 0;
@@ -82,11 +51,23 @@ class _PatientHomeState extends State<PatientHome> {
     return homeWidget;
   }
 
+  Widget setBody() {
+    Widget body = Container();
+    if (index == 0) body = Posts();
+    if (index == 1) body = Notifications();
+    if (index == 2)
+      body = DoctorsList(
+        username: loggedInUser["username"],
+      );
+
+    return body;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+        title: Text(loggedInUser['name']),
         actions: [
           Container(
             height: 40,
@@ -104,29 +85,18 @@ class _PatientHomeState extends State<PatientHome> {
           )
         ],
       ),
-      drawer: DrawerWidget(),
-      backgroundColor: Color.fromRGBO(224, 217, 217, 0.87),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (index == 0) Posts(),
-            if (index == 1) Notifications(),
-            if (index == 2) DoctorsList()
-          ],
-        ),
+      drawer: DrawerWidget(
+        userInfo: loggedInUser,
       ),
-      floatingActionButton: AnimatedFloatingActionButton(
-          key: fabKey,
-          fabButtons: <Widget>[
-            // add(),
-            chat(context),
-            add(context),
-            // inbox(),
-          ],
-          colorStartAnimation: Theme.of(context).primaryColor,
-          colorEndAnimation: Colors.red,
-          animatedIconData: AnimatedIcons.menu_close //To principal button
-          ),
+      body: setBody(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.chat_sharp),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ChatBot();
+          }));
+        }, //To principal button
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColor,
         currentIndex: index,

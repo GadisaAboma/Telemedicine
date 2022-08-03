@@ -8,7 +8,6 @@ import '../posts/widgets/each_place.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
-import '../posts/posts.dart';
 import '../video chat/rtc/client_io.dart';
 
 class AdminHome extends StatefulWidget {
