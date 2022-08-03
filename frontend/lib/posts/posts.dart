@@ -42,7 +42,7 @@ class _PostsState extends State<Posts> {
     return Container(
 
       child: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SizedBox(
@@ -53,7 +53,9 @@ class _PostsState extends State<Posts> {
                   return EachPlace(
                       places[index]['description'],
                       places[index]['imageUrl'].toString().replaceAll('\\', '/'),
-                      places[index]['date']);
+                      places[index]['date'],
+                      places[index]['doctorName']
+                      );
                 },
               ),
           ),

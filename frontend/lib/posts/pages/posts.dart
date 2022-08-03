@@ -26,17 +26,14 @@ class _PostsState extends State<Posts> {
       isLoading = true;
     });
 
-      Provider.of<Users>(context, listen: false).fetchPlaces();
-      
-      setState(() {
-        isLoading = false;
-      });
+    Provider.of<Users>(context, listen: false).fetchPlaces();
 
+    setState(() {
+      isLoading = false;
+    });
   }
 
-
-
- /*  @override
+  /*  @override
   void didChangeDependencies() {
     setState(() {
       isLoading = true;
@@ -84,7 +81,8 @@ class _PostsState extends State<Posts> {
                 : TextButton.icon(
                     icon: const Icon(Icons.login),
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed(Login.routeName);
+                      Navigator.of(context)
+                          .pushReplacementNamed(Login.routeName);
                     },
                     label: const Text('Login'),
                     style: TextButton.styleFrom(
@@ -136,8 +134,11 @@ class _PostsState extends State<Posts> {
             )
           : Container(
               child: ListView.builder(
-                itemBuilder: (ctx, i) =>
-                    EachPlace(places[i]['name'], places[i]['imageUrl'].toString().replaceAll('\\', '/'), places[i]['date']),
+                itemBuilder: (ctx, i) => EachPlace(
+                    places[i]['description'],
+                    places[i]['imageUrl'].toString().replaceAll('\\', '/'),
+                    places[i]['date'],
+                    places[i]['doctorName']),
                 itemCount: places.length,
               ),
             ),

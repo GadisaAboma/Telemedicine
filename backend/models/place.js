@@ -17,6 +17,10 @@ const postSchema = new Schema({
         type: Date,
         default: new Date()
     },
+    doctorName: {
+        type: String,
+        required: true,
+    }
     // creator: {
     //     type: mongoose.Schema.Types.ObjectId,
     //     /* required: true,

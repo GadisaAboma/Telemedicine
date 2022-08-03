@@ -16,6 +16,7 @@ class RegisterProvider extends ChangeNotifier {
 
   String loggedId = '';
   String userType = '';
+  String loggedName = '';
 
   void setLoading() {
     isLoading = !isLoading;
@@ -77,7 +78,9 @@ class RegisterProvider extends ChangeNotifier {
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
-
+ userType = responseData['role'] + 's';
+      loggedId = responseData['_doc']['_id'];
+      loggedName = responseData['_doc']['name'];
       setLoading();
       notifyListeners();
       return "success";
@@ -152,10 +155,11 @@ class RegisterProvider extends ChangeNotifier {
 
       userType = responseData['role'] + 's';
       loggedId = responseData['_doc']['_id'];
+      loggedName = responseData['_doc']['name'];
 
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } catch (e) {
-    print(e);
+      print(e);
       return Future.error("Error happened");
     }
   }
@@ -166,5 +170,9 @@ class RegisterProvider extends ChangeNotifier {
 
   String get loggedUserType {
     return userType;
+  }
+
+  String get loggedUserName {
+    return loggedName;
   }
 }

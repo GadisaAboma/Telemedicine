@@ -11,6 +11,7 @@ import '../posts/posts.dart';
 import '../provider/message.dart';
 import '../provider/register.dart';
 import '../views/chat/chat_page.dart';
+import '../posts/widgets/each_place.dart';
 
 class DoctorHome extends StatefulWidget {
   @override
@@ -18,6 +19,17 @@ class DoctorHome extends StatefulWidget {
 }
 
 class _DoctorHomeState extends State<DoctorHome> {
+  bool isLoading = true;
+  List places = [];
+
+  void fetchPosts() async {
+    await Provider.of<PatientProvider>(context, listen: false).fetchPosts();
+    places = Provider.of<PatientProvider>(context, listen: false).places;
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
   int index = 0;
   dynamic doctorInfo;
@@ -31,6 +43,12 @@ class _DoctorHomeState extends State<DoctorHome> {
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
     super.initState();
+    Future.delayed(
+      Duration.zero,
+      () {
+        fetchPosts();
+      },
+    );
   }
 
   void setNavigation(int navagateIndex) {
@@ -126,16 +144,21 @@ class _DoctorHomeState extends State<DoctorHome> {
   Widget SetBody(BuildContext ctx) {
     Widget returnedWidget;
     if (index == 0) {
-      returnedWidget = Center(
-        child: ElevatedButton(
-          child: Text("chatpage"),
-          onPressed: () {
-            print("object");
-
-            // Navigator.pushNamed(context, chatPageRoute, arguments: id.toString());
-          },
-        ),
-      );
+      returnedWidget = isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              child: ListView.builder(
+                itemBuilder: (ctx, i) => EachPlace(
+                    places[i]['description'],
+                    places[i]['imageUrl'].toString().replaceAll('\\', '/'),
+                    places[i]['date'],
+                    places[i]['doctorName']
+                    ),
+                itemCount: places.length,
+              ),
+            );
     } else if (index == 1) {
       returnedWidget = const Center(
         child: Text("Notification"),
@@ -193,10 +216,11 @@ class _DoctorHomeState extends State<DoctorHome> {
                 icon: Icon(Icons.message), label: "message"),
           ]),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, createPost);
-          },    
-          child: Icon(Icons.add),),
+        onPressed: () {
+          Navigator.pushNamed(context, createPost);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
