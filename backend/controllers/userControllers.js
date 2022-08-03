@@ -59,6 +59,7 @@ const createPost = asyncHandler(async (req, res) => {
     const post = new Post({
         description: req.body.description,
         imageUrl: req.file.path,
+        doctorName: req.body.doctorName
         //creator: req.user._id
     })
     const newPost = await post.save()
@@ -72,7 +73,7 @@ const createPost = asyncHandler(async (req, res) => {
 })
 
 const getAllPosts = asyncHandler(async (req, res) => {
-    console.log('coming')
+
     const allPlaces = await Post.find()
 
     var currentIndex = allPlaces.length, temporaryValue, randomIndex;
@@ -88,15 +89,9 @@ const getAllPosts = asyncHandler(async (req, res) => {
 
 })
 
-
-// const startTextChat = asyncHandler( async (req, res) => {
-
-// })
-
 module.exports = {
     loginUser,
     fetchAppointments,
     getAllPosts,
     createPost
-    // startTextChat
 }

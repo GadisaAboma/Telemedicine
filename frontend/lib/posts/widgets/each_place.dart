@@ -8,8 +8,9 @@ class EachPlace extends StatelessWidget {
   var description;
   var imageUrl;
   var date;
+  var doctorName;
 
-  EachPlace(this.description, this.imageUrl, this.date);
+  EachPlace(this.description, this.imageUrl, this.date, this.doctorName);
 
   String timeAgo(DateTime d) {
     Duration diff = DateTime.now().difference(d);
@@ -57,9 +58,9 @@ class EachPlace extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Gadisa Aboma posted a post",
-                    style: TextStyle(
+                  Text(
+                    "$doctorName posted a post",
+                    style: const TextStyle(
                         fontSize: 19,
                         fontFamily: 'OpenSans',
                         fontWeight: FontWeight.w600),
@@ -75,6 +76,15 @@ class EachPlace extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
+          Text(
+            description,
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           GestureDetector(
             onTap: () => Navigator.of(context).pushNamed(UserDetail.routeName),
             child: Image.network('$serverUrl/$imageUrl'),
@@ -82,32 +92,32 @@ class EachPlace extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton.icon(
-                label: const Text('Like'),
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.thumb_up_alt_outlined,
-                  color: Colors.black,
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite_border),
-                label: const Text('Favorite'),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                label: const Text('View'),
-                icon: const Icon(
-                  Icons.place,
-                  color: Colors.orange,
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     TextButton.icon(
+          //       label: const Text('Like'),
+          //       onPressed: () {},
+          //       icon: const Icon(
+          //         Icons.thumb_up_alt_outlined,
+          //         color: Colors.black,
+          //       ),
+          //     ),
+          //     TextButton.icon(
+          //       onPressed: () {},
+          //       icon: const Icon(Icons.favorite_border),
+          //       label: const Text('Favorite'),
+          //     ),
+          //     TextButton.icon(
+          //       onPressed: () {},
+          //       label: const Text('View'),
+          //       icon: const Icon(
+          //         Icons.place,
+          //         color: Colors.orange,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           const Divider(
             thickness: 2,
           )

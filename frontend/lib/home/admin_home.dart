@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:frontend/admin/doctor_detail_info.dart';
+import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:provider/provider.dart';
+import '../posts/widgets/each_place.dart';
 
 import '../chatbot/chatbot.dart';
 import '../drawer/drawer.dart';
@@ -14,6 +16,19 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
+
+ bool isLoading = true;
+  List places = [];
+
+
+  void fetchPosts() async {
+    await Provider.of<PatientProvider>(context, listen: false).fetchPosts();
+    places = Provider.of<PatientProvider>(context, listen: false).places;
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
   int index = 0;
   var unApprovedDoctorsList;
@@ -27,6 +42,13 @@ class _AdminHomeState extends State<AdminHome> {
 
     ClientIO().rootContext = context;
     super.initState();
+
+     Future.delayed(
+      Duration.zero,
+      () {
+        fetchPosts();
+      },
+    );
   }
 
   Widget bodyWidget(BuildContext ctx) {
@@ -60,9 +82,25 @@ class _AdminHomeState extends State<AdminHome> {
               }),
             );
     } else {
-      returnedwidget = Center(
-        child: Text("admin"),
-      );
+      returnedwidget = isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SizedBox(
+            height: 700,
+            child: ListView.builder(
+                itemCount: places.length,
+                itemBuilder: (context, index) {
+                  return EachPlace(
+                      places[index]['description'],
+                      places[index]['imageUrl'].toString().replaceAll('\\', '/'),
+                      places[index]['date'],
+                      places[index]['doctorName']);
+                      
+                },
+              ),
+          
+    );
     }
     return returnedwidget;
   }

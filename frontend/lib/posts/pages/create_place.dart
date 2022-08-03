@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/provider/patient.dart';
+import 'package:frontend/provider/register.dart';
 import 'package:image_picker/image_picker.dart';
 import '../providers/users.dart';
 import 'package:provider/provider.dart';
@@ -83,9 +84,9 @@ class _CreatePostState extends State<CreatePost> {
     _form.currentState!.save();
 
     try {
-     // String token = Provider.of<PatientProvider>(context, listen: false);
+     String doctorName = Provider.of<RegisterProvider>(context, listen: false).loggedUserName;
       await Provider.of<PatientProvider>(context, listen: false)
-          .createPlace(description, _image!);
+          .createPlace(description, _image!, doctorName);
 
       setState(() {
         isLoading = false;

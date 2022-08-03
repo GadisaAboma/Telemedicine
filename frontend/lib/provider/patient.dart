@@ -127,13 +127,15 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> createPlace(var description, File image) async {
+  Future<void> createPlace(
+      var description, File image, String doctorName) async {
     var url = Uri.parse('$serverUrl/api/user/createPost');
     try {
       var request = http.MultipartRequest('post', url);
       // request.fields['name'] = name.toString();
       // request.headers['authorization'] = 'Bearer $token';
       request.fields['description'] = description.toString();
+      request.fields['doctorName'] = doctorName.toString();
       var img = await http.MultipartFile.fromPath("postImage", image.path);
       request.files.add(img);
       var res = await request.send();
@@ -149,7 +151,7 @@ class PatientProvider extends ChangeNotifier {
     var url = Uri.parse('$serverUrl/api/user/fetchPosts');
     try {
       var res = await http.get(url);
-        _places = json.decode(res.body);
+      _places = json.decode(res.body);
       notifyListeners();
     } catch (err) {
       print(err);
