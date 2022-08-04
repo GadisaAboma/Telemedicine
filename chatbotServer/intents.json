@@ -1,7 +1,7 @@
 {"intents" : [
      {"tag" : "nagaatti",
       "patterns" : ["nagaan ooli", "oolmaa gaarii", "nagaatti", "booda walitti deebina", "guyyaa gaarii qabaadhu", "chaaw", "wal agarra"],
-      "responses" : ["deemunka nan gadda!", "nagaatti!"]
+      "responses" : ["  nagaan turi!", "nagaatti!","turtii gaarii"]
  },
      {
       "tag" : "nagaa",
@@ -21,7 +21,7 @@
  {
       "tag" : "dhukkuba",
       "patterns" : ["mucaa koo dhukkube", "mucaakoo na jalaa dhukkube", "daa'ima na jalaa dhukkubee", "daa'ima koo dhukkube","maal na gargaaruu dandeessaa"],
-      "responses" : ["maal si jalaa taate", "maal tatee mucaan kee" ]
+      "responses" : ["maal si jalaa taate", "mallattoo mucaa kee irrratti muldhat hundaa natti himi" ]
  },
  {
       "tag" : "Garaa kaasaa",
@@ -33,70 +33,203 @@
       "responses" : ["qaama gubaa irraa mucaan keessan akka fayyituuf mucaa keessan doktora waliin walii galuudhaan garaa mana yaalatti geessun dirqamadha sababnisaa qaama gubaan qorannaa dhiigaa waan barbaaduuf qoricha mana yaala irra siniif keennamuu hordofuun mucaa keessan dhukkubicharraa aka fayyitu gochuu dandeessu " ]
  },{
       "tag" : "gogiinsa garaa",
-      "patterns" : [" mucaan koo bobbaa baayye gogaa babba'a ", "  mucaan koo bobbaa baayye gogaa babbaati ", " mucaan koo fedhii nyaata hin qabu  ", " fedhii nyaata hin qabu  "," fedhii nyaata hin qabdu ","mucaa koo ol deebisa"],
+      "patterns" : [" mucaan koo bobbaa baayye gogaa babba'a ", "  mucaan koo bobbaa baayye gogaa bobbaati ", " mucaan koo fedhii nyaata hin qabu  ", " fedhii nyaata hin qabu  "," fedhii nyaata hin qabdu ","mucaa koo ol deebisiisa"],
       "responses" : [" nyaata kuduraafii muduraa seeraan kennaafii ,bishaan gahaa kennaafii" ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "oolmaa",
+      "patterns" : ["  akkam oolte", "  nagaa ooltee ", " fayyaa ooltee  ", "  ","  "],
+      "responses" : [" nagaa akkam oolte maal si gargaaru ", "galata rabbii maal si gargaaru " ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "hi",
+      "patterns" : [" hi ", " hey  ", " heey  ", " hii ","si  "],
+      "responses" : ["hi nagaa dhaa? fayyaa daa'iimaa irrattin hojjedha maaal si gargaaru  ", " hi akkam? fayyaa daa'immaanii irratti gaaffi qabdaniif deebisuuf akkamitti sin gargaaru " ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "tole",
+      "patterns" : ["ishi  ", " tole  ", " haa ta'u  ", " ","  "],
+      "responses" : [" tole nagaatti ", " haa ta'u jabaadhu " ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "gaaffii",
+      "patterns" : ["naaf hin galle  ", " ifaa naaf hin taane  ", "haala kamiin fayyu dandeessi"],
+      "responses" : ["waanta siif hin galle hundaa na gaafachuu dandeessa dhibee mucaa kee faana kan wal qabatu"]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "qorra",
+      "patterns" : [" haxxifachiisa ", " mucaa koo ni haxxiffachiisa", "  baayyee qufaasisa ", "utaalloo cimaatu  ","Hirriba rakkachuu" ,"baayyee hin raffisu", "rafuu dadhabsiisa"],
+      "responses" : ["mallattoon isin amma natti himtan kun maallatto qorraa waan taheef daa'ima keessan haala kanaan kunuunsu qabdu 1.ffaa amma dhukkubni kun itti furutti waan ho'aa keenuufii 2.ffaa daa'ima keessanitti xuuxxoo keennu irra harmaa hoosisuun filatamaadha"]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "toonsiilii",
+      "patterns" : ["  Liqimsuun rakkisaa ykn dhukkuba.", " mucaa koo nyaata Liqimsuu dadhabsiisa ", "daa'ima koo nyaata Liqimsuun rakkisaa ykn dhukkubbii.   ", " sagalee hin taane baafachisa","sagalee yeroo baafattu hin dhukkuba  "],
+      "responses" : [" daa'imni keessan nyaata liqimsuu dadhabsiisa taanan yks sagalee badee ykn furdaa baafachisa taanan dhibeen mucaa keessaniii toonsilii yookiin dhukkubbi qooqnqootti dhihata yaalin isin mana keessanitti gochuufi qabdan Mucaan keessan maal nyaachuu ykn dhuguu akka qabu hubachudha haa ta’u malee, dhukkubbii qoonqoo yoo qabaatan nyaata lallaafaa ta’e filachuu danda’u gama qorichaatin immoo ibuprofin kennuufidha kanarra yoo darbe immoo doktora faana haasayaa", "  " ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "finniisa",
+      "patterns" : ["fuula mucaakootti fiinnisatu bayyate", "finnisaa fuulaa akkamittin balleesina", "fuula daa'imaa irraa finnisa akkamitti ballessuu dandeenya", "finniisa ijoolle irraa akkamiin  ballessina","finisni akkamitti baduu danda'a"],
+      "responses" : ["Fuula daa'ima keessanii qulqullina qabaadhaa. Guyyaa guyyaan fuula daa'ima keessanii bishaan ho'aa fi saamunaa daa'imaa salphaadhaan dhiqadhaa. Fuula daa'ima keessanii suuta gogsaa. Salphaatti gogaa daa'ima keessanii gogsuu qofa.Finniisa sana hin ciniinsinaa ykn hin xuuxinaa  Fuula daa'ima keessanii irratti looshinii ykn zayita fayyadamuu irraa of qusadhaa." ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "diaper rash",
+      "patterns" : ["mucaa koo gogaa naannoo qaama saala guba", "gogaa naannoo qaama saalaa gubuu", "yeroon diaper jijjiruuf hin boochisa", "naannoo qama saalatti madaa'a jira"],
+      "responses" : ["aa’ima keessan guyyaa guyyaan dhiqadhaa: Dhiqachuun karaa gaarii ta’ee fi dhiqannaa daa’imaa saffisaan qulqulleessuuf gargaarudha. Kaayyoo kanaaf bishaan ho’aa urgooftuu hin qabnee fi saamunaa salphaa qabu fayyadamuu ykn mucaa keessan ofeeggannoodhaan baazii gochuudhaan salphaatti akka fayyan gochuu ni dandeessu"]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "alaarjikii",
+      "patterns" : ["mucaa koo geengoo ija jalaa dukkanaa’aa", "mucaa koo yeroo baayye afaaniin hafuura baafachiisaa"],
+      "responses" : ["Yoo mucaan keessan alarjii salphaa ol ta’e ykn si yaaddessu qabaate hakiima qunnamaa. Yoo mallattoon dhukkubaa salphaa ta’e, qoricha farra histaamiinii kan akka diphenhydramine (kan akka Benadryl) afaaniin kennaafii." ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "gargaarsa",
+      "patterns" : ["waan na gargaarteef galatoomi", "guddaa galatoomi", "naaf galeera galatoomi", "tole galatoomi","na gargaaruu keetiif galatoomi","gargaarsikee natti toleera"],
+      "responses" : ["hayyee nagaan tura fayyaa hin dhabiina", "tole  nagaan turi yeroo gaarii" ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "dhukkubii mataa haadholii",
+      "patterns" : ["mataakoo baayyee na dhukkuba","Yeroo ulfaa dhiibbaa dhiigaa koo akkamittan gadi buusu danda'a?"],
+      "responses" : ["Nyaata madaalawaa nyaachuu fi soogidda xiqqaa fudhachuun dhiibbaa dhiigaa hir’isuuf gargaaruu danda’a", "  " ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "dhukkubbi haadholii",
+      "patterns" : ["baayyee na dhukkuba na gargaruu dandeessa", "na dhukkuba", "na dhukkubaa jira", "qaama koo dhukkuba","baayye na dhukkubaa jira maal gochuun qaba"],
+      "responses" : ["qaama kee keessaa eessa si dhukkuba maal si godha maallattoo akkamii akka si irratti muldhisu natti himi" ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "dhiiga",
+      "patterns" : ["dhiignii koo baayye dhangala'a", "dhangala'uu dhiigaa akkamitti dhaabun danda'ama", "dhiiga yaa'uu akkamitti dhaabbachiisna", "dhiiga dhangala'u akkamitti dhaabbachiisna"],
+      "responses" : ["Mana keessatti dhiiga dhangala'eu qoricha uumamaatiin yaaluun karaan mirkanaa'e hin jiru. Yoo mana keessatti dhiiga dhangala’e balleessuuf yaalte, wal’aansa fayyaa sirrii ta’e argachuuf yeroo dheeraa sitti fudhachuu danda’a. Kunis carraa dhukkuba lubbuu namaa balaadhaaf saaxiluu danda’u qabaachuu kee dabaluu danda’a. kanaafuu doktora kee faana walqunnamuun haasayi" ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "gargaarsaa",
+      "patterns" : ["akkamittin na gargaaruu dandeessa", "na gargaari", "na gargaaruu dandeessaa"],
+      "responses" : ["akkamittiin si gargaaruu maalidha rakkoon daa'ima kee", "haala kamiin akkan si gargaaruu barbaadde" ]
  },{
-      "tag" : "",
-      "patterns" : ["  ", "   ", "   ", "  ","  "],
-      "responses" : ["  ", "  " ]
+      "tag" : "haasaa",
+      "patterns" : ["hi akkam oolte", "hii akkam bulte", "hi akkam", "hi akkam nagadhaa","akkami fayyaaadhaa"],
+      "responses" : ["nagaadha! maal si gargaaruu gama fayyaa daa'immaniitiin" ]
+ }, {
+     "tag": "dhukkubbii garaacha",
+     "patterns":["tuttufsiisa","olgursisa","mucaa koo tuttufsiisa","ni tutufsisa","ni boo'a","tasgabbii dhoowwa"],
+     "responses":["Mucaan keessan boqonnaa hedduu akka argatu mirkaneessi. Mucaan keessan dhangala’oo ifa ta’e kan akka bishaan qabbanaa’ee bilcheefame ykn dhangala’aa baay’ee akka dhugu gargaaraa.  Mucaan keessan yoo fayyaa dhabuun itti dhaga’ame nyaata akka nyaatu hin dhiibinaa.     Yoo mucaan keessan beela’e nyaata lallaafaa kan akka crackers, rice, bananas ykn toast dhiheessi."]
+ },
+ {
+     "tag": "maagaa",
+     "patterns": ["bobbaa faana raammoo  adii baasisa","rammoo babbasisa","babbaa malee raammoo baasisa",""],
+     "responses" : ["dukkubichi dhukkuba maagaati dhukkubichi kan nama qabu qulqullina dhaburran  kan kahedha. dhukkubicha salphadhan dhabamsiisu ni dandahama kanaafuu  mucaan keesssan bakka qulqullu ta'e kaahaa "]
+ },
+ {
+     "tag": "hirriba",
+     "patterns": ["mucaa koo hirriba dhoowwa","mucaan koo hin raftu","hanqina hirribaa qabdi","hin raffisuu ni boochisa","mucaa koo yeroo hundaa hin raftu"],
+     "responses" : ["rakkina hirribaa mucaa keessan qabate hirdhisuuf wan sin gochuu qabdan 1ffaa  Ho’i kutaa ciisichaa mijataa fi kutaa ciisichaa dukkanaa’aa ta’uu isaa mirkaneessi. Sagaleen mana keessa jiru gadi aanaa ta’uu isaa mirkaneessi. 2ffaa daa'ima nyaata ykn dhugaatii kaafeeniin qabu kamiyyuu yeroo ciisan dura sa'aatii 6 gadi hin kenniinaa."]
+ },
+ {
+     "tag": "diimachuu ijaa",
+     "patterns": ["mucaan koo ifaa ilaaluu hin dandeessuu","ifaa ilaaluu dadhabsiisa","ija banachuu dadhabsiisa","ija dhitessee jira","mucaakoo ija dhiitesse"],
+     "responses" : ["mallattooleen kun malattoo dimachuu ijaatii,, Yeroo hedduu diimachuun ijaa waan nama yaaddeessu miti, waan ofii isaatiin dhiisuudha. Waantoota akka goguu ijaatiif imimmaan namtolchee fayyadamuun ni danda'ama. yookis saamunaa malee ijaa daa'ima keessanii akka dhiqxan "]
+ },
+ {
+     "tag": "akkamitti naf fayyiti",
+     "patterns": ["mucaan koo haala amma jetten fayyuu dandeessi","akka fayyituuf akkam gochuun qabaree","haala kamin fayyitiree","kanan qofaa fayyuu dandeessii"],
+     "responses" : ["wantotan ani sitti himu hundaa hojiitti hiiki yoo kanaan itti furuu baate doktara quunnami "]
+ },
+ {
+     "tag": "yaalii",
+     "patterns": ["na yaaluu dandeessa","yaalii naaf kennitaa","akkamittin na yaalta"],
+     "responses" : ["ani  yaalii siif kennuu hin danda'u gorsan siif kenna malee yaalii gaha argachuuf doktora faana wal qunnami "]
+ },
+ {
+     "tag": "qoricha",
+     "patterns": ["qorichaa eessan argachu danda'a","qoricha naaf kennuu dandeessaa","qoricha garaa argachuu danda'aa","mucaakoo naaf yaalu dandeessaa"],
+     "responses" : ["ani mucaa keessan isinif yaalus tahee qoricha kennuufihin danda'u gorsa siniif kenna qoricha argachuuf doctora qunnamaa"]
+ },
+ {
+     "tag": "gaaffii dhibee",
+     "patterns": ["dhukkubni garaa maalidha","dhukkubni garaa akkamitti nama qabaa","daa'ima garaa maalif dhukkuba",""],
+     "responses" : ["Dhukkubbiin garaachaa nyaata baay’isuu ykn xiqqoo nyaachuu, gaazii garaachaa ykn infekshinii vaayirasii salphaa ta’een kan dhufudha. "]
+ },
+ {
+     "tag": "gaaffi albaatii",
+     "patterns": ["maaliif albaasisaa","albaatiin akkamitti itti bayyata","yeroo baayee maalif albaasisa"],
+     "responses" : ["nyaata sirri hin taane kennufii irran kanka'e  bayyee albaasisa "]
+ },
+ {
+     "tag": "ati eenyu",
+     "patterns": ["eenyudha ati","ati eenyuu","maqaan kee eenyu","eenyu jedhamta","ati doctoradhaa"],
+     "responses" : ["maqaan koo gargaaraadha.. gorsaa siif kennuun danda'a akkamin si gargaaru"]
+ },
+ {
+     "tag": "wal arguu",
+     "patterns": ["mucaa koo sibira fiduun danda'aa","dhufuun danda'aa","si faana wal quunnamuu danda'aa","akkamittan si arguu danda'a"],
+     "responses" : ["anaan na qunnaamuu hin dandeessu sababnisaa qaaman si gargaaruu hin danda'u waan sitti ulfaatee doktora faana haasayi"]
+ },
+ {
+     "tag": "",
+     "patterns": [" ","  ","   ","     "],
+     "responses" : ["miiseejii duwwaa hin ergiin"]
+ },
+ {
+     "tag": "jira",
+     "patterns": ["jira","nagaakoo","fayya","galatasaa"],
+     "responses" : ["tole, maal si haa gargaaruree?","haa ta'u maal si gargaruun danda'a"]
+ },
+ {
+     "tag": "argachuu",
+     "patterns": ["sibira qoricha argachuu danda'aa"],
+     "responses" : ["na biraa argachuu hin dandeessu "]
+ },
+ {
+     "tag": "hirriba itti baayisa",
+     "patterns": ["mucaa koo hirriba itti baayyisa","baayyee raffisa","hirriba guddaa rafa ","baayyee mugsiisa"],
+     "responses" : ["daa'imni baayyee rafuun dhukkuba cimaadha ykn fayya iaanii irratti dhiibbaa fida jettani hin dhiphatiinaa ,, yoo hirriba dhabe malee"]
+ },
+ {
+     "tag": "bultee",
+     "patterns": ["nagaa bultee","akkam bulte","fayyaa bultee"],
+     "responses" : ["nagaa akkami.. maal akkan si gargaaru barbaadda"]
+ },
+ {
+     "tag": "dhukkuba gurraa",
+     "patterns": ["gurra malaasuu","maalaan karaa gurraa bahuu","gurra hoqsiisuu","malaa gurraa"],
+     "responses" : ["Huccuu dhiqannaa bishaan qabbanaawaa ykn ho'aa keessatti jiidhuu, ciccitaa, achiis gurra daa'imaa isaa  dhukkubu irra kaa'i"]
+ },
+ {
+     "tag": "dhukkuba arrabaa",
+     "patterns": ["mucaa koo arrab dhukkuba ","arraba dhukkubsachisa","arraba dhukkuba","arrabashi dukkuba","arrabasaa dhukkuba"],
+     "responses" : ["Erga nyaachiftee booda qulqulleessuu amala godhadhu. Yeroo qulqulleessitu daa’ima kee harka tokkoon suuta suutaan qabadhu.Gaazii jiidha qabu ykn huccuu dhiqannaa, ykn qulqulleessituu arraba daa’imaa silikoonii fayyadamaa.     Suuta jedhii ilkaan, arrabaa fi qoochoo isaanii keessaa dhiqadhu."]
+ },
+ {
+     "tag": "hepatitis",
+     "patterns": ["hepatisi b","hepatisis b maalidha","hepatisis dhukkuba cimaadha"],
+     "responses" : ["Hepatitis B dhukkuba kalee lubbuu namaa balaa irra buusu kan vaayirasii hepatitis B (HBV) jedhamu irraa dhufudha. Rakkoo fayyaa guddaa addunyaati. Infeekshinii yeroo dheeraa fiduu kan danda’u yoo ta’u, daa'immoota dhukkuba cirrhosis fi kaansarii kaleetiin du’uuf carraa guddaa keessa galcha "]
+ },
+ {
+     "tag": "hepatitis fayyu",
+     "patterns": ["hepatisi b irra akkamitti fayyina"],
+     "responses" : ["doktora qunnamuun gara mana yaalaa deema "]
+ },
+ {
+     "tag": "nyaata",
+     "patterns": ["fayyaa da'imaaf maal soorachiisuun qaba","sorata daa'imaaf malu","sorata gaarii daa'imaaf","nyata madalama","nyaanni madalamaan maal fa'a"],
+     "responses" : [" guyyaa guyyaan nyaata beeyladaa (aannan, aannan, hanqaaquu, foon, qurxummii fi qamadii) irraa qooda tokko qabaachuu ishee mirkaneessi,  ykn naatiiwwan, fi kuduraalee fi fuduraalee burtukaanaa ykn magariisa"]
+ },
+ {
+     "tag": "nyata badaa",
+     "patterns": ["daa'imni nyaata akkamii nyaachuu hin qabdu","nyaata daa'imaaf hin malle","nyaaata bada","nyaata sirri hin taane"],
+     "responses" : ["daa'imni keessan nyaata kana nyaachuu hin qabne Soogidda. Daa'imman soogidda baay'ee nyaachuu hin qaban, sababiin isaas tiruu isaaniif gaarii waan hin taaneef. .Shukkaara. Daa'imni keessan sukkaara hin barbaadu.Cooma guutuu. Damma "]
+ },
+ {
+     "tag": "fincaan diimessuu",
+     "patterns": ["fincaan diimessa","fincaan yeroo fincooftu ni guba","fincaan yeroo fincaa'u ni guba","mucaan koo fincaan diimaa baasa","dhiigaa fincaa'a ","fincaan keessan dhiiga "],
+     "responses" : ["kun kan ta’uu danda’u yoo daa’imni keessan dhangala’aa gahaa hin arganne (bishaan isaa irraa hir’ate). Yookiin daa’imni keessan qoricha tokko tokko yoo fudhate ykn rakkoo kalee yoo qabaate ta’uu danda’a. Nyaata akka biiti, rhubarb, blackberries ykn nyaata halluu nyaataa diimaa qabu nyaachuun fincaan daa’ima keessanii diimaa ykn bifa pilaastikii fakkaatu gochuu danda’a."]
+ },
+ {
+     "tag": "iyyisiisuu",
+     "patterns": ["ni iyyisiisa","mucaa koo ni iyyisiisaa","mucaan koo ni boossi","boo'icha cimaa daa'imaa","daa'imni maalif boossi"],
+     "responses" : ["Jalqaba daa'imni keessan ho'a qaamaa akka hin qabne mirkaneessaa. ... Daa'imni keessan akka hin beelofnee fi daappii qulqulluu akka qabu mirkaneessi. Daa’ima waliin dhagaa ykn deemuu.     Daa’ima kee wajjin faarfadhu ykn haasa’i. "]
+ },
+ {
+     "tag": "dubbachuu dadhabuu",
+     "patterns": ["mucaan koo dubbachuu hin dandeessu","mucaa koo arraba hidha","dubbii dadhabsiisaa","haasayuu hin dandeesu"],
+     "responses" : ["yaalii kana argachuuf doktora faana osoo wal qunnamtanii gaaridha"]
+ },
+ {
+     "tag": "baga jiraatte",
+     "patterns": ["baga jiraatte","baga fayya taate"],
+     "responses" : ["ameen walumaan maal si haa gargaaru ","tole maal  si haa gargaaru"]
+ },
+ {
+     "tag": "yaaliif gaafachuu",
+     "patterns": ["daa'ima najalaa dhukkube na gargaaru dandeessaa","dhuukkuba daa'ima koo yoo sitti hime nagartgata"],
+     "responses" : [" hayyeee maalidha dhukkubni da'ima keetii mallatto irratti argite faana natti himi"]
  }
- 
  ]
  }
  

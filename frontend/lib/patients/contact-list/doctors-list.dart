@@ -84,7 +84,8 @@ class _DoctorsListState extends State<DoctorsList> {
                               Navigator.pushNamed(context, chatPageRoute,
                                   arguments: {
                                     "id": user["_id"],
-                                    "username": doctors![index]["user"]
+                                    "username": doctors![index]["user"],
+                                    "name": doctors![index]["user"]
                                   });
                             },
                             child: Container(
@@ -95,21 +96,29 @@ class _DoctorsListState extends State<DoctorsList> {
                               child: ListTile(
                                 leading: Stack(
                                   children: [
-                                    CircleAvatar(radius: 30,),
-                                    Positioned(bottom: 1,right: 5,
+                                    CircleAvatar(
+                                      radius: 30,
+                                    ),
+                                    Positioned(
+                                      bottom: 1,
+                                      right: 5,
                                       child: CircleAvatar(
-                                        radius: 5,
-                                        backgroundColor:(Provider.of<PreviousChat>(context,
-                                                      listen: false)
-                                                  .contacts
-                                                  .any((element) => element
-                                                      .split(":")
-                                                      .contains(
-                                                          doctors![index]["user"]))? Colors.green:Colors.yellow)),
+                                          radius: 5,
+                                          backgroundColor:
+                                              (Provider.of<PreviousChat>(
+                                                          context,
+                                                          listen: false)
+                                                      .contacts
+                                                      .any((element) => element
+                                                          .split(":")
+                                                          .contains(
+                                                              doctors![index]
+                                                                  ["user"]))
+                                                  ? Colors.green
+                                                  : Colors.yellow)),
                                     ),
                                   ],
                                 ),
-                                
                                 title: Text(doctors?[index]["user"]),
                                 subtitle: Row(
                                   children: [

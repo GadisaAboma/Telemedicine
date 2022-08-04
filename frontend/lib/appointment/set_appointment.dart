@@ -87,11 +87,14 @@ class _SetAppointmentState extends State<SetAppointment> {
                     // ),
                     const SizedBox(
                       width: 15,
-                    ),   
+                    ),
                     Expanded(
                       child: TextField(
                         onChanged: (value) {
-                          description = value;
+                          // setState(() {
+                            description = value;
+                          
+                          
                         },
                         minLines: 2,
                         maxLines: 5,
@@ -128,7 +131,10 @@ class _SetAppointmentState extends State<SetAppointment> {
                   lastDate: DateTime.now().add(Duration(days: 30)),
                   onDateChanged: (selectedDate) {
                     setState(() {
-                      date = selectedDate;
+                      date = DateFormat.yMMMEd()
+
+                          // displaying formatted date
+                          .format(selectedDate);
                     });
                   },
                 ),

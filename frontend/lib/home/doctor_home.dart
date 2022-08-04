@@ -78,69 +78,67 @@ class _DoctorHomeState extends State<DoctorHome> {
                         child: Card(
                           elevation: 5,
                           child: ListTile(
-                              onTap: () async {
-                                // SocketService.init();
-                                final chat = Provider.of<PreviousChat>(ctx,
-                                    listen: false);
-                                final patient = await Provider.of<
-                                        PatientProvider>(context, listen: false)
-                                    .patient(
-                                        doctorInfo["messages"][index]["user"]);
-                                chat.setUserName(doctorInfo["username"]);
-                                chat.setReciever(
-                                    doctorInfo["messages"][index]["user"]);
-                                chat.setSender(doctorInfo["username"]);
-                                (doctorInfo["messages"][index]["content"]
-                                        as List)
-                                    .forEach((data) {
-                                  (data as Map).remove("_id");
-                                  // print(data);
-                                  chat.addToChatHistory(data);
-                                });
-                                print(chat.chatHistory);
+                            onTap: () async {
+                              // SocketService.init();
+                              final chat =
+                                  Provider.of<PreviousChat>(ctx, listen: false);
+                              final patient = await Provider.of<
+                                      PatientProvider>(context, listen: false)
+                                  .patient(
+                                      doctorInfo["messages"][index]["user"]);
+                              chat.setUserName(doctorInfo["username"]);
+                              chat.setReciever(
+                                  doctorInfo["messages"][index]["user"]);
+                              chat.setSender(doctorInfo["username"]);
+                              (doctorInfo["messages"][index]["content"] as List)
+                                  .forEach((data) {
+                                (data as Map).remove("_id");
+                                // print(data);
+                                chat.addToChatHistory(data);
+                              });
+                              print(chat.chatHistory);
 
-                                chat.connectAndListen(doctorInfo["username"]);
+                              chat.connectAndListen(doctorInfo["username"]);
 
-                                // print("patient" + patient);
-                                Navigator.pushNamed(context, chatPageRoute,
-                                    arguments: {
-                                      "id": patient["_id"],
-                                      "name": patient["name"]
-                                    });
-                              },
-                              title:
-                                  Text(doctorInfo["messages"][index]["user"]),
-                              leading: Stack(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 30,
-                                  ),
-                                  Positioned(
-                                    bottom: 1,
-                                    right: 5,
-                                    child: CircleAvatar(
-                                        radius: 5,
-                                        backgroundColor: (Provider.of<
-                                                        PreviousChat>(context,
-                                                    listen: false)
-                                                .contacts
-                                                .any((element) => element
-                                                    .split(":")
-                                                    .contains(doctorInfo[
-                                                            "messages"]![index]
-                                                        ["user"]))
-                                            ? Colors.green
-                                            : Colors.yellow)),
-                                  ),
-                                ],
-                              ),
-                              trailing: Icon(
-                                Icons.done_all,
-                              ),
+                              // print("patient" + patient);
+                              Navigator.pushNamed(context, chatPageRoute,
+                                  arguments: {
+                                    "id": patient["_id"],
+                                    "name": patient["name"],
+                                    "username": patient["username"]
+                                  });
+                            },
+                            title: Text(doctorInfo["messages"][index]["user"]),
+                            leading: Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                ),
+                                Positioned(
+                                  bottom: 1,
+                                  right: 5,
+                                  child: CircleAvatar(
+                                      radius: 5,
+                                      backgroundColor: (Provider.of<
+                                                      PreviousChat>(context,
+                                                  listen: false)
+                                              .contacts
+                                              .any((element) => element
+                                                  .split(":")
+                                                  .contains(doctorInfo[
+                                                          "messages"]![index]
+                                                      ["user"]))
+                                          ? Colors.green
+                                          : Colors.yellow)),
+                                ),
+                              ],
+                            ),
+                            trailing: Icon(
+                              Icons.done_all,
                             ),
                           ),
                         ),
-                      
+                      ),
                   ],
                 );
           return listOfPatient;

@@ -90,7 +90,10 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                                           ),
                                         ),
                                         Text(
-                                          appointments[index]['date'],
+              //                             DateFormat.yMMMEd() 
+              // .format(DateTime.parse(appointments[index]['date'])
+              appointments[index]['date']
+              , 
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
