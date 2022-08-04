@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/provider/message.dart';
+import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,7 +37,6 @@ class DrawerWidget extends StatelessWidget {
                     backgroundImage: AssetImage("assets/image/doctor.jpg"),
                   ),
                 ),
-                
               ),
               ListTile(
                 title: Text(userInfo["name"],
@@ -51,15 +51,17 @@ class DrawerWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            ListTile(
-              title: Text("Appointment"),
-              leading: Icon(Icons.event),
-              onTap: () {
-                // Provider.of<PreviousChat>(context, listen: false).dispose();
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, appointmentPage);
-              },
-            ),
+            Provider.of<RegisterProvider>(context, listen: false).loggedUserId != 'admins'
+                ? ListTile(
+                    title: Text("Appointment"),
+                    leading: Icon(Icons.event),
+                    onTap: () {
+                      // Provider.of<PreviousChat>(context, listen: false).dispose();
+                      Navigator.of(context).pop();
+                      Navigator.pushNamed(context, appointmentPage);
+                    },
+                  )
+                : Container(),
             ListTile(
               title: Text("logout"),
               leading: Icon(Icons.logout),

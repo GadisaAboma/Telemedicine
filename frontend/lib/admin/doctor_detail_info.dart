@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/provider/register.dart';
+import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
-class DoctorDetailInfo extends StatelessWidget {
+class DoctorDetailInfo extends StatefulWidget {
   final doctorInfo;
   DoctorDetailInfo({this.doctorInfo});
+
+  @override
+  State<DoctorDetailInfo> createState() => _DoctorDetailInfoState();
+}
+
+class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +26,19 @@ class DoctorDetailInfo extends StatelessWidget {
             Container(
                 alignment: Alignment.center,
                 height: 200,
-                child: Image.asset("assets/image/doctor.jpg")),
+                child: Image.network(
+                    '$serverUrl/${widget.doctorInfo['idUrl'].toString().replaceAll('\\', '/')}')),
             SizedBox(
               height: 20,
             ),
             Row(
-              children: [Text("Name of doctor:  "), Text(doctorInfo["name"])],
+              children: [
+                Text("Name of doctor:  "),
+                Text(
+                  widget.doctorInfo["name"],
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
             ),
             SizedBox(
               height: 10,
@@ -31,7 +46,7 @@ class DoctorDetailInfo extends StatelessWidget {
             Row(
               children: [
                 Text("Specialized in:  "),
-                Text(doctorInfo["specializedIn"])
+                Text(widget.doctorInfo["specializedIn"])
               ],
             ),
             SizedBox(
@@ -40,9 +55,30 @@ class DoctorDetailInfo extends StatelessWidget {
             Row(
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      // Provider.of<RegisterProvider>(context, listen: false)
-                      //     .approveRequest(doctorInfo["_id"]);
+                    onPressed: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      AlertDialog(
+                        content: isLoading
+                            ? CircularProgressIndicator()
+                            : Text("Request Approved"),
+                        actions: [
+                          !isLoading
+                              ? TextButton(
+                                  onPressed: (() {
+                                    Navigator.pop(context);
+                                  }),
+                                  child: Text("success"))
+                              : Text("Loading")
+                        ],
+                      );
+                      setState(() {
+                        isLoading = true;
+                      });
+                      Provider.of<RegisterProvider>(context, listen: false)
+                          .approveDoctor(widget.doctorInfo["_id"]);
                     },
                     child: Text("Approve")),
                 SizedBox(

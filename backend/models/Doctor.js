@@ -28,6 +28,10 @@ const doctorSchema = new Schema({
         type: Boolean,
         default: false
     },
+    idUrl: {
+        type: String,
+        required: true
+    },
     appointments: [{
         description: {
           type: String, 

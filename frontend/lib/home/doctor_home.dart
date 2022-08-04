@@ -21,11 +21,11 @@ class DoctorHome extends StatefulWidget {
 
 class _DoctorHomeState extends State<DoctorHome> {
   bool isLoading = true;
-  List places = [];
+  List posts = [];
 
   void fetchPosts() async {
     await Provider.of<PatientProvider>(context, listen: false).fetchPosts();
-    places = Provider.of<PatientProvider>(context, listen: false).places;
+    posts = Provider.of<PatientProvider>(context, listen: false).posts;
     setState(() {
       isLoading = false;
     });
@@ -157,11 +157,11 @@ class _DoctorHomeState extends State<DoctorHome> {
           : Container(
               child: ListView.builder(
                 itemBuilder: (ctx, i) => EachPlace(
-                    places[i]['description'],
-                    places[i]['imageUrl'].toString().replaceAll('\\', '/'),
-                    places[i]['date'],
-                    places[i]['doctorName']),
-                itemCount: places.length,
+                    posts[i]['description'],
+                    posts[i]['imageUrl'].toString().replaceAll('\\', '/'),
+                    posts[i]['date'],
+                    posts[i]['doctorName']),
+                itemCount: posts.length,
               ),
             );
     } else if (index == 1) {

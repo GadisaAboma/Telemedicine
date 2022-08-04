@@ -39,8 +39,14 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
-  Future register(String name, String username, String password,
-      String accountType, String specializedIn, String gender) async {
+  Future register(
+      String name,
+      String username,
+      String password,
+      String accountType,
+      String specializedIn,
+      String gender,
+      File? image) async {
     print("object");
     setLoading();
     Map<String, String> jsonData = accountType == "doctor"
@@ -63,12 +69,31 @@ class RegisterProvider extends ChangeNotifier {
           ? "patients/registerPatient"
           : "doctors/registerDoctor";
 
-      final response = await http.post(Uri.parse("$serverUrl/api/$routeType"),
-          body: json.encode(jsonData),
-          headers: {
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          });
+      var url = Uri.parse('$serverUrl/api/$routeType');
+      var request = http.MultipartRequest('post', url);
+      if (accountType == 'patient') {
+        request.fields['name'] = name.toString();
+        request.fields['username'] = username.toString();
+        request.fields['gender'] = gender.toString();
+        request.fields['password'] = password.toString();
+      } else {
+        request.fields['name'] = name.toString();
+        request.fields['username'] = username.toString();
+        request.fields['gender'] = gender.toString();
+        request.fields['password'] = password.toString();
+        request.fields['specializedIn'] = specializedIn.toString();
+        var img = await http.MultipartFile.fromPath("doctorId", image!.path);
+        request.files.add(img);
+      }
+      var res = await request.send();
+      var response = await http.Response.fromStream(res);
+
+      // final response = await http.post(Uri.parse("$serverUrl/api/$routeType"),
+      //     body: json.encode(jsonData),
+      //     headers: {
+      //       "Content-type": "application/json",
+      //       "Accept": "application/json",
+      //     });
 
       final responseData = json.decode(response.body);
       if (response.statusCode == 400) {
@@ -78,7 +103,10 @@ class RegisterProvider extends ChangeNotifier {
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
       }
- userType = responseData['role'] + 's';
+
+      print(responseData);
+
+      userType = responseData['role'] + 's';
       loggedId = responseData['_doc']['_id'];
       loggedName = responseData['_doc']['name'];
       setLoading();
@@ -88,6 +116,7 @@ class RegisterProvider extends ChangeNotifier {
       print(e.message);
       return Future.error(e.message);
     } catch (e) {
+      print(e);
       throw Exception("Error happened");
     }
   }
@@ -108,6 +137,28 @@ class RegisterProvider extends ChangeNotifier {
       return json.decode(response.body);
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> approveDoctor(String id) async {
+    print(id);
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/admin/approve"),
+          body: json.encode({"id": id}),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          });
+
+      unApprovedDoctorsList = json.decode(response.body);
+      notifyListeners();
+      return json.decode(response.body);
+    } catch (e) {
+      unApprovedDoctorsList = [
+        null,
+      ];
+      notifyListeners();
     }
   }
 

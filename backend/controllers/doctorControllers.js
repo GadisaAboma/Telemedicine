@@ -32,7 +32,9 @@ const registerDoctor = asyncHandler(async (req, res) => {
     }
 
     const doctor = new Doctor({
-        ...req.body, messages: {
+        ...req.body,
+        idUrl: req.file.path,
+         messages: {
             user: "patient",
             content: {
                 sender: "Telemedicine",

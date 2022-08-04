@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../utils/helpers.dart';
 
 class PatientProvider extends ChangeNotifier {
-  List _places = [];
+  List _posts = [];
 
   Future doctors() async {
     try {
@@ -151,14 +151,14 @@ class PatientProvider extends ChangeNotifier {
     var url = Uri.parse('$serverUrl/api/user/fetchPosts');
     try {
       var res = await http.get(url);
-      _places = json.decode(res.body);
+      _posts = json.decode(res.body);
       notifyListeners();
     } catch (err) {
       print(err);
     }
   }
 
-  List get places {
-    return [..._places];
+  List get posts {
+    return [..._posts];
   }
 }

@@ -20,7 +20,7 @@ const allRequests = asyncHandler(async (req, res) => {
         isActive: false
     })
 
-    if(requests.length > 0) {
+    if (requests.length > 0) {
         res.send(requests)
     } else {
         res.status(404)
@@ -31,9 +31,17 @@ const allRequests = asyncHandler(async (req, res) => {
 
 const approveRequest = asyncHandler(async (req, res) => {
     const { id } = req.body
+    console.log(id)
     const doctor = await Doctor.findById(id)
     doctor.isActive = true
-    await doctor.save()
+    const success = await doctor.save()
+
+    if (success) {
+        res.send("Approved Successfully")
+    } else {
+        throw new Error('Failed Approving')
+    }
+
 })
 
 module.exports = {

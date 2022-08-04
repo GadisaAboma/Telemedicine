@@ -16,7 +16,7 @@ class Posts extends StatefulWidget {
 
 class _PostsState extends State<Posts> {
   bool isLoading = true;
-  List places = [];
+  List posts = [];
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _PostsState extends State<Posts> {
 
   void fetchPosts() async {
     await Provider.of<PatientProvider>(context, listen: false).fetchPosts();
-    places = Provider.of<PatientProvider>(context, listen: false).places;
+    posts = Provider.of<PatientProvider>(context, listen: false).posts;
     setState(() {
       isLoading = false;
     });
@@ -49,13 +49,13 @@ class _PostsState extends State<Posts> {
           : SizedBox(
             height: 700,
             child: ListView.builder(
-                itemCount: places.length,
+                itemCount: posts.length,
                 itemBuilder: (context, index) {
                   return EachPlace(
-                      places[index]['description'],
-                      places[index]['imageUrl'].toString().replaceAll('\\', '/'),
-                      places[index]['date'],
-                      places[index]['doctorName']
+                      posts[index]['description'],
+                      posts[index]['imageUrl'].toString().replaceAll('\\', '/'),
+                      posts[index]['date'],
+                      posts[index]['doctorName']
                       );
                 },
               ),

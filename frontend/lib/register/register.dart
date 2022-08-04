@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/login/login.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
@@ -17,12 +20,62 @@ class _RegisterState extends State<Register> {
   late bool isLoading;
   String fullname = "";
   String username = "";
+  File? _image;
   String password = "";
   String? gender;
   String specializedIn = "Conception and Pregnancy Adviser";
 
   String accountType = "patient";
   bool isDoctor = false;
+
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile?.path != null) {
+      setState(() {
+        _image = File(pickedFile!.path);
+      });
+    }
+    Navigator.pop(context);
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 150.0,
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          const Text('Choose Image'),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: TextButton.icon(
+                    onPressed: () {
+                      takePhoto(ImageSource.gallery);
+                    },
+                    label: const Text('Gallery'),
+                    icon: const Icon(Icons.image)),
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  takePhoto(ImageSource.camera);
+                },
+                label: const Text('Camera'),
+                icon: const Icon(Icons.camera_alt),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 
   void register(BuildContext ctx) async {
     try {
@@ -33,7 +86,7 @@ class _RegisterState extends State<Register> {
         final registerResponse =
             await Provider.of<RegisterProvider>(context, listen: false)
                 .register(fullname, username, password, accountType,
-                    specializedIn, gender.toString());
+                    specializedIn, gender.toString(), _image);
         print("registerResponse: $registerResponse");
         if (registerResponse == "success" && accountType == "patient") {
           // Navigator.pop(ctx);
@@ -181,34 +234,6 @@ class _RegisterState extends State<Register> {
                             });
                           },
                         ),
-                        // Row(
-                        //   children: [
-                        //     Text("gender"),
-                        //     SizedBox(
-                        //       width: 20,
-                        //     ),
-                        // DropdownButton(
-                        //     iconEnabledColor: Colors.amber,
-                        //     value: gender,
-                        //     items: [
-                        //       DropdownMenuItem(
-                        //         child: Text("male"),
-                        //         value: "male",
-                        //       ),
-                        //       DropdownMenuItem(
-                        //         value: "female",
-                        //         child: Text("Female"),
-                        //       ),
-                        //     ],
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         gender = value.toString();
-                        //       });
-                        //     }),
-
-                        //   ],
-                        // ),
-
                         SizedBox(
                           height: 20,
                         ),
@@ -272,7 +297,7 @@ class _RegisterState extends State<Register> {
                                 ),
                                 DropdownButton(
                                     value: specializedIn,
-                                    items: [
+                                    items: const [
                                       DropdownMenuItem(
                                         child: Text(
                                             "Conception and Pregnancy Adviser"),
@@ -299,7 +324,34 @@ class _RegisterState extends State<Register> {
                                       setState(() {
                                         specializedIn = value.toString();
                                       });
-                                    })
+                                    }),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                  child: TextButton.icon(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (_) => bottomSheet(),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.image),
+                                    label: const Text('Attach your id'),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                _image == null
+                                    ? Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text('Image Preview'),
+                                      )
+                                    : Container(
+                                        child: Image.file(_image!),
+                                        height: 160,
+                                      ),
                               ],
                             ),
                           ]),
