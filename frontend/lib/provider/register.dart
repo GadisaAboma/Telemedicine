@@ -17,6 +17,9 @@ class RegisterProvider extends ChangeNotifier {
   String loggedId = '';
   String userType = '';
   String loggedName = '';
+  String userToken = '';
+  String userName = '';
+  String userPassword = '';
 
   void setLoading() {
     isLoading = !isLoading;
@@ -207,6 +210,9 @@ class RegisterProvider extends ChangeNotifier {
       userType = responseData['role'] + 's';
       loggedId = responseData['_doc']['_id'];
       loggedName = responseData['_doc']['name'];
+      userName = responseData["_doc"]['username'];
+      userToken = responseData['token'];
+      userPassword = responseData["_doc"]['password'];
 
       return {"role": responseData["role"], "user": responseData["_doc"]};
     } on SocketException catch (e) {
@@ -227,5 +233,17 @@ class RegisterProvider extends ChangeNotifier {
 
   String get loggedUserName {
     return loggedName;
+  }
+
+  String get username {
+    return userName;
+  }
+
+  String get passWord {
+    return userPassword;
+  }
+
+  String get token {
+    return userToken;
   }
 }

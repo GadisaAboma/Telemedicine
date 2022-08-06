@@ -11,7 +11,7 @@ const postSchema = new Schema({
 
     imageUrl: {
         type: String,
-      
+
     },
     date: {
         type: Date,
@@ -20,13 +20,14 @@ const postSchema = new Schema({
     doctorName: {
         type: String,
         required: true,
+    },
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
-    // creator: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     /* required: true,
-    //     ref: 'User' */
-    // }
 
 })
 
-module.exports = mongoose.model('Posts', postSchema)
+
+module.exports = mongoose.model('Post', postSchema)

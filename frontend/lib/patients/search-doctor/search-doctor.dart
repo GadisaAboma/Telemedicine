@@ -91,7 +91,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
           ? Center(
               child: CircularProgressIndicator(
               color: Colors.green,
-            )):doctor == "doctor not found"?Center(child: Text(doctor),)
+            )):doctor == "doctor not found"? Center(child: Text(doctor),)
           : doctor.isNotEmpty && doctor['name'] != null
               ? ListTile(
                   leading: CircleAvatar(),

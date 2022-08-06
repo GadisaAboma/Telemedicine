@@ -5,8 +5,12 @@ import 'package:frontend/appointment/set_appointment.dart';
 // import 'package:frontend/chat-page/chatpage.dart';
 import 'package:frontend/home/admin_home.dart';
 import 'package:frontend/home/doctor_home.dart';
+import 'package:frontend/home/edit_account.dart';
+import 'package:frontend/home/edit_page.dart';
 import 'package:frontend/login/login.dart';
 import 'package:frontend/patients/search-doctor/search-doctor.dart';
+import 'package:frontend/posts/pages/post_detail.dart';
+import 'package:frontend/provider/doctor.dart';
 import 'package:frontend/provider/message.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
@@ -31,6 +35,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: ((context) => RegisterProvider()),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => DoctorProvider()),
         ),
         ChangeNotifierProvider(
           create: ((context) => PatientProvider()),
@@ -65,7 +72,9 @@ class MyApp extends StatelessWidget {
           "/setAppointment": (context) => SetAppointment(),
           "/selectUser": (context) => SelectUser(),
           "/createPost": (context) => CreatePost(),
-          
+          "/postDetail": (context) => PostDetail(),
+          "/editAccount": (context) => EditAccount(),
+          "/editPage": (context) => EditPage(),
         },
         // home: Login(),
       ),

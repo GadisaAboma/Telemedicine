@@ -128,14 +128,15 @@ class PatientProvider extends ChangeNotifier {
   }
 
   Future<void> createPlace(
-      var description, File image, String doctorName) async {
+      var description, File image, String doctorName, String token) async {
     var url = Uri.parse('$serverUrl/api/user/createPost');
     try {
       var request = http.MultipartRequest('post', url);
       // request.fields['name'] = name.toString();
-      // request.headers['authorization'] = 'Bearer $token';
+      request.headers['authorization'] = 'Bearer $token';
       request.fields['description'] = description.toString();
       request.fields['doctorName'] = doctorName.toString();
+      request.fields['creator'] = "dfdfdf";
       var img = await http.MultipartFile.fromPath("postImage", image.path);
       request.files.add(img);
       var res = await request.send();

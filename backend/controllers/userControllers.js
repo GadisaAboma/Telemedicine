@@ -4,6 +4,9 @@ const Patient = require('../models/Patient')
 const Doctor = require('../models/Doctor')
 const Post = require('../models/place')
 
+
+const jwt = require('jsonwebtoken')
+
 const loginUser = asyncHandler(async (req, res) => {
     const { username, password } = req.body
 
@@ -14,19 +17,22 @@ const loginUser = asyncHandler(async (req, res) => {
     if (admin && admin.password === password) {
         res.send({
             ...admin,
-            role: 'admin'
+            role: 'admin',
+            token: generateAuthToken(admin._id),
 
         })
     } else if (patient && patient.password === password) {
 
         user = {
             ...patient,
+            token: generateAuthToken(patient._id),
             role: 'patient'
         }
         res.send(user)
     } else if (doctor && doctor.password === password) {
         user = {
             ...doctor,
+            token: generateAuthToken(doctor._id),
             role: 'doctor'
         }
         res.send(user)
@@ -37,6 +43,10 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
 })
+
+const generateAuthToken = (id) => {
+    return jwt.sign({ id }, "telemedicine")
+}
 
 const fetchAppointments = asyncHandler(async (req, res) => {
     const { id, userType } = req.body
@@ -59,8 +69,8 @@ const createPost = asyncHandler(async (req, res) => {
     const post = new Post({
         description: req.body.description,
         imageUrl: req.file.path,
-        doctorName: req.body.doctorName
-        //creator: req.user._id
+        doctorName: req.body.doctorName,
+        creator: req.user._id
     })
     const newPost = await post.save()
 
@@ -70,6 +80,12 @@ const createPost = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('Unable to create place!')
     }
+})
+
+const getMyPosts = asyncHandler(async (req, res) => {
+    const user = await Doctor.findById(req.user._id)
+    await user.populate('posts')
+    res.send(user.posts)
 })
 
 const getAllPosts = asyncHandler(async (req, res) => {
@@ -89,9 +105,93 @@ const getAllPosts = asyncHandler(async (req, res) => {
 
 })
 
+
+const deletePost = asyncHandler(async (req, res) => {
+    const { id } = req.body
+    let post = await Post.findById(id)
+
+    if (post) {
+        await post.remove()
+        res.send("success")
+    } else {
+        res.status(404)
+        throw new Error("Failed to delete post")
+    }
+
+})
+
+const confirmPassword = asyncHandler(async (req, res) => {
+    const { id, password, type } = req.body
+    let user
+    if (type === 'doctors') {
+        user = await Doctor.findById(id)
+        if (password === user.password) {
+            res.send("success")
+        } else {
+            res.status(404)
+            throw new Error("Incorrect password")
+        }
+    } else if (type === 'patients') {
+        user = await Patient.findById(id)
+        if (password === user.password) {
+            res.send("success")
+        } else {
+            res.status(404)
+            throw new Error("Incorrect password")
+        }
+    } else if (type === 'admins') {
+        user = await Admin.findById(id)
+        if (password === user.password) {
+            res.send("success")
+        } else {
+            res.status(404)
+            throw new Error("Incorrect password")
+        }
+    } else {
+        res.status(404)
+        throw new Error("Incorrect password")
+    }
+})
+
+const updateUserInfo = asyncHandler(async (req, res) => {
+    const { name, password, id, type, username } = req.body
+    let user;
+
+    if (type === 'doctors') {
+        user = await Doctor.findById(id)
+
+    } else if (type === 'patients') {
+        user = await Patient.findById(id)
+
+    } else if (type === 'admins') {
+        user = await Admin.findById(id)
+
+    } else {
+        res.status(404)
+        throw new Error("Failed to save password")
+    }
+    user.name = name
+    user.password = password
+    user.username = username
+
+    const savedUser = await user.save()
+
+    if (savedUser) {
+        res.send("success")
+    } else {
+        res.status(404)
+        throw new Error("Failed to save password")
+    }
+})
+
+
 module.exports = {
     loginUser,
     fetchAppointments,
     getAllPosts,
-    createPost
+    createPost,
+    getMyPosts,
+    deletePost,
+    confirmPassword,
+    updateUserInfo
 }

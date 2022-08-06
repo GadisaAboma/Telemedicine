@@ -14,5 +14,8 @@ String appointmentPage = '/appointment';
 String setAppointment = '/setAppointment';
 String selectUser = '/selectUser';
 String createPost = '/createPost';
+String postDetail = '/postDetail';
+String editAccount = '/editAccount';
+String editPage = "/editPage";
 
 // static String url = "http://10.141.214.82:3000";

@@ -70,5 +70,11 @@ const doctorSchema = new Schema({
 
 })
 
+doctorSchema.virtual('posts', {
+    ref: 'Post',
+    localField: '_id',
+    foreignField: 'creator'
+})
+
 
 module.exports = mongoose.model('Doctor', doctorSchema)
