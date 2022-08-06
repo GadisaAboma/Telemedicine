@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
@@ -26,33 +28,53 @@ class _ChatPageState extends State<ChatPage> {
   // List<String> contacts = [];
   dynamic currentContact;
   bool isVideo = true;
+ 
+  Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
 
   @override
   void initState() {
+
     super.initState();
-    // Future.delayed(Duration.zero, () {
-    // final provider = Provider.of<PreviousChat>(context, listen: false);
-    // contacts = provider.contacts;
+   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+   FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    
+   });
+   
+   
+
+    final fdm = FirebaseMessaging.instance;
+
+    // fdm.requestPermission(); 
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  print('Got a message whilst in the foreground!');
+  print('Message data: ${message.data}');
+
+  if (message.notification != null) {
+    print('Message also contained a notification: ${message.notification}');
+  }
+});
+
+    
     currentContact =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-
     Provider.of<PreviousChat>(context, listen: false)
         .initVideo(context, currentContact["_id"], currentContact["username"]);
-
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     var provider = Provider.of<PreviousChat>(context, listen: true);
     var loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
     String title = "messaging";
-    
 
     void _scrollDown() {
       try {

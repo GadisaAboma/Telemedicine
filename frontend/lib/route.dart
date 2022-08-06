@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/login/login.dart';
 import 'package:frontend/provider/register.dart';
@@ -23,7 +24,10 @@ class _RouteAppState extends State<RouteApp> {
 
   @override
   void initState() {
+  Firebase.initializeApp();
+
     super.initState();
+
     Future.delayed(Duration.zero, () => {getData()});
   }
 

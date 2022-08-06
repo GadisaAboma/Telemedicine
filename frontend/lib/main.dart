@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/appointment/appointment_home.dart';
 import 'package:frontend/appointment/select_user.dart';
@@ -19,6 +22,7 @@ import 'home/patient_home.dart';
 import 'views/chat/chat_page.dart';
 
 void main() {
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -65,7 +69,6 @@ class MyApp extends StatelessWidget {
           "/setAppointment": (context) => SetAppointment(),
           "/selectUser": (context) => SelectUser(),
           "/createPost": (context) => CreatePost(),
-          
         },
         // home: Login(),
       ),
