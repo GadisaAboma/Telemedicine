@@ -138,7 +138,8 @@ class _SearchDoctorState extends State<SearchDoctor> {
 
                       Navigator.pushNamed(context, chatPageRoute, arguments: {
                         "id": doctor["_id"],
-                        "name": doctor["name"]
+                        "name": doctor["name"],
+                        "username":doctor["username"]
                       });
                     },
                   ),

@@ -87,6 +87,7 @@ const searchPatient = asyncHandler(async (req, res) => {
 })
 
 const setAppointment = asyncHandler(async (req, res) => {
+    console.log(req.body)
 
     const { id, date, description, doctorId } = req.body
     const patient = await Patient.findById(id)

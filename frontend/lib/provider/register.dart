@@ -67,6 +67,9 @@ class RegisterProvider extends ChangeNotifier {
             "password": password,
           };
 
+    print(jsonData);
+    print(accountType);
+    var response;
     try {
       final String routeType = accountType == "patient"
           ? "patients/registerPatient"
@@ -74,11 +77,18 @@ class RegisterProvider extends ChangeNotifier {
 
       var url = Uri.parse('$serverUrl/api/$routeType');
       var request = http.MultipartRequest('post', url);
-      if (accountType == 'patient') {
-        request.fields['name'] = name.toString();
-        request.fields['username'] = username.toString();
-        request.fields['gender'] = gender.toString();
-        request.fields['password'] = password.toString();
+      if (accountType != 'doctor') {
+        // request.fields['name'] = name.toString();
+        // request.fields['username'] = username.toString();
+        // request.fields['gender'] = gender.toString();
+        // request.fields['password'] = password.toString();
+
+        response = await http.post(Uri.parse("$serverUrl/api/$routeType"),
+            body: json.encode(jsonData),
+            headers: {
+              "Content-type": "application/json",
+              "Accept": "application/json",
+            });
       } else {
         request.fields['name'] = name.toString();
         request.fields['username'] = username.toString();
@@ -87,9 +97,9 @@ class RegisterProvider extends ChangeNotifier {
         request.fields['specializedIn'] = specializedIn.toString();
         var img = await http.MultipartFile.fromPath("doctorId", image!.path);
         request.files.add(img);
+        var res = await request.send();
+        response = await http.Response.fromStream(res);
       }
-      var res = await request.send();
-      var response = await http.Response.fromStream(res);
 
       // final response = await http.post(Uri.parse("$serverUrl/api/$routeType"),
       //     body: json.encode(jsonData),
@@ -105,13 +115,19 @@ class RegisterProvider extends ChangeNotifier {
       currentUser = responseData;
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
+        loggedId = responseData['_doc']["_id"];
+      loggedName = responseData['_doc']['name'];
+
+      } else{
+      loggedId = responseData['_id'];
+      loggedName = responseData['name'];
+
+
       }
 
       print(responseData);
 
-      userType = responseData['role'] + 's';
-      loggedId = responseData['_doc']['_id'];
-      loggedName = responseData['_doc']['name'];
+      userType = accountType + 's';
       setLoading();
       notifyListeners();
       return "success";
@@ -120,7 +136,7 @@ class RegisterProvider extends ChangeNotifier {
       return Future.error(e.message);
     } catch (e) {
       print(e);
-      throw Exception("Error happened");
+      throw Exception("Something wrong");
     }
   }
 

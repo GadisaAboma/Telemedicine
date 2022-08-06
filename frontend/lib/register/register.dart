@@ -224,6 +224,10 @@ class _RegisterState extends State<Register> {
                             if (fullname.isEmpty) {
                               return "fullname does not empty";
                             }
+
+                            if (!RegExp(r'^[a-zA-Z]+$').hasMatch(fullname)) {
+                              return "fullname must contain only character";
+                            }
                             if (fullname.length < 5) {
                               return "full name must greater than 5 character";
                             }
@@ -246,6 +250,9 @@ class _RegisterState extends State<Register> {
                             String username = value.toString().trim();
                             if (username.isEmpty) {
                               return "username does not empty";
+                            }
+                            if (RegExp(r'^[0-9_.]+$').hasMatch(fullname)) {
+                              return "username must not contain number";
                             }
                             if (username.length < 3) {
                               return "username must greater than 3 character";
@@ -299,24 +306,21 @@ class _RegisterState extends State<Register> {
                                     value: specializedIn,
                                     items: const [
                                       DropdownMenuItem(
-                                        child: Text(
-                                            "Conception and Pregnancy Adviser"),
+                                        child: Text("Pregnancy Adviser"),
                                         value:
                                             "Conception and Pregnancy Adviser",
                                       ),
                                       DropdownMenuItem(
-                                        child:
-                                            Text("Critical Infant Caregiver"),
+                                        child: Text(" Infant Caregiver"),
                                         value: "Critical Infant Caregiver",
                                       ),
                                       DropdownMenuItem(
-                                        child: Text(
-                                            "Premature and Newborn Supervisor"),
+                                        child: Text("Newborn Supervisor"),
                                         value:
                                             "Premature and Newborn Supervisor",
                                       ),
                                       DropdownMenuItem(
-                                        child: Text("Routine Check-Up Expert"),
+                                        child: Text("Check-Up Expert"),
                                         value: "Routine Check-Up Expert",
                                       ),
                                     ],
@@ -372,6 +376,10 @@ class _RegisterState extends State<Register> {
                             if (password.length < 7) {
                               return "password must greater than 7 character";
                             }
+                            // if ((RegExp(r'^[0-9_]+$').hasMatch(fullname) &&
+                            //     RegExp(r'^[a-zA-Z]+$').hasMatch(fullname))) {
+                            //   return "password must contain character and number ";
+                            // }
                           }),
                           onSaved: (value) {
                             setState(() {

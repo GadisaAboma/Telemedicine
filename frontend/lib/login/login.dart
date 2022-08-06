@@ -305,6 +305,7 @@ class _LoginState extends State<Login> {
                               if (username.isEmpty) {
                                 return "username field required";
                               }
+                              
                               if (username.length < 3) {
                                 return "username must greater than 3 character";
                               }

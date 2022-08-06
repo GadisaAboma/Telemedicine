@@ -99,11 +99,16 @@ class _DoctorHomeState extends State<DoctorHome> {
                               print(chat.chatHistory);
                               chat.connectAndListen(doctorInfo["username"]);
 
+
+                              chat.connectAndListen(doctorInfo["username"]);
+
                               // print("patient" + patient);
                               Navigator.pushNamed(context, chatPageRoute,
                                   arguments: {
                                     "id": patient["_id"],
                                     "name": patient["name"]
+                                    "name": patient["name"],
+                                    "username": patient["username"]
                                   });
                             },
                             title: Text(doctorInfo["messages"][index]["user"]),
