@@ -57,7 +57,7 @@ class _AdminHomeState extends State<AdminHome> {
       print(unApprovedDoctorsList);
       return unApprovedDoctorsList[0] == null
           ? returnedwidget = Center(
-              child: Text("There is no unapproved doctors" ),
+              child: Text("There is no unapproved doctors"),
             )
           : ListView.builder(
               itemCount: unApprovedDoctorsList.length,

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend/provider/message.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/register/register.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,8 +99,8 @@ class _LoginState extends State<Login> {
         LocalStorage.write('username', username);
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-         sharedPreferences.setString("username",username);
-         sharedPreferences.setString("password", password);
+        sharedPreferences.setString("username", username);
+        sharedPreferences.setString("password", password);
 
         switch (loginResponse['role']) {
           case "admin":
@@ -366,10 +367,10 @@ class _LoginState extends State<Login> {
                           ),
                           Container(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: forgetPassword,
                               child: const Text(
                                 "Forget password",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black54),
                               ),
                             ),
                           ),
@@ -384,5 +385,16 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void forgetPassword() async {
+    String message = "This is a test message!";
+    List<String> recipents = ["0967436185"];
+    String _result =
+        await sendSMS(message: message, recipients: recipents, sendDirect: true)
+            .catchError((onError) {
+      print(onError);
+    });
+    print(_result);
   }
 }

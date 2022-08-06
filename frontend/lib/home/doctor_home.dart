@@ -97,6 +97,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                                 chat.addToChatHistory(data);
                               });
                               print(chat.chatHistory);
+                              chat.connectAndListen(doctorInfo["username"]);
 
                               chat.connectAndListen(doctorInfo["username"]);
 
@@ -104,6 +105,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                               Navigator.pushNamed(context, chatPageRoute,
                                   arguments: {
                                     "id": patient["_id"],
+                                    "name": patient["name"],
                                     "name": patient["name"],
                                     "username": patient["username"]
                                   });

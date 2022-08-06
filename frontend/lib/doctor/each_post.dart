@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/helpers.dart';
-import '../helpers/date_calculator.dart';
-import '../pages/user_detail.dart';
 import 'package:intl/intl.dart';
 
-class EachPlace extends StatelessWidget {
+class EachPost extends StatefulWidget {
   var description;
+  Function deletePost;
   var imageUrl;
   var date;
   var doctorName;
+  var postId;
+  EachPost(this.description, this.imageUrl, this.date, this.doctorName,
+      this.postId, this.deletePost);
 
-  EachPlace(this.description, this.imageUrl, this.date, this.doctorName);
+  @override
+  State<EachPost> createState() => _EachPostState();
+}
 
+class _EachPostState extends State<EachPost> {
+  bool isDelete = false;
   String timeAgo(DateTime d) {
     Duration diff = DateTime.now().difference(d);
     if (diff.inDays > 365) {
@@ -35,9 +41,34 @@ class EachPlace extends StatelessWidget {
     return "just now";
   }
 
+  void confirmDelete() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const Text("Are you sure?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  widget.deletePost(widget.postId);
+                },
+                child: const Text("Yes"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text("No"),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    date = DateTime.parse(date);
+    //widget.date = DateTime.parse(widget.date);
     return Container(
       padding: const EdgeInsets.all(5),
       child: Column(
@@ -57,18 +88,53 @@ class EachPlace extends StatelessWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "$doctorName posted a post",
-                    style: const TextStyle(
-                        fontSize: 19,
-                        fontFamily: 'OpenSans',
-                        fontWeight: FontWeight.w600),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: Text(
+                          "${widget.doctorName} posted a post",
+                          style: const TextStyle(
+                              fontSize: 19,
+                              fontFamily: 'OpenSans',
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Container(
+                        height: 100,
+                        padding: EdgeInsets.all(10),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isDelete = !isDelete;
+                                  });
+                                },
+                                icon: Icon(Icons.more_vert)),
+                            isDelete
+                                ? Positioned(
+                                    bottom: 0,
+                                    child: TextButton(
+                                        child: Text("delete"),
+                                        onPressed: () {
+                                          // widget.deletePost(widget.postId);
+                                          confirmDelete();
+                                        }))
+                                : Container()
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(timeAgo(date)),
+                  // Text(timeAgo(widget.date)),
+                  Text(widget.date)
                 ],
               ),
             ],
@@ -77,7 +143,7 @@ class EachPlace extends StatelessWidget {
             height: 10,
           ),
           Text(
-            description,
+            widget.description,
             style: const TextStyle(
               fontSize: 18,
             ),
@@ -85,10 +151,9 @@ class EachPlace extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(postDetail),
-            child: Image.network('$serverUrl/$imageUrl'),
-          ),
+
+          Image.network('$serverUrl/${widget.imageUrl}'),
+
           const SizedBox(
             width: 10,
           ),

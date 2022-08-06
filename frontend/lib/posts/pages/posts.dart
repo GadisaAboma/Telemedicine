@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../pages/login.dart';
 import '../pages/profile.dart';
 import '../providers/users.dart';
 import '../widgets/each_place.dart';
@@ -61,37 +60,7 @@ class _PostsState extends State<Posts> {
         child: AppBar(
           elevation: 0,
           backgroundColor: Colors.grey[100],
-          actions: [
-            isAuth
-                ? TextButton.icon(
-                    onPressed: () {
-                      /*  Navigator.of(context).pushReplacementNamed('/'); */
-                      Provider.of<Auth>(context, listen: false).deleteToken;
-                    },
-                    icon: const Icon(Icons.logout),
-                    label: const Text('Logout'),
-                    style: TextButton.styleFrom(
-                      /*  primary: Colors.white, */
-                      textStyle: const TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                : TextButton.icon(
-                    icon: const Icon(Icons.login),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(Login.routeName);
-                    },
-                    label: const Text('Login'),
-                    style: TextButton.styleFrom(
-                      /* primary: Colors.white, */
-                      textStyle: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-          ],
+          actions: [],
           title: const Text(
             'My Places',
             style: TextStyle(

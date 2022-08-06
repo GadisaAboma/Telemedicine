@@ -103,6 +103,9 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                                     Row(
                                       children: [
                                         Icon(Icons.edit),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
                                         Icon(Icons.delete),
                                       ],
                                     )

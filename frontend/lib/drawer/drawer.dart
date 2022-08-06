@@ -51,7 +51,9 @@ class DrawerWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            Provider.of<RegisterProvider>(context, listen: false).loggedUserId != 'admins'
+            Provider.of<RegisterProvider>(context, listen: false)
+                        .loggedUserId !=
+                    'admins'
                 ? ListTile(
                     title: Text("Appointment"),
                     leading: Icon(Icons.event),
@@ -62,6 +64,13 @@ class DrawerWidget extends StatelessWidget {
                     },
                   )
                 : Container(),
+            ListTile(
+              title: const Text("Edit your account"),
+              leading: const Icon(Icons.edit),
+              onTap: () async {
+                Navigator.of(context).pushNamed(editAccount);
+              },
+            ),
             ListTile(
               title: Text("logout"),
               leading: Icon(Icons.logout),

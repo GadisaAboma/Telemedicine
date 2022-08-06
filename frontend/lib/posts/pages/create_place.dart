@@ -84,9 +84,11 @@ class _CreatePostState extends State<CreatePost> {
     _form.currentState!.save();
 
     try {
-     String doctorName = Provider.of<RegisterProvider>(context, listen: false).loggedUserName;
+      String token = Provider.of<RegisterProvider>(context, listen: false).token;
+      String doctorName =
+          Provider.of<RegisterProvider>(context, listen: false).loggedUserName;
       await Provider.of<PatientProvider>(context, listen: false)
-          .createPlace(description, _image!, doctorName);
+          .createPlace(description, _image!, doctorName, token);
 
       setState(() {
         isLoading = false;
@@ -112,7 +114,9 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Create Post"),),
+      appBar: AppBar(
+        title: const Text("Create Post"),
+      ),
       body: SingleChildScrollView(
         child: Container(
           height: 600,
@@ -122,7 +126,6 @@ class _CreatePostState extends State<CreatePost> {
               padding: const EdgeInsets.all(8.0),
               child: ListView(
                 children: [
-                  
                   const SizedBox(
                     height: 10,
                   ),
@@ -194,7 +197,6 @@ class _CreatePostState extends State<CreatePost> {
           ),
         ),
       ),
-     
     );
   }
 }
