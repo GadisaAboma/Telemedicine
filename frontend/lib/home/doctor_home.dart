@@ -134,27 +134,24 @@ class _DoctorHomeState extends State<DoctorHome> {
                                 ),
                               ],
                             ),
-
-                         
-
-                            subtitle: Text((Provider.of<
-                                                      PreviousChat>(context,
-                                                  listen: false)
-                                              .contacts
-                                              .any((element) => element
-                                                  .split(":")
-                                                  .contains(doctorInfo[
-                                                          "messages"]![index]
-                                                      ["user"])))?"online":"offline", ),
+                            subtitle: Text(
+                              (Provider.of<PreviousChat>(context, listen: false)
+                                      .contacts
+                                      .any((element) => element
+                                          .split(":")
+                                          .contains(
+                                              doctorInfo["messages"]![index]
+                                                  ["user"])))
+                                  ? "online"
+                                  : "offline",
+                            ),
                             trailing: Icon(
-
                               Icons.done_all,
                             ),
                           ),
                         ),
                       ),
-                      
-                ],
+                  ],
                 );
           return listOfPatient;
         });
@@ -192,76 +189,71 @@ class _DoctorHomeState extends State<DoctorHome> {
   Widget build(BuildContext context) {
     Object? id = ModalRoute.of(context)?.settings.arguments;
 
-    return WillPopScope(
-      onWillPop: () async{
-        Navigator.pop(context);
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          // backgroundColor: Colors.white,
-          title: Container(
-              child: Text(
-            "hi, Dr. ${doctorInfo["name"]}",
-            // style: TextStyle(color: Colors.black),
-          )),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return DoctorProfile(doctorinfo: doctorInfo);
-                }));
-              },
-              icon: const Icon(
-                Icons.person,
-                // color: Colors.black,
-                size: 30,
-              ),
-            )
-          ],
-        ),
-        drawer: DrawerWidget(
-          userInfo: doctorInfo,
-        ),
-        body: SetBody(context),
-        bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            currentIndex: index,
-            selectedItemColor: Colors.white,
-            showUnselectedLabels: false,
-            onTap: (value) {
-              setState(() {
-                index = value;
-              });
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        // backgroundColor: Colors.white,
+        title: Container(
+            child: Text(
+          "hi, Dr. ${doctorInfo["name"]}",
+          // style: TextStyle(color: Colors.black),
+        )),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return DoctorProfile(doctorinfo: doctorInfo);
+              }));
             },
-            items: const [
-              BottomNavigationBarItem(
+            icon: const Icon(
+              Icons.person,
+              // color: Colors.black,
+              size: 30,
+            ),
+          )
+        ],
+      ),
+      drawer: DrawerWidget(
+        userInfo: doctorInfo,
+      ),
+      body: SetBody(context),
+      bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          currentIndex: index,
+          selectedItemColor: Colors.white,
+          showUnselectedLabels: false,
+          onTap: (value) {
+            setState(() {
+              index = value;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              label: "home",
+            ),
+            BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.home,
+                  Icons.notifications,
                   color: Colors.white,
                 ),
-                label: "home",
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                  ),
-                  label: "Notification"),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.message,
-                    color: Colors.white,
-                  ),
-                  label: "message"),
-            ]),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, createPost);
-          },
-          child: Icon(Icons.add),
-        ),
+                label: "Notification"),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.message,
+                  color: Colors.white,
+                ),
+                label: "message"),
+          ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, createPost);
+        },
+        child: Icon(Icons.add),
+      
       ),
     );
   }
