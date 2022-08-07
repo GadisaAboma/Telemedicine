@@ -73,21 +73,36 @@ class _ChatBotState extends State<ChatBot> {
                 child: Container(
                   color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      style: const TextStyle(color: Colors.black),
-                      decoration: const InputDecoration(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                    ),
+                    child: ListTile(
+                      title: TextField(
+                        style: const TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
                           icon: Icon(
                             Icons.message,
-                            color: Colors.blue,
+                            color: Theme.of(context).primaryColor,
                           ),
                           hintText: 'Type Message',
-                          fillColor: Colors.white12),
-                      controller: queryController,
-                      textInputAction: TextInputAction.send,
-                      onSubmitted: (msg) {
-                        getResponse();
-                      },
+                          fillColor: Colors.white12,
+                        ),
+                        controller: queryController,
+                        textInputAction: TextInputAction.send,
+                        onSubmitted: (msg) {
+                          getResponse();
+                        },
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          getResponse();
+                        },
+                        icon: Icon(
+                          Icons.send,
+                          size: 30,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),

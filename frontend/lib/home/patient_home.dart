@@ -92,7 +92,10 @@ class _PatientHomeState extends State<PatientHome> {
       ),
       body: setBody(),
       floatingActionButton: FloatingActionButton(
-        child: FaIcon(FontAwesomeIcons.bots, ),
+        child: FaIcon(
+          FontAwesomeIcons.bots,
+          color: Colors.white,
+        ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
             return ChatBot();
