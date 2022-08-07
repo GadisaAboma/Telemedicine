@@ -26,6 +26,12 @@ class _DoctorsRequestState extends State<DoctorsRequest> {
     });
   }
 
+  @override
+  void didUpdateWidget(covariant DoctorsRequest oldWidget) {
+    fetchRequests();
+    super.didUpdateWidget(oldWidget);
+  }
+
   void fetchRequests() async {
     setState(() {
       isLoading = true;
