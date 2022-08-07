@@ -25,8 +25,10 @@ import './posts/pages/create_place.dart';
 import 'home/patient_home.dart';
 import 'views/chat/chat_page.dart';
 
-void main() {
-  Firebase.initializeApp();
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

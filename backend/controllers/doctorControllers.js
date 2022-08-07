@@ -3,6 +3,60 @@ const Doctor = require('../models/Doctor')
 const Admin = require('../models/Admin')
 const Patient = require('../models/Patient')
 
+//////////////////////////////////
+//// PUSH NOTIFICATION
+var admin = require("firebase-admin");
+var serviceAccount = require("../telemedicine-app-for-babycare-firebase-adminsdk-1jc98-32ff2bfae1.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+
+
+async function sendNotificationEventCreation(){
+    try{
+        let message = {
+            notification: {
+              title: '$GOOG up 1.43% on the day',
+              body: '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.',
+            },
+            data: {
+              channel_id: threadId,
+            },
+            android: {
+              ttl: 3600 * 1000,
+              notification: {
+                icon: 'stock_ticker_update',
+                color: '#f45342',
+              },
+            },
+            apns: {
+              payload: {
+                aps: {
+                  badge: 42,
+                },
+              },
+            },
+            token: deviceToken,
+          };
+          
+          admin.messaging().send(message)
+            .then((response) => {
+              // Response is a message ID string.
+              console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+              console.log('Error sending message:', error);
+            });
+    }catch(e){
+        console.log(e)
+    }
+}
+
+
+//////////////////////////////////////////////
+
+
 const registerDoctor = asyncHandler(async (req, res) => {
 
     const { username } = req.body
@@ -86,8 +140,12 @@ const searchPatient = asyncHandler(async (req, res) => {
 
 })
 
+
+
 const setAppointment = asyncHandler(async (req, res) => {
+
     console.log(req.body)
+    sendNotificationEventCreation()
 
     const { id, date, description, doctorId } = req.body
     const patient = await Patient.findById(id)

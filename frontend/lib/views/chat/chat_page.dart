@@ -46,8 +46,6 @@ class _ChatPageState extends State<ChatPage> {
     
    });
    
-   
-
     final fdm = FirebaseMessaging.instance;
 
     // fdm.requestPermission(); 
@@ -63,8 +61,7 @@ class _ChatPageState extends State<ChatPage> {
     
     currentContact =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-    Provider.of<PreviousChat>(context, listen: false)
-        .initVideo(context, currentContact["_id"], currentContact["username"]);
+    
   }
 
   @override

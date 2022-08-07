@@ -21,6 +21,7 @@ class _SearchDoctorState extends State<SearchDoctor> {
   TextEditingController edit = TextEditingController();
 
   String searchedDoctor = "";
+  String physicianCategory = "Check-Up Expert";
   dynamic doctor = {};
   bool isLoading = false;
   void search(BuildContext ctx) async {
@@ -49,35 +50,70 @@ class _SearchDoctorState extends State<SearchDoctor> {
     }
   }
 
+  var items = [
+    "Check-Up Expert",
+    "Newborn Supervisor",
+    "Infant Caregiver",
+    "Pregnancy Adviser"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Container(
-          width: 300,
           height: 40,
           margin: EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: Colors.white,
+            // color: Colors.white,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             children: [
-              Container(
-                width: 166,
-                child: TextFormField(
-                  controller: edit,
-                  decoration: const InputDecoration(
-                      hintText: "Search doctor",
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                      )),
+              // Container(
+              //   width: 166,
+              //   child: TextFormField(
+              //     controller: edit,
+              //     decoration: const InputDecoration(
+              //         hintText: "Search doctor",
+              //         border: OutlineInputBorder(
+              //           borderSide: BorderSide.none,
+              //         )),
+              //   ),
+              // ),
+              DropdownButton(
+                // Initial Value
+                value: physicianCategory, elevation: 5,
+
+                // Down Arrow Icon
+                icon: const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.white,
                 ),
+
+                // Array list of items
+                items: items.map((String items) {
+                  return DropdownMenuItem(
+                    alignment: Alignment.center,
+                    value: items,
+                    child: Text(
+                      items,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  );
+                }).toList(),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (String? newValue) {
+                  setState(() {
+                    physicianCategory = newValue!;
+                  });
+                },
               ),
               IconButton(
                   icon: const Icon(
                     Icons.search,
-                    color: Colors.blueGrey,
+                    color: Colors.white,
                   ),
                   onPressed: () => search(context))
             ],
@@ -91,28 +127,33 @@ class _SearchDoctorState extends State<SearchDoctor> {
           ? Center(
               child: CircularProgressIndicator(
               color: Colors.green,
-            )):doctor == "doctor not found"? Center(child: Text(doctor),)
-          : doctor.isNotEmpty && doctor['name'] != null
-              ? ListTile(
-                  leading: CircleAvatar(),
-                  title: Text(doctor['name'].toString()),
-                  subtitle: Text(doctor["specializedIn"].toString()),
-                  trailing: IconButton(
-                    icon: Icon(Icons.message),
-                    onPressed: () async {
-                      // print(doctor["_id"]);
+            ))
+          : doctor == "doctor not found"
+              ? Center(
+                  child: Text(doctor),
+                )
+              : doctor.isNotEmpty && doctor['name'] != null
+                  ? ListTile(
+                      leading: CircleAvatar(),
+                      title: Text(doctor['name'].toString()),
+                      subtitle: Text(doctor["specializedIn"].toString()),
+                      trailing: IconButton(
+                        icon: Icon(Icons.message),
+                        onPressed: () async {
+                          // print(doctor["_id"]);
 
-                      final provider =
-                          Provider.of<RegisterProvider>(context, listen: false);
-                      final chat =
-                          Provider.of<PreviousChat>(context, listen: false);
-                      String myUsername = provider.currentUser["username"];
-                      final patientData =
-                          await provider.fetchMessage(myUsername);
+                          final provider = Provider.of<RegisterProvider>(
+                              context,
+                              listen: false);
+                          final chat =
+                              Provider.of<PreviousChat>(context, listen: false);
+                          String myUsername = provider.currentUser["username"];
+                          final patientData =
+                              await provider.fetchMessage(myUsername);
 
-                      // String myUsername = provider.me;
-                      // final patientData = await provider.fetchPatient(myUsername);
-                      // Map<String, String> data = json.decode(patientData);
+                          // String myUsername = provider.me;
+                          // final patientData = await provider.fetchPatient(myUsername);
+                          // Map<String, String> data = json.decode(patientData);
 // (patientData["messages"]["content"] as List)
 //                         .forEach((data) {
 //                       (data as Map).remove("_id");
@@ -120,32 +161,33 @@ class _SearchDoctorState extends State<SearchDoctor> {
 //                       chat.addToChatHistory(data);
 //                     });
 
-                      print(patientData);
-                      (patientData["messages"] as List).forEach((element) {
-                        if (element["user"] == doctor["username"]) {
-                          (element["content"] as List).forEach((message) {
-                            (message as Map).remove("_id");
-                            print(patientData["messages"]);
-                            chat.addToChatHistory(message);
+                          print(patientData);
+                          (patientData["messages"] as List).forEach((element) {
+                            if (element["user"] == doctor["username"]) {
+                              (element["content"] as List).forEach((message) {
+                                (message as Map).remove("_id");
+                                print(patientData["messages"]);
+                                chat.addToChatHistory(message);
+                              });
+                            }
                           });
-                        }
-                      });
 
-                      chat.setUserName(myUsername);
-                      chat.setReciever(doctor["username"]);
-                      chat.setSender(myUsername);
-                      chat.connectAndListen(myUsername);
+                          chat.setUserName(myUsername);
+                          chat.setReciever(doctor["username"]);
+                          chat.setSender(myUsername);
+                          chat.connectAndListen(myUsername);
 
-                      Navigator.pushNamed(context, chatPageRoute, arguments: {
-                        "id": doctor["_id"],
-                        "name": doctor["name"],
-                        "username":doctor["username"]
-                      });
-                    },
-                  ),
-                  onTap: () {},
-                )
-              : Center(child: Text("search doctor")),
+                          Navigator.pushNamed(context, chatPageRoute,
+                              arguments: {
+                                "id": doctor["_id"],
+                                "name": doctor["name"],
+                                "username": doctor["username"]
+                              });
+                        },
+                      ),
+                      onTap: () {},
+                    )
+                  : Center(child: Text("search doctor")),
     );
   }
 }
