@@ -99,13 +99,12 @@ class _DoctorHomeState extends State<DoctorHome> {
                               print(chat.chatHistory);
                               chat.connectAndListen(doctorInfo["username"]);
 
-                              chat.connectAndListen(doctorInfo["username"]);
+                              // chat.connectAndListen(doctorInfo["username"]);
 
                               // print("patient" + patient);
                               Navigator.pushNamed(context, chatPageRoute,
                                   arguments: {
                                     "id": patient["_id"],
-                                    "name": patient["name"],
                                     "name": patient["name"],
                                     "username": patient["username"]
                                   });
@@ -135,7 +134,20 @@ class _DoctorHomeState extends State<DoctorHome> {
                                 ),
                               ],
                             ),
+<<<<<<< HEAD
                             trailing: const Icon(
+=======
+                            subtitle: Text((Provider.of<
+                                                      PreviousChat>(context,
+                                                  listen: false)
+                                              .contacts
+                                              .any((element) => element
+                                                  .split(":")
+                                                  .contains(doctorInfo[
+                                                          "messages"]![index]
+                                                      ["user"])))?"online":"offline", ),
+                            trailing: Icon(
+>>>>>>> 7bb48e594a446fcb9490dd25915b07c1b786b449
                               Icons.done_all,
                             ),
                           ),

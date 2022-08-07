@@ -26,33 +26,22 @@ class _ChatPageState extends State<ChatPage> {
   // List<String> contacts = [];
   dynamic currentContact;
   bool isVideo = true;
+ 
 
-  @override
-  void initState() {
-    super.initState();
-    // Future.delayed(Duration.zero, () {
-    // final provider = Provider.of<PreviousChat>(context, listen: false);
-    // contacts = provider.contacts;
+    
     currentContact =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-
-    Provider.of<PreviousChat>(context, listen: false)
-        .initVideo(context, currentContact["_id"], currentContact["username"]);
-
-    // });
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     var provider = Provider.of<PreviousChat>(context, listen: true);
     var loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     final previousChat = provider.chatHistory;
     ScrollController _scrollController = ScrollController();
     String title = "messaging";
-    
 
     void _scrollDown() {
       try {

@@ -225,7 +225,7 @@ class _RegisterState extends State<Register> {
                               return "fullname does not empty";
                             }
 
-                            if (!RegExp(r'^[a-zA-Z]+$').hasMatch(fullname)) {
+                            if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(fullname)) {
                               return "fullname must contain only character";
                             }
                             if (fullname.length < 5) {
@@ -308,20 +308,21 @@ class _RegisterState extends State<Register> {
                                       DropdownMenuItem(
                                         child: Text("Pregnancy Adviser"),
                                         value:
-                                            "Conception and Pregnancy Adviser",
+                                            "Pregnancy Adviser",
                                       ),
                                       DropdownMenuItem(
-                                        child: Text(" Infant Caregiver"),
-                                        value: "Critical Infant Caregiver",
+                                        child: Text("Infant Caregiver"),
+                                        value: "Infant Caregiver",
                                       ),
                                       DropdownMenuItem(
                                         child: Text("Newborn Supervisor"),
                                         value:
-                                            "Premature and Newborn Supervisor",
+                                            "Newborn Supervisor",
                                       ),
+                                      // Check-Up Expert Newborn Supervisor Infant Caregiver Pregnancy Adviser
                                       DropdownMenuItem(
                                         child: Text("Check-Up Expert"),
-                                        value: "Routine Check-Up Expert",
+                                        value: "Check-Up Expert",
                                       ),
                                     ],
                                     onChanged: (value) {

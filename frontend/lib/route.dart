@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/login/login.dart';
 import 'package:frontend/provider/register.dart';
@@ -21,11 +20,7 @@ class _RouteAppState extends State<RouteApp> {
   String password = "";
   bool isLoading = false;
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () => {getData()});
-  }
+
 
   Future getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

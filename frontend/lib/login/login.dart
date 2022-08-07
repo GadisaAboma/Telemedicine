@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -101,6 +103,10 @@ class _LoginState extends State<Login> {
             await SharedPreferences.getInstance();
         sharedPreferences.setString("username", username);
         sharedPreferences.setString("password", password);
+
+
+        Provider.of<PreviousChat>(ctx, listen: false)
+        .initVideo(context, loginResponse["user"]["_id"],username);
 
         switch (loginResponse['role']) {
           case "admin":

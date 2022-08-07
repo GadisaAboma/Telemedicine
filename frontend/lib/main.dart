@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:frontend/appointment/appointment_home.dart';
 import 'package:frontend/appointment/select_user.dart';
@@ -22,7 +23,8 @@ import './posts/pages/create_place.dart';
 import 'home/patient_home.dart';
 import 'views/chat/chat_page.dart';
 
-void main() {
+void main()async {
+
   runApp(const MyApp());
 }
 
@@ -73,6 +75,7 @@ class MyApp extends StatelessWidget {
           "/setAppointment": (context) => SetAppointment(),
           "/selectUser": (context) => SelectUser(),
           "/createPost": (context) => CreatePost(),
+
           "/postDetail": (context) => PostDetail(),
           "/editAccount": (context) => EditAccount(),
           "/editPage": (context) => EditPage(),
