@@ -143,7 +143,7 @@ class RegisterProvider extends ChangeNotifier {
   // late String me;
   // late dynamic doctordInfo;
 
-  Future fetchPatient(String username) async {
+  Future fetchPhysician(String username) async {
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/patients/fetchPatient"),

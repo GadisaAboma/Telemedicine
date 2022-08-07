@@ -101,7 +101,7 @@ io.on('connection', function (socket) {
                 return; 
             } 
         })
-        if(index == 0 || !isPrevousUser ){
+        if(index == 1 || !isPrevousUser ){
             reciever.messages.push(new_reciever_message)
             index = -1  
         } else {
@@ -119,7 +119,7 @@ io.on('connection', function (socket) {
             } 
         })
 
-        if(index == 0 || !isPrevousUser ){
+        if(index == 1 || !isPrevousUser ){
             sender.messages.push(new_sender_message)
             index = -1  
         } else {
@@ -204,13 +204,19 @@ io.on('connection', function (socket) {
         // io.to(senderSocketId).emit("new_message",data)
 
 
-        var disMsg = `${userName} has disconnected! 😭😭`;
-        console.log(disMsg);
-        io.emit('message', {
-            "message": disMsg,
-        });
-        removeUser(userName);
-        emitUsers()
+        
+        // console.log(disMsg);
+        // io.emit('message', {
+        //     "message": disMsg,
+        // });
+
+        socket.on("disconnect", function(){
+            var disMsg = `${userName} has disconnected! 😭😭`;
+            console.log(disMsg)
+            removeUser(userName);
+            emitUsers()
+        })
+        
     });
 
 

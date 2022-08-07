@@ -104,21 +104,20 @@ class _LoginState extends State<Login> {
         sharedPreferences.setString("username", username);
         sharedPreferences.setString("password", password);
 
-
         Provider.of<PreviousChat>(ctx, listen: false)
-        .initVideo(context, loginResponse["user"]["_id"],username);
+            .initVideo(context, loginResponse["user"]["_id"], username);
 
         switch (loginResponse['role']) {
           case "admin":
-            Navigator.pushReplacementNamed(ctx, adminHomeRoute);
+            Navigator.of(context).pushReplacementNamed(adminHomeRoute);
             break;
           case "doctor":
-            Navigator.pushReplacementNamed(ctx, doctorHomeRoute,
+            Navigator.of(context).pushReplacementNamed(doctorHomeRoute,
                 arguments: loginResponse["user"]["_id"]);
 
             break;
           case "patient":
-            Navigator.pushReplacementNamed(ctx, patientHomeRoute);
+            Navigator.of(context).pushReplacementNamed(patientHomeRoute);
             break;
           default:
             Navigator.pop(ctx);
@@ -311,7 +310,7 @@ class _LoginState extends State<Login> {
                               if (username.isEmpty) {
                                 return "username field required";
                               }
-                              
+
                               if (username.length < 3) {
                                 return "username must greater than 3 character";
                               }

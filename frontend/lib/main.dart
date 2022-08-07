@@ -11,6 +11,7 @@ import 'package:frontend/home/doctor_home.dart';
 import 'package:frontend/home/edit_account.dart';
 import 'package:frontend/home/edit_page.dart';
 import 'package:frontend/login/login.dart';
+import 'package:frontend/onboarding.dart';
 import 'package:frontend/patients/search-doctor/search-doctor.dart';
 import 'package:frontend/posts/pages/post_detail.dart';
 import 'package:frontend/provider/doctor.dart';

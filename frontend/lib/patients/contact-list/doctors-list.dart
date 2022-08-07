@@ -24,21 +24,105 @@ class _DoctorsListState extends State<DoctorsList> {
     Future.delayed(
       Duration.zero,
       () {
-        fetchPosts();
+        fetchPhysician();
       },
     );
   }
 
   bool isLoading = true;
   List? doctors;
-  void fetchPosts() async {
+  Future<void> fetchPhysician() async {
     user = await Provider.of<RegisterProvider>(context, listen: false)
-        .fetchPatient(widget.username);
-    print(user["messages"]);
+        .fetchPhysician(widget.username);
+    (user["messages"] as List).forEach((user) async{
+        await Provider.of<RegisterProvider>(context, listen: false)
+        .fetchPhysician(widget.username);
+    });
     doctors = user["messages"].reversed.toList();
     setState(() {
       isLoading = false;
     });
+  }
+
+Future fetchOnePhysician(String username) async{
+
+}
+  Widget _listofDoctor(int index) {
+    if (doctors!.length > 1 && index != doctors!.length - 1)  {
+        
+      return Card(
+        elevation: 5,
+        child: InkWell(
+          onTap: () async {
+            await fetchPhysician();
+
+            final chat = Provider.of<PreviousChat>(context, listen: false);
+
+            (doctors?[index]["content"] as List).forEach((element) {
+              (element as Map).remove("_id");
+              chat.addToChatHistory(element);
+            });
+
+            chat.setUserName(widget.username);
+            chat.setReciever(doctors?[index]["user"]);
+            chat.setSender(widget.username);
+            chat.connectAndListen(widget.username);
+
+            Navigator.pushNamed(context, chatPageRoute, arguments: {
+              "id": user["_id"],
+              "username": doctors![index]["user"],
+              "name": doctors![index]["user"]
+            });
+            setState(() {
+              isLoading = false;
+            });
+          },
+          child: Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            child: ListTile(
+              leading: Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                  ),
+                  Positioned(
+                    bottom: 1,
+                    right: 5,
+                    child: CircleAvatar(
+                        radius: 5,
+                        backgroundColor:
+                            (Provider.of<PreviousChat>(context, listen: false)
+                                    .contacts
+                                    .any((element) => element
+                                        .split(":")
+                                        .contains(doctors![index]["user"]))
+                                ? Colors.green
+                                : Colors.yellow)),
+                  ),
+                ],
+              ),
+              title: Text(doctors?[index]["user"]),
+              subtitle: Row(
+                children: [
+                  Text((Provider.of<PreviousChat>(context, listen: false)
+                          .contacts
+                          .any((element) => element
+                              .split(":")
+                              .contains(doctors![index]["user"]))
+                      ? "online"
+                      : "offline")),
+                ],
+              ),
+              focusColor: Colors.blue,
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
@@ -58,89 +142,8 @@ class _DoctorsListState extends State<DoctorsList> {
                     itemCount: doctors?.length,
                     itemBuilder: (context, index) {
                       Widget listOfDoctor = Container();
-                      if (doctors!.length > 1 && index != doctors!.length - 1) {
-                        listOfDoctor = Card(
-                          elevation: 5,
-                          child: InkWell(
-                            onTap: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              fetchPosts();
-                              final chat = Provider.of<PreviousChat>(context,
-                                  listen: false);
-
-                              (doctors?[index]["content"] as List)
-                                  .forEach((element) {
-                                (element as Map).remove("_id");
-                                chat.addToChatHistory(element);
-                              });
-
-                              chat.setUserName(widget.username);
-                              chat.setReciever(doctors?[index]["user"]);
-                              chat.setSender(widget.username);
-                              chat.connectAndListen(widget.username);
-
-                              Navigator.pushNamed(context, chatPageRoute,
-                                  arguments: {
-                                    "id": user["_id"],
-                                    "username": doctors![index]["user"],
-                                    "name": doctors![index]["user"]
-                                  });
-                            },
-                            child: Container(
-                              margin: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white),
-                              child: ListTile(
-                                leading: Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 30,
-                                    ),
-                                    Positioned(
-                                      bottom: 1,
-                                      right: 5,
-                                      child: CircleAvatar(
-                                          radius: 5,
-                                          backgroundColor:
-                                              (Provider.of<PreviousChat>(
-                                                          context,
-                                                          listen: false)
-                                                      .contacts
-                                                      .any((element) => element
-                                                          .split(":")
-                                                          .contains(
-                                                              doctors![index]
-                                                                  ["user"]))
-                                                  ? Colors.green
-                                                  : Colors.yellow)),
-                                    ),
-                                  ],
-                                ),
-                                title: Text(doctors?[index]["user"]),
-                                subtitle: Row(
-                                  children: [
-                                    Text((Provider.of<PreviousChat>(context,
-                                                listen: false)
-                                            .contacts
-                                            .any((element) => element
-                                                .split(":")
-                                                .contains(
-                                                    doctors![index]["user"]))
-                                        ? "online"
-                                        : "offline")),
-                                  ],
-                                ),
-                                focusColor: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-
-                      return listOfDoctor;
+                      
+                      return _listofDoctor(index);
                     }),
           );
   }

@@ -57,6 +57,10 @@ class PreviousChat extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeChatHistory() {
+    _chatHistory = [];
+  }
+
   Future<void> contactedDoctor(String username) async {
     try {
       final response = await http
