@@ -45,11 +45,11 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
-  Future searchDoctor(String username) async {
+  Future searchDoctor(String physiicianCategory) async {
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/patients/searchDoctor"),
-          body: (json.encode({"username": username})),
+          body: (json.encode({"specializedIn": physiicianCategory})),
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json",

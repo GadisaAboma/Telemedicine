@@ -296,9 +296,15 @@ class _RegisterState extends State<Register> {
                             ]),
                         if (isDoctor)
                           Column(children: [
-                            Row(
+                            Column(
                               children: [
-                                Text("Specialized in"),
+                                Container(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      "Specialized in",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    )),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -306,23 +312,26 @@ class _RegisterState extends State<Register> {
                                     value: specializedIn,
                                     items: const [
                                       DropdownMenuItem(
-                                        child: Text("Pregnancy Adviser"),
+                                        child: Text(
+                                            "Conception and Pregnancy Adviser"),
                                         value:
-                                            "Pregnancy Adviser",
+                                            "Conception and Pregnancy Adviser",
                                       ),
                                       DropdownMenuItem(
-                                        child: Text("Infant Caregiver"),
-                                        value: "Infant Caregiver",
+                                        child:
+                                            Text("Critical Infant Caregiver"),
+                                        value: "Critical Infant Caregiver",
                                       ),
+                                      // Conception Pregnancy Adviser Critical Infant Caregiver Premature Newborn Supervisor Routine Check-Up Expert
                                       DropdownMenuItem(
-                                        child: Text("Newborn Supervisor"),
+                                        child: Text(
+                                            "Premature and Newborn Supervisor"),
                                         value:
-                                            "Newborn Supervisor",
+                                            "Premature and Newborn Supervisor",
                                       ),
-                                      // Check-Up Expert Newborn Supervisor Infant Caregiver Pregnancy Adviser
                                       DropdownMenuItem(
-                                        child: Text("Check-Up Expert"),
-                                        value: "Check-Up Expert",
+                                        child: Text("Routine Check-Up Expert"),
+                                        value: "Routine Check-Up Expert",
                                       ),
                                     ],
                                     onChanged: (value) {

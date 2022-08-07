@@ -61,9 +61,9 @@ const fetchPatient = asyncHandler(async (req, res) => {
 })
 const searchDoctor = asyncHandler(async (req, res) => {
     
-    const { username } = req.body
-
-    const doctor = await Doctor.findOne({ username })
+    const { specializedIn } = req.body
+    const doctor = await Doctor.find({specializedIn} )
+    console.log(doctor)
 
     if (doctor) {
         res.send(doctor)
