@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:full_screen_image/full_screen_image.dart';
 
 class DoctorDetailInfo extends StatefulWidget {
   final doctorInfo;
@@ -26,30 +28,38 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
             Container(
                 alignment: Alignment.center,
                 height: 200,
-                child: Image.network(
-                    '$serverUrl/${widget.doctorInfo['idUrl'].toString().replaceAll('\\', '/')}')),
+                  child: FullScreenWidget(
+                child: InteractiveViewer(
+                    child: Container(
+                      margin: const EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.network(
+                          '$serverUrl/${widget.doctorInfo['idUrl'].toString().replaceAll('\\', '/')}'),
+                    ),
+                  ),
+                )),
             SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                Text("Name of doctor:  "),
+               const Text("Name of doctor:  "),
                 Text(
                   widget.doctorInfo["name"],
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            SizedBox(
+           const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Text("Specialized in:  "),
+                const Text("Specialized in:  "),
                 Text(widget.doctorInfo["specializedIn"])
               ],
             ),
-            SizedBox(
+           const SizedBox(
               height: 20,
             ),
             Row(
@@ -67,7 +77,7 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
                         actions: [
                           !isLoading
                               ? TextButton(
-                                  onPressed: (() {
+                                  onPressed: (() async {
                                     Navigator.pop(context);
                                   }),
                                   child: Text("success"))
@@ -77,10 +87,49 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
                       setState(() {
                         isLoading = true;
                       });
-                      Provider.of<RegisterProvider>(context, listen: false)
+                      var success = await Provider.of<RegisterProvider>(context,
+                              listen: false)
                           .approveDoctor(widget.doctorInfo["_id"]);
+
+                      if (success == 'success') {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text("Success!"),
+                                content: const Text("Successfully approved!"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text("Error!"),
+                                content: const Text("Error approving"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                        // Navigator.of(context).pop();
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                      }
                     },
-                    child: Text("Approve")),
+                    child: isLoading
+                        ? CircularProgressIndicator()
+                        : Text("Approve")),
                 SizedBox(
                   width: 30,
                 ),

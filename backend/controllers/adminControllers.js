@@ -19,7 +19,6 @@ const allRequests = asyncHandler(async (req, res) => {
     const requests = await Doctor.find({
         isActive: false
     })
-
     if (requests.length > 0) {
         res.send(requests)
     } else {

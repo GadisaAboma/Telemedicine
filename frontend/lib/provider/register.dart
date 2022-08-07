@@ -154,7 +154,7 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> approveDoctor(String id) async {
+  Future approveDoctor(String id) async {
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/admin/approve"),
@@ -164,11 +164,12 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
 
-      unApprovedDoctorsList = json.decode(response.body);
-
       notifyListeners();
-      print("respinse: " + json.decode(response.body));
-      return json.decode(response.body);
+      if (response.body == 'success') {
+        return "success";
+      } else {
+        return "error";
+      }
     } catch (e) {
       unApprovedDoctorsList = [
         null,
@@ -186,9 +187,9 @@ class RegisterProvider extends ChangeNotifier {
       print(json.decode(response.body));
       notifyListeners();
     } catch (e) {
-      unApprovedDoctorsList = [
-        null,
-      ];
+      // unApprovedDoctorsList = [
+      //   null,
+      // ];
       notifyListeners();
     }
   }
