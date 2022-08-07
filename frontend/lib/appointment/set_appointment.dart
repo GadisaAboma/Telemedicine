@@ -42,7 +42,6 @@ class _SetAppointmentState extends State<SetAppointment> {
             Provider.of<RegisterProvider>(context, listen: false).loggedId;
         var result = await Provider.of<PatientProvider>(listen: false, context)
             .setAppointment(id, date.toString(), doctorId, description);
-        print(result);
         if (result == 'Success') {
           showDialog(
               context: context,
@@ -69,7 +68,7 @@ class _SetAppointmentState extends State<SetAppointment> {
                   content: const Text("Error Sending!"),
                   actions: [
                     TextButton(
-                      child: Text("OK"),
+                      child: const Text("OK"),
                       onPressed: () {
                         Navigator.of(ctx).pop();
                       },
@@ -82,7 +81,6 @@ class _SetAppointmentState extends State<SetAppointment> {
         return;
       }
     }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Set Appointement"),
@@ -128,9 +126,6 @@ class _SetAppointmentState extends State<SetAppointment> {
                       child: Form(
                         key: formKey,
                         child: TextFormField(
-                          // onChanged: (value) {
-                          //   description = value;
-                          // },
                           onSaved: (value) {
                             description = value.toString();
                           },

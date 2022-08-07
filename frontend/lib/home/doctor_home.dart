@@ -134,9 +134,9 @@ class _DoctorHomeState extends State<DoctorHome> {
                                 ),
                               ],
                             ),
-<<<<<<< HEAD
-                            trailing: const Icon(
-=======
+
+                         
+
                             subtitle: Text((Provider.of<
                                                       PreviousChat>(context,
                                                   listen: false)
@@ -147,13 +147,14 @@ class _DoctorHomeState extends State<DoctorHome> {
                                                           "messages"]![index]
                                                       ["user"])))?"online":"offline", ),
                             trailing: Icon(
->>>>>>> 7bb48e594a446fcb9490dd25915b07c1b786b449
+
                               Icons.done_all,
                             ),
                           ),
                         ),
                       ),
-                  ],
+                      
+                ],
                 );
           return listOfPatient;
         });

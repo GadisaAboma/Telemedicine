@@ -104,9 +104,8 @@ class _LoginState extends State<Login> {
         sharedPreferences.setString("username", username);
         sharedPreferences.setString("password", password);
 
-
         Provider.of<PreviousChat>(ctx, listen: false)
-        .initVideo(context, loginResponse["user"]["_id"],username);
+            .initVideo(context, loginResponse["user"]["_id"], username);
 
         switch (loginResponse['role']) {
           case "admin":
@@ -259,7 +258,7 @@ class _LoginState extends State<Login> {
                     ),
                   ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Expanded(
@@ -298,7 +297,7 @@ class _LoginState extends State<Login> {
                                 prefixIcon: const Icon(Icons.person),
                                 label: const Text(
                                   "username",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -311,7 +310,7 @@ class _LoginState extends State<Login> {
                               if (username.isEmpty) {
                                 return "username field required";
                               }
-                              
+
                               if (username.length < 3) {
                                 return "username must greater than 3 character";
                               }
@@ -331,7 +330,7 @@ class _LoginState extends State<Login> {
                                   prefixIcon: const Icon(Icons.lock),
                                   label: const Text(
                                     "password",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),

@@ -114,13 +114,10 @@ class RegisterProvider extends ChangeNotifier {
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
         loggedId = responseData['_doc']["_id"];
-      loggedName = responseData['_doc']['name'];
-
-      } else{
-      loggedId = responseData['_id'];
-      loggedName = responseData['name'];
-
-
+        loggedName = responseData['_doc']['name'];
+      } else {
+        loggedId = responseData['_id'];
+        loggedName = responseData['name'];
       }
 
       print(responseData);
@@ -158,7 +155,6 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   Future<void> approveDoctor(String id) async {
-    print(id);
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/admin/approve"),
@@ -169,7 +165,9 @@ class RegisterProvider extends ChangeNotifier {
           });
 
       unApprovedDoctorsList = json.decode(response.body);
+
       notifyListeners();
+      print("respinse: " + json.decode(response.body));
       return json.decode(response.body);
     } catch (e) {
       unApprovedDoctorsList = [
