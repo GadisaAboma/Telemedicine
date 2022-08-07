@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
+import 'package:frontend/admin/admin_post.dart';
 import 'package:frontend/admin/doctor_detail_info.dart';
+import 'package:frontend/admin/doctors_request.dart';
 import 'package:frontend/provider/patient.dart';
 import 'package:frontend/provider/register.dart';
 import 'package:provider/provider.dart';
@@ -19,84 +21,15 @@ class _AdminHomeState extends State<AdminHome> {
   bool isLoading = true;
   List posts = [];
 
-  void fetchPosts() async {
-    await Provider.of<PatientProvider>(context, listen: false).fetchPosts();
-    posts = Provider.of<PatientProvider>(context, listen: false).posts;
-    setState(() {
-      isLoading = false;
-    });
-  }
-
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
   int index = 0;
-  var unApprovedDoctorsList;
-
-  @override
-  void initState() {
-    Provider.of<RegisterProvider>(context, listen: false).unApprovedDoctors();
-    final loggedInUser =
-        Provider.of<RegisterProvider>(context, listen: false).currentUser;
-    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
-
-    ClientIO().rootContext = context;
-    super.initState();
-
-    Future.delayed(
-      Duration.zero,
-      () {
-        fetchPosts();
-      },
-    );
-  }
 
   Widget bodyWidget(BuildContext ctx) {
     Widget returnedwidget = Container();
     if (index == 1) {
-      unApprovedDoctorsList = Provider.of<RegisterProvider>(ctx, listen: true)
-          .unApprovedDoctorsList;
-      print(unApprovedDoctorsList);
-      return unApprovedDoctorsList[0] == null
-          ? returnedwidget = Center(
-              child: Text("There is no unapproved doctors"),
-            )
-          : ListView.builder(
-              itemCount: unApprovedDoctorsList.length,
-              itemBuilder: ((_, index) {
-                return Column(
-                  children: [
-                    ListTile(
-                      title: Text(unApprovedDoctorsList[index]["name"]),
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return DoctorDetailInfo(
-                              doctorInfo: unApprovedDoctorsList[index]);
-                        }));
-                      },
-                    ),
-                    Divider()
-                  ],
-                );
-              }),
-            );
+      returnedwidget = const DoctorsRequest();
     } else {
-      returnedwidget = isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : SizedBox(
-              height: 700,
-              child: ListView.builder(
-                itemCount: posts.length,
-                itemBuilder: (context, index) {
-                  return EachPlace(
-                      posts[index]['description'],
-                      posts[index]['imageUrl'].toString().replaceAll('\\', '/'),
-                      posts[index]['date'],
-                      posts[index]['doctorName']);
-                },
-              ),
-            );
+      returnedwidget = const AdminPost();
     }
     return returnedwidget;
   }

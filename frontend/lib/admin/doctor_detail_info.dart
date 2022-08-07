@@ -26,31 +26,32 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-                alignment: Alignment.center,
-                height: 200,
-                  child: FullScreenWidget(
+              alignment: Alignment.center,
+              height: 200,
+              child: FullScreenWidget(
                 child: InteractiveViewer(
-                    child: Container(
-                      margin: const EdgeInsets.all(20),
-                      width: MediaQuery.of(context).size.width,
-                      child: Image.network(
-                          '$serverUrl/${widget.doctorInfo['idUrl'].toString().replaceAll('\\', '/')}'),
-                    ),
+                  child: Container(
+                    margin: const EdgeInsets.all(20),
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.network(
+                        '$serverUrl/${widget.doctorInfo['idUrl'].toString().replaceAll('\\', '/')}'),
                   ),
-                )),
-            SizedBox(
+                ),
+              ),
+            ),
+            const SizedBox(
               height: 20,
             ),
             Row(
               children: [
-               const Text("Name of doctor:  "),
+                const Text("Name of doctor:  "),
                 Text(
                   widget.doctorInfo["name"],
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
             ),
-           const SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -59,77 +60,79 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
                 Text(widget.doctorInfo["specializedIn"])
               ],
             ),
-           const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        isLoading = true;
-                      });
+                isLoading
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                      AlertDialog(
-                        content: isLoading
-                            ? CircularProgressIndicator()
-                            : Text("Request Approved"),
-                        actions: [
-                          !isLoading
-                              ? TextButton(
-                                  onPressed: (() async {
-                                    Navigator.pop(context);
-                                  }),
-                                  child: Text("success"))
-                              : Text("Loading")
-                        ],
-                      );
-                      setState(() {
-                        isLoading = true;
-                      });
-                      var success = await Provider.of<RegisterProvider>(context,
-                              listen: false)
-                          .approveDoctor(widget.doctorInfo["_id"]);
+                          AlertDialog(
+                            content: isLoading
+                                ? CircularProgressIndicator()
+                                : Text("Request Approved"),
+                            actions: [
+                              !isLoading
+                                  ? TextButton(
+                                      onPressed: (() async {
+                                        Navigator.pop(context);
+                                      }),
+                                      child: Text("success"))
+                                  : Text("Loading")
+                            ],
+                          );
+                          setState(() {
+                            isLoading = true;
+                          });
+                          var success = await Provider.of<RegisterProvider>(
+                                  context,
+                                  listen: false)
+                              .approveDoctor(widget.doctorInfo["_id"]);
 
-                      if (success == 'success') {
-                        showDialog(
-                            context: context,
-                            builder: (ctx) {
-                              return AlertDialog(
-                                title: const Text("Success!"),
-                                content: const Text("Successfully approved!"),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("OK"))
-                                ],
-                              );
-                            });
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (ctx) {
-                              return AlertDialog(
-                                title: const Text("Error!"),
-                                content: const Text("Error approving"),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                        // Navigator.of(context).pop();
-                                      },
-                                      child: const Text("OK"))
-                                ],
-                              );
-                            });
-                      }
-                    },
-                    child: isLoading
-                        ? CircularProgressIndicator()
-                        : Text("Approve")),
+                          if (success == 'success') {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return AlertDialog(
+                                    title: const Text("Success!"),
+                                    content:
+                                        const Text("Successfully approved!"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text("OK"))
+                                    ],
+                                  );
+                                });
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return AlertDialog(
+                                    title: const Text("Error!"),
+                                    content: const Text("Error approving"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                            // Navigator.of(context).pop();
+                                          },
+                                          child: const Text("OK"))
+                                    ],
+                                  );
+                                });
+                          }
+                        },
+                        child: Text("Approve")),
                 SizedBox(
                   width: 30,
                 ),

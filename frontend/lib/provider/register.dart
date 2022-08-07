@@ -50,7 +50,6 @@ class RegisterProvider extends ChangeNotifier {
       String specializedIn,
       String gender,
       File? image) async {
-    print("object");
     setLoading();
     Map<String, String> jsonData = accountType == "doctor"
         ? {
@@ -182,9 +181,7 @@ class RegisterProvider extends ChangeNotifier {
     try {
       final response =
           await http.get(Uri.parse("$serverUrl/api/admin/requests"));
-      // print(json.decode(response.body));
       unApprovedDoctorsList = json.decode(response.body);
-      print(json.decode(response.body));
       notifyListeners();
     } catch (e) {
       // unApprovedDoctorsList = [
