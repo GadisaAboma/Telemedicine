@@ -39,6 +39,12 @@ class _DoctorsRequestState extends State<DoctorsRequest> {
       isLoading = false;
     });
   }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+  
 
   @override
   Widget build(BuildContext context) {

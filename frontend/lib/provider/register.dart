@@ -41,6 +41,7 @@ class RegisterProvider extends ChangeNotifier {
       return e;
     }
   }
+
   Future fetchOnePhysician(String username) async {
     try {
       final response = await http.post(
@@ -226,6 +227,7 @@ class RegisterProvider extends ChangeNotifier {
 
       me = responseData["_doc"]["username"];
       currentUser = responseData["_doc"];
+      print(currentUser);
       // me.add(User(responseData["_doc"]["username"], responseData["_doc"]["_id"]));
 
       if (responseData["role"] == "doctor") {

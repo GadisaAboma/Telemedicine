@@ -109,10 +109,10 @@ class _LoginState extends State<Login> {
 
         switch (loginResponse['role']) {
           case "admin":
-            Navigator.of(ctx).pushReplacementNamed(adminHomeRoute);
+            Navigator.of(ctx).popAndPushNamed(adminHomeRoute);
             break;
           case "doctor":
-            Navigator.of(ctx).pushReplacementNamed(doctorHomeRoute,
+            Navigator.of(ctx).popAndPushNamed(doctorHomeRoute,
                 arguments: loginResponse["user"]["_id"]);
 
             break;
