@@ -32,7 +32,7 @@ class DrawerWidget extends StatelessWidget {
                       },
                     ));
                   },
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     radius: 30,
                     backgroundImage: AssetImage("assets/image/doctor.jpg"),
                   ),
@@ -40,7 +40,8 @@ class DrawerWidget extends StatelessWidget {
               ),
               ListTile(
                 title: Text(userInfo["name"],
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600)),
                 // subtitle: Text(
                 //   "phone number +251950488766",
                 //   style: TextStyle(color: Colors.white),
@@ -55,8 +56,11 @@ class DrawerWidget extends StatelessWidget {
                         .loggedUserId !=
                     'admins'
                 ? ListTile(
-                    title: Text("Appointment"),
-                    leading: Icon(Icons.event),
+                    title: const Text(
+                      "Appointments",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    leading: const Icon(Icons.event),
                     onTap: () {
                       // Provider.of<PreviousChat>(context, listen: false).dispose();
                       Navigator.of(context).pop();
@@ -65,15 +69,21 @@ class DrawerWidget extends StatelessWidget {
                   )
                 : Container(),
             ListTile(
-              title: const Text("Edit your account"),
+              title: const Text(
+                "Edit Your Account",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
               leading: const Icon(Icons.edit),
               onTap: () async {
                 Navigator.of(context).pushNamed(editAccount);
               },
             ),
             ListTile(
-              title: Text("logout"),
-              leading: Icon(Icons.logout),
+              title: const Text(
+                "Logout",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              leading: const Icon(Icons.logout),
               onTap: () async {
                 // Provider.of<PreviousChat>(context, listen: false).dispose();
                 SharedPreferences sharedPreferences =

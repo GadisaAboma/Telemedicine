@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Telemedicine application',
         theme: ThemeData(
+          fontFamily: "OpenSans",
           primarySwatch: Colors.blueGrey,
           primaryColor: Color.fromARGB(197, 6, 57, 116),
           appBarTheme: const AppBarTheme(

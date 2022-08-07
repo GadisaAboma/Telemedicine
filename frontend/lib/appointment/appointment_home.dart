@@ -74,8 +74,10 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                             padding: const EdgeInsets.all(5.0),
                             child: Card(
                               child: Padding(
-                                padding: const EdgeInsets.all(25),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 20),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -83,31 +85,35 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          appointments[index]['description'],
-                                          style: const TextStyle(
-                                            fontSize: 20,
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          child: Text(
+                                            appointments[index]['description'],
+                                            softWrap: true,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
                                         Text(
-              //                             DateFormat.yMMMEd() 
-              // .format(DateTime.parse(appointments[index]['date'])
-              appointments[index]['date']
-              , 
+                                          //                             DateFormat.yMMMEd()
+                                          // .format(DateTime.parse(appointments[index]['date'])
+                                          appointments[index]['date'],
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.edit),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Icon(Icons.delete),
-                                      ],
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.cancel),
                                     )
                                   ],
                                 ),

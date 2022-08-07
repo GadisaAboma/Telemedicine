@@ -23,7 +23,7 @@ lemmatizer = WordNetLemmatizer()
 
 path = pathlib.Path().resolve()
 intents = json.loads(
-    open(path.joinpath("chatbotServer\intents.json")).read())
+    open(path.joinpath("Telemedicine\chatbotServer\intents.json")).read())
 
 
 words = []

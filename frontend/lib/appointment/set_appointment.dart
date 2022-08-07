@@ -21,6 +21,8 @@ class SetAppointment extends StatefulWidget {
 class _SetAppointmentState extends State<SetAppointment> {
   var date;
   var appointments;
+  final formKey = GlobalKey<FormState>();
+  String description = "";
 
   @override
   void dispose() {
@@ -32,13 +34,53 @@ class _SetAppointmentState extends State<SetAppointment> {
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var id = args['id'];
-    String description = "";
 
     void setAppointmentDate() async {
-      String doctorId =
-          Provider.of<RegisterProvider>(context, listen: false).loggedId;
-      appointments = await Provider.of<PatientProvider>(listen: false, context)
-          .setAppointment(id, date.toString(), doctorId, description);
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        String doctorId =
+            Provider.of<RegisterProvider>(context, listen: false).loggedId;
+        var result = await Provider.of<PatientProvider>(listen: false, context)
+            .setAppointment(id, date.toString(), doctorId, description);
+        print(result);
+        if (result == 'Success') {
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  title: const Text("Success!"),
+                  content: const Text("Successfully Sent!"),
+                  actions: [
+                    TextButton(
+                      child: const Text("OK"),
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                    )
+                  ],
+                );
+              });
+        } else {
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  title: const Text("Error!"),
+                  content: const Text("Error Sending!"),
+                  actions: [
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                    )
+                  ],
+                );
+              });
+        }
+      } else {
+        return;
+      }
     }
 
     return Scaffold(
@@ -50,7 +92,7 @@ class _SetAppointmentState extends State<SetAppointment> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   const Text(
@@ -62,7 +104,7 @@ class _SetAppointmentState extends State<SetAppointment> {
                   ),
                   Text(
                     args['name'],
-                    style: TextStyle(fontSize: 20, color: Colors.blue),
+                    style: const TextStyle(fontSize: 20, color: Colors.blue),
                   ),
                 ]),
               ),
@@ -73,38 +115,40 @@ class _SetAppointmentState extends State<SetAppointment> {
                   color: Color(MyColors.bg),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Container(
-                    //   padding: const EdgeInsets.only(top: 3),
-                    //   child: Icon(
-                    //     Icons.description,
-                    //     color: Color(MyColors.purple02),
-                    //   ),
-                    // ),
                     const SizedBox(
                       width: 15,
                     ),
                     Expanded(
-                      child: TextField(
-                        onChanged: (value) {
-                          // setState(() {
-                            description = value;
-                          
-                          
-                        },
-                        minLines: 2,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Appointment description',
-                          hintStyle: TextStyle(
-                              fontSize: 13,
-                              color: Color(MyColors.purple01),
-                              fontWeight: FontWeight.w700),
+                      child: Form(
+                        key: formKey,
+                        child: TextFormField(
+                          // onChanged: (value) {
+                          //   description = value;
+                          // },
+                          onSaved: (value) {
+                            description = value.toString();
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "description cannot be empty";
+                            }
+                          },
+                          minLines: 2,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Appointment description',
+                            hintStyle: TextStyle(
+                                fontSize: 13,
+                                color: Color(MyColors.purple01),
+                                fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ),
                     ),
@@ -113,7 +157,7 @@ class _SetAppointmentState extends State<SetAppointment> {
               ),
               Container(
                 alignment: Alignment.bottomLeft,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Text(
                   date == null ? "No date choosen" : date.toString(),
                 ),
@@ -128,26 +172,24 @@ class _SetAppointmentState extends State<SetAppointment> {
                 child: CalendarDatePicker(
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(Duration(days: 30)),
+                  lastDate: DateTime.now().add(const Duration(days: 30)),
                   onDateChanged: (selectedDate) {
                     setState(() {
-                      date = DateFormat.yMMMEd()
-
-                          // displaying formatted date
-                          .format(selectedDate);
+                      date = DateFormat.yMMMEd().format(selectedDate);
                     });
                   },
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 width: double.infinity,
                 child: SizedBox(
                   height: 50,
                   child: ElevatedButton.icon(
                     onPressed: setAppointmentDate,
-                    icon: const Icon(Icons.save),
-                    label: const Text("Send Appointement"),
+                    icon: const Icon(Icons.send),
+                    label: const Text("Send Appointment"),
 
                     // style: ElevatedButton.styleFrom(primary: Colors.blue),
                   ),

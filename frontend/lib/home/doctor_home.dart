@@ -135,7 +135,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                                 ),
                               ],
                             ),
-                            trailing: Icon(
+                            trailing: const Icon(
                               Icons.done_all,
                             ),
                           ),

@@ -67,8 +67,6 @@ class RegisterProvider extends ChangeNotifier {
             "password": password,
           };
 
-    print(jsonData);
-    print(accountType);
     var response;
     try {
       final String routeType = accountType == "patient"
