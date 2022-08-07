@@ -29,6 +29,19 @@ class _ChatPageState extends State<ChatPage> {
   dynamic currentContact;
   bool isVideo = true;
 
+  
+
+  @override
+  void initState() {
+    super.initState();
+    
+    
+
+    currentContact =
+        Provider.of<RegisterProvider>(context, listen: false).currentUser;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<PreviousChat>(context, listen: true);
@@ -50,170 +63,180 @@ class _ChatPageState extends State<ChatPage> {
     dynamic route = ModalRoute.of(context)!.settings.arguments;
     var size = MediaQuery.of(context).size;
     bool isVideo = true;
-    return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Provider.of<PreviousChat>(context, listen: false).dispose();
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back,
+    return WillPopScope(
+      onWillPop: ()async {
+        
+        Provider.of<PreviousChat>(context, listen: false)
+                    .removeChatHistory();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Provider.of<PreviousChat>(context, listen: false).dispose();
+                Provider.of<PreviousChat>(context, listen: false)
+                    .removeChatHistory();
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back,
+              ),
             ),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  final res = await HttpUtil()
-                      .createRoom(isVideo == true ? 'video' : 'audio');
-                  final String room = res['room'];
-                  final String type = res['type'];
+            actions: [
+              IconButton(
+                  onPressed: () async {
+                    final res = await HttpUtil()
+                        .createRoom(isVideo == true ? 'video' : 'audio');
+                    final String room = res['room'];
+                    final String type = res['type'];
 
-                  // var callee = contacts[index].split(':').last;
-                  var callee = "";
-                  Provider.of<PreviousChat>(context, listen: false)
-                      .contacts
-                      .forEach((element) {
-                    print("username is : " + element);
-                    if (element.split(":").contains(route["username"])) {
-                      callee = element.split(':').last;
-                      return;
-                    }
-                  });
+                    // var callee = contacts[index].split(':').last;
+                    var callee = "";
+                    Provider.of<PreviousChat>(context, listen: false)
+                        .contacts
+                        .forEach((element) {
+                      print("username is : " + element);
+                      if (element.split(":").contains(route["username"])) {
+                        callee = element.split(':').last;
+                        return;
+                      }
+                    });
 
-                  print('callee: $callee');
-                  print('room: $room');
+                    print('callee: $callee');
+                    print('room: $room');
 
-                  if (callee.isEmpty) {
-                    AlertDialog(
-                      title: Row(
-                        children: [
-                          Icon(Icons.warning),
-                          Text("user is offline")
-                        ],
-                      ),
-                      actions: [
-                        Container(
-                          child: Text("ok"),
-                        )
-                      ],
-                    );
-                  } else {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => RTCVideo(
-                          room: room,
-                          callee: callee,
-                          caller: currentContact["_id"],
-                          isCaller: true,
-                          type: type,
+                    if (callee.isEmpty) {
+                      AlertDialog(
+                        title: Row(
+                          children: [
+                            Icon(Icons.warning),
+                            Text("user is offline")
+                          ],
                         ),
-                      ),
-                    );
-                  }
-                },
-                icon: Icon(Icons.video_call))
-          ],
-          // centerTitle: true,
-          title: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(route["name"]),
+                        actions: [
+                          Container(
+                            child: Text("ok"),
+                          )
+                        ],
+                      );
+                    } else {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => RTCVideo(
+                            room: room,
+                            callee: callee,
+                            caller: currentContact["_id"],
+                            isCaller: true,
+                            type: type,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.video_call))
             ],
-          )),
-      body: previousChat == null
-          ? Container(child: Center(child: Text("welcome ")))
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // const UserListView(),
-                    Expanded(
-                      child: ListView.builder(
-                          controller: _scrollController,
-                          itemCount: previousChat.length,
-                          itemBuilder: (contex, index) {
-                            bool isSendByUser = previousChat[index].sender ==
-                                Provider.of<PreviousChat>(context,
-                                        listen: false)
-                                    .getUsername();
-                            _scrollDown();
-                            return Align(
-                              alignment: isSendByUser
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: Container(
-                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
-                                child: Column(
-                                  crossAxisAlignment: isSendByUser
-                                      ? CrossAxisAlignment.end
-                                      : CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      (previousChat[index].sender ?? ''),
-                                      style: const TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Container(
-                                        padding: const EdgeInsets.all(8),
-                                        constraints: BoxConstraints(
-                                          maxWidth: size.width * 0.5,
-                                          minWidth: size.width * 0.01,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color: isSendByUser
-                                                ? Colors.blue
-                                                : Colors.grey.shade500),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            if (!isSendByUser)
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 8),
-                                                child: CircleAvatar(
-                                                  child: Icon(Icons.person,
-                                                      size: 10),
-                                                  radius: 8,
+            // centerTitle: true,
+            title: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(route["name"]),
+              ],
+            )),
+        body: previousChat == null
+            ? Container(child: Center(child: Text("welcome ")))
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // const UserListView(),
+                      Expanded(
+                        child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: previousChat.length,
+                            itemBuilder: (contex, index) {
+                              bool isSendByUser = previousChat[index].sender ==
+                                  Provider.of<PreviousChat>(context,
+                                          listen: false)
+                                      .getUsername();
+                              _scrollDown();
+                              return Align(
+                                alignment: isSendByUser
+                                    ? Alignment.centerRight
+                                    : Alignment.centerLeft,
+                                child: Container(
+                                  margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+                                  child: Column(
+                                    crossAxisAlignment: isSendByUser
+                                        ? CrossAxisAlignment.end
+                                        : CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        (previousChat[index].sender ?? ''),
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Container(
+                                          padding: const EdgeInsets.all(8),
+                                          constraints: BoxConstraints(
+                                            maxWidth: size.width * 0.5,
+                                            minWidth: size.width * 0.01,
+                                          ),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: isSendByUser
+                                                  ? Colors.blue
+                                                  : Colors.grey.shade500),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              if (!isSendByUser)
+                                                const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(right: 8),
+                                                  child: CircleAvatar(
+                                                    child: Icon(Icons.person,
+                                                        size: 10),
+                                                    radius: 8,
+                                                  ),
+                                                ),
+                                              Flexible(
+                                                child: Text(
+                                                  previousChat[index].message ??
+                                                      'none',
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
+                                                  softWrap: true,
                                                 ),
                                               ),
-                                            Flexible(
-                                              child: Text(
-                                                previousChat[index].message ??
-                                                    'none',
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                                softWrap: true,
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                    // const SizedBox(height: 4),
-                                    // Text(
-                                    //   f.format(DateTime.parse(chat.time ?? '')),
-                                    //   style: const TextStyle(fontSize: 10),
-                                    // )
-                                    const SizedBox(height: 10),
-                                  ],
+                                            ],
+                                          )),
+                                      // const SizedBox(height: 4),
+                                      // Text(
+                                      //   f.format(DateTime.parse(chat.time ?? '')),
+                                      //   style: const TextStyle(fontSize: 10),
+                                      // )
+                                      const SizedBox(height: 10),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
-                    ),
-                    SizedBox(height: 6),
+                              );
+                            }),
+                      ),
+                      SizedBox(height: 6),
 
-                    ChatTextInput(),
-                  ])),
+                      ChatTextInput(),
+                    ])),
+      ),
     );
   }
 }

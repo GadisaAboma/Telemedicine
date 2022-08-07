@@ -57,6 +57,10 @@ class PreviousChat extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeChatHistory() {
+    _chatHistory = [];
+  }
+
   Future<void> contactedDoctor(String username) async {
     try {
       final response = await http
@@ -94,7 +98,7 @@ class PreviousChat extends ChangeNotifier {
     print(username);
 
     _socket = io.io(
-        "http://192.168.1.106:8080",
+        "http://192.168.1.41:8080",
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()

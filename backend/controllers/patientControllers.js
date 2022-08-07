@@ -74,6 +74,21 @@ const searchDoctor = asyncHandler(async (req, res) => {
     }
 
 })
+const fetchDoctor = asyncHandler(async (req, res) => {
+    
+    const { username } = req.body
+    const doctor = await Doctor.find({username} )
+    console.log(doctor)
+
+    if (doctor) {
+        res.send(doctor)
+
+    } else {
+        res.status(400)
+        throw new Error('Doctor not found!')
+    }
+
+})
 const patient = asyncHandler(async (req, res) => {
     console.log(req.body)
     const { username } = req.body
@@ -131,6 +146,7 @@ module.exports = {
     searchDoctor,fetchPatient,patient,
     createPost,
     getAllPosts,
+    fetchDoctor
 
 
 }

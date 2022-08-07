@@ -17,7 +17,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 lemmatizer = WordNetLemmatizer()
 path = pathlib.Path().resolve()
-intents = json.loads(open(path.joinpath('Telemedicine\chatbotServer\intents.json')).read())
+intents = json.loads(open(path.joinpath('chatbotServer\intents.json')).read())
 
 words = pickle.load(open("words.pkl", "rb"))
 classes = pickle.load(open("classes.pkl", "rb"))

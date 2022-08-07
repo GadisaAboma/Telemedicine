@@ -42,6 +42,22 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
+  Future fetchOnePhysician(String username) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$serverUrl/api/patients/fetchDoctor"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json.encode({"username": username}),
+      );
+      return json.decode(response.body);
+    } catch (e) {
+      return e;
+    }
+  }
+
   Future register(
       String name,
       String username,
@@ -137,7 +153,7 @@ class RegisterProvider extends ChangeNotifier {
   // late String me;
   // late dynamic doctordInfo;
 
-  Future fetchPatient(String username) async {
+  Future fetchPhysician(String username) async {
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/patients/fetchPatient"),
@@ -211,6 +227,7 @@ class RegisterProvider extends ChangeNotifier {
 
       me = responseData["_doc"]["username"];
       currentUser = responseData["_doc"];
+      print(currentUser);
       // me.add(User(responseData["_doc"]["username"], responseData["_doc"]["_id"]));
 
       if (responseData["role"] == "doctor") {

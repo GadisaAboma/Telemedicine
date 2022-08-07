@@ -68,77 +68,78 @@ class _PatientHomeState extends State<PatientHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(loggedInUser['name']),
-        actions: [
-          Container(
-            height: 40,
-            child: IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () =>
-                    Navigator.pushNamed(context, searchDoctorRoute)),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.person,
-              size: 30,
+        appBar: AppBar(
+          title: Text(loggedInUser['name']),
+          actions: [
+            Container(
+              height: 40,
+              child: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, searchDoctorRoute)),
             ),
-          )
-        ],
-      ),
-      drawer: DrawerWidget(
-        userInfo: loggedInUser,
-      ),
-      body: setBody(),
-      floatingActionButton: FloatingActionButton(
-        child: FaIcon(
-          FontAwesomeIcons.bots,
-          color: Colors.white,
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.person,
+                size: 30,
+              ),
+            )
+          ],
         ),
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-            return ChatBot();
-          }));
-        }, //To principal button
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        currentIndex: index,
-        selectedItemColor: Colors.white,
-        showUnselectedLabels: false,
-        onTap: (currentIndex) {
-          setState(() {
-            index = currentIndex;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
-              size: 30,
-            ),
-            label: "home",
+        drawer: DrawerWidget(
+          userInfo: loggedInUser,
+        ),
+        body: setBody(),
+        floatingActionButton: FloatingActionButton(
+          child: FaIcon(
+            FontAwesomeIcons.bots,
+            color: Colors.white,
           ),
-          BottomNavigationBarItem(
-            label: "notification",
-            icon: Icon(
-              Icons.notifications,
-              size: 30,
-              color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+              return ChatBot();
+            }));
+          }, //To principal button
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          currentIndex: index,
+          selectedItemColor: Colors.white,
+          showUnselectedLabels: false,
+          onTap: (currentIndex) {
+            setState(() {
+              index = currentIndex;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+                size: 30,
+              ),
+              label: "home",
             ),
-          ),
-          BottomNavigationBarItem(
-            label: "messages",
-            icon: Icon(
-              Icons.message,
-              size: 30,
-              color: Colors.white,
+            BottomNavigationBarItem(
+              label: "notification",
+              icon: Icon(
+                Icons.notifications,
+                size: 30,
+                color: Colors.white,
+              ),
             ),
-          ),
-        ],
-      ),
+            BottomNavigationBarItem(
+              label: "messages",
+              icon: Icon(
+                Icons.message,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      
     );
   }
 }

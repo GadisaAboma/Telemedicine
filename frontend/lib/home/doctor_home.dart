@@ -134,27 +134,24 @@ class _DoctorHomeState extends State<DoctorHome> {
                                 ),
                               ],
                             ),
-
-                         
-
-                            subtitle: Text((Provider.of<
-                                                      PreviousChat>(context,
-                                                  listen: false)
-                                              .contacts
-                                              .any((element) => element
-                                                  .split(":")
-                                                  .contains(doctorInfo[
-                                                          "messages"]![index]
-                                                      ["user"])))?"online":"offline", ),
+                            subtitle: Text(
+                              (Provider.of<PreviousChat>(context, listen: false)
+                                      .contacts
+                                      .any((element) => element
+                                          .split(":")
+                                          .contains(
+                                              doctorInfo["messages"]![index]
+                                                  ["user"])))
+                                  ? "online"
+                                  : "offline",
+                            ),
                             trailing: Icon(
-
                               Icons.done_all,
                             ),
                           ),
                         ),
                       ),
-                      
-                ],
+                  ],
                 );
           return listOfPatient;
         });
@@ -256,6 +253,7 @@ class _DoctorHomeState extends State<DoctorHome> {
           Navigator.pushNamed(context, createPost);
         },
         child: Icon(Icons.add),
+      
       ),
     );
   }

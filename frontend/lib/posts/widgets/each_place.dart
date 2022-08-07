@@ -5,6 +5,7 @@ import '../pages/user_detail.dart';
 import 'package:intl/intl.dart';
 
 class EachPlace extends StatelessWidget {
+  
   var description;
   var imageUrl;
   var date;

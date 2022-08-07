@@ -95,44 +95,48 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
                                   listen: false)
                               .approveDoctor(widget.doctorInfo["_id"]);
 
-                          if (success == 'success') {
-                            showDialog(
-                                context: context,
-                                builder: (ctx) {
-                                  return AlertDialog(
-                                    title: const Text("Success!"),
-                                    content:
-                                        const Text("Successfully approved!"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(ctx).pop();
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text("OK"))
-                                    ],
-                                  );
-                                });
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (ctx) {
-                                  return AlertDialog(
-                                    title: const Text("Error!"),
-                                    content: const Text("Error approving"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(ctx).pop();
-                                            // Navigator.of(context).pop();
-                                          },
-                                          child: const Text("OK"))
-                                    ],
-                                  );
-                                });
-                          }
-                        },
-                        child: Text("Approve")),
+
+                      if (success == 'success') {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text("Success!"),
+                                content: const Text("Successfully approved!"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("OK"),
+                                      )
+                                ],
+                              );
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text("Error!"),
+                                content: const Text("Error approving"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                        // Navigator.of(context).pop();
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                      }
+                    },
+                    child: isLoading
+                        ? CircularProgressIndicator()
+                        : Text("Approve")),
+
                 SizedBox(
                   width: 30,
                 ),
