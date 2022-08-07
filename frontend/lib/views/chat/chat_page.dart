@@ -42,7 +42,7 @@ class _ChatPageState extends State<ChatPage> {
 
     super.initState();
    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-   FirebaseMessaging.onMessageOpenedApp.listen((event) {
+   FirebaseMessaging.onMessageOpenedApp.listen((event) {  
     
    });
    
