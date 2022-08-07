@@ -82,7 +82,6 @@ class PatientProvider extends ChangeNotifier {
 
   Future setAppointment(
       String id, var date, String doctorId, String description) async {
-    print("desc   " + description);
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/doctors/setAppointment"),
@@ -96,10 +95,9 @@ class PatientProvider extends ChangeNotifier {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
-      final data = json.decode(response.body);
 
       notifyListeners();
-      return data;
+      return response.body;
     } catch (e) {
       print(e);
       return e;

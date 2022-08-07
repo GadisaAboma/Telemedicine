@@ -31,12 +31,14 @@ class _DoctorsListState extends State<DoctorsList> {
 
   bool isLoading = true;
   List? doctors;
+  List? PhysiciansData;
   Future<void> fetchPhysician() async {
     user = await Provider.of<RegisterProvider>(context, listen: false)
         .fetchPhysician(widget.username);
-    (user["messages"] as List).forEach((user) async{
-        await Provider.of<RegisterProvider>(context, listen: false)
-        .fetchPhysician(widget.username);
+    user["messages"].forEach((user) async {
+      final pycn = await Provider.of<RegisterProvider>(context, listen: false)
+          .fetchOnePhysician(widget.username);
+      PhysiciansData!.add(pycn);
     });
     doctors = user["messages"].reversed.toList();
     setState(() {
@@ -44,12 +46,9 @@ class _DoctorsListState extends State<DoctorsList> {
     });
   }
 
-Future fetchOnePhysician(String username) async{
-
-}
+  Future fetchOnePhysician(String username) async {}
   Widget _listofDoctor(int index) {
-    if (doctors!.length > 1 && index != doctors!.length - 1)  {
-        
+    if (doctors!.length > 1 && index != doctors!.length - 1) {
       return Card(
         elevation: 5,
         child: InkWell(
@@ -142,7 +141,7 @@ Future fetchOnePhysician(String username) async{
                     itemCount: doctors?.length,
                     itemBuilder: (context, index) {
                       Widget listOfDoctor = Container();
-                      
+
                       return _listofDoctor(index);
                     }),
           );

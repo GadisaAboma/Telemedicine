@@ -41,6 +41,21 @@ class RegisterProvider extends ChangeNotifier {
       return e;
     }
   }
+  Future fetchOnePhysician(String username) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$serverUrl/api/patients/fetchDoctor"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json.encode({"username": username}),
+      );
+      return json.decode(response.body);
+    } catch (e) {
+      return e;
+    }
+  }
 
   Future register(
       String name,
@@ -67,8 +82,6 @@ class RegisterProvider extends ChangeNotifier {
             "password": password,
           };
 
-    print(jsonData);
-    print(accountType);
     var response;
     try {
       final String routeType = accountType == "patient"
@@ -116,13 +129,10 @@ class RegisterProvider extends ChangeNotifier {
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
         loggedId = responseData['_doc']["_id"];
-      loggedName = responseData['_doc']['name'];
-
-      } else{
-      loggedId = responseData['_id'];
-      loggedName = responseData['name'];
-
-
+        loggedName = responseData['_doc']['name'];
+      } else {
+        loggedId = responseData['_id'];
+        loggedName = responseData['name'];
       }
 
       print(responseData);
@@ -159,8 +169,7 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> approveDoctor(String id) async {
-    print(id);
+  Future approveDoctor(String id) async {
     try {
       final response = await http.post(
           Uri.parse("$serverUrl/api/admin/approve"),
@@ -170,9 +179,12 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
 
-      unApprovedDoctorsList = json.decode(response.body);
       notifyListeners();
-      return json.decode(response.body);
+      if (response.body == 'success') {
+        return "success";
+      } else {
+        return "error";
+      }
     } catch (e) {
       unApprovedDoctorsList = [
         null,
@@ -190,9 +202,9 @@ class RegisterProvider extends ChangeNotifier {
       print(json.decode(response.body));
       notifyListeners();
     } catch (e) {
-      unApprovedDoctorsList = [
-        null,
-      ];
+      // unApprovedDoctorsList = [
+      //   null,
+      // ];
       notifyListeners();
     }
   }

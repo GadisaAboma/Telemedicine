@@ -65,7 +65,7 @@
       "responses" : ["Fuula daa'ima keessanii qulqullina qabaadhaa. Guyyaa guyyaan fuula daa'ima keessanii bishaan ho'aa fi saamunaa daa'imaa salphaadhaan dhiqadhaa. Fuula daa'ima keessanii suuta gogsaa. Salphaatti gogaa daa'ima keessanii gogsuu qofa.Finniisa sana hin ciniinsinaa ykn hin xuuxinaa  Fuula daa'ima keessanii irratti looshinii ykn zayita fayyadamuu irraa of qusadhaa." ]
  },{
       "tag" : "diaper rash",
-      "patterns" : ["mucaa koo gogaa naannoo qaama saala guba", "gogaa naannoo qaama saalaa gubuu", "yeroon diaper jijjiruuf hin boochisa", "naannoo qama saalatti madaa'a jira"],
+      "patterns" : ["mucaa koo gogaa naannoo qaama saalaa guba", "gogaa naannoo qaama saalaa gubuu", "yeroon diaper jijjiruuf hin boochisa", "naannoo qama saalatti madaa'a jira"],
       "responses" : ["aa’ima keessan guyyaa guyyaan dhiqadhaa: Dhiqachuun karaa gaarii ta’ee fi dhiqannaa daa’imaa saffisaan qulqulleessuuf gargaarudha. Kaayyoo kanaaf bishaan ho’aa urgooftuu hin qabnee fi saamunaa salphaa qabu fayyadamuu ykn mucaa keessan ofeeggannoodhaan baazii gochuudhaan salphaatti akka fayyan gochuu ni dandeessu"]
  },{
       "tag" : "alaarjikii",
@@ -88,7 +88,7 @@
       "patterns" : ["dhiignii koo baayye dhangala'a", "dhangala'uu dhiigaa akkamitti dhaabun danda'ama", "dhiiga yaa'uu akkamitti dhaabbachiisna", "dhiiga dhangala'u akkamitti dhaabbachiisna"],
       "responses" : ["Mana keessatti dhiiga dhangala'eu qoricha uumamaatiin yaaluun karaan mirkanaa'e hin jiru. Yoo mana keessatti dhiiga dhangala’e balleessuuf yaalte, wal’aansa fayyaa sirrii ta’e argachuuf yeroo dheeraa sitti fudhachuu danda’a. Kunis carraa dhukkuba lubbuu namaa balaadhaaf saaxiluu danda’u qabaachuu kee dabaluu danda’a. kanaafuu doktora kee faana walqunnamuun haasayi" ]
  },{
-      "tag" : "gargaarsaa",
+      "tag" : "gargaarsa",
       "patterns" : ["akkamittin na gargaaruu dandeessa", "na gargaari", "na gargaaruu dandeessaa"],
       "responses" : ["akkamittiin si gargaaruu maalidha rakkoon daa'ima kee", "haala kamiin akkan si gargaaruu barbaadde" ]
  },{

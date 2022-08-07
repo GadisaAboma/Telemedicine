@@ -1,7 +1,4 @@
 import 'dart:developer';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/login/login.dart';
 import 'package:frontend/onboarding.dart';
@@ -24,25 +21,7 @@ class _RouteAppState extends State<RouteApp> {
   String password = "";
   bool isLoading = false;
 
-  FirebaseMessaging fc = FirebaseMessaging.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    // Firebase.initializeApp();
-    fc.subscribeToTopic("Events");
-    FirebaseMessaging.onMessage.listen((event) {
-      AlertDialog(
-        content: Text(event.toString()),
-        actions: [TextButton(onPressed: () {}, child: Text("ok"))],
-      );
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      print("on background");
-    });
-
-    Future.delayed(Duration.zero, () => {getData()});
-  }
 
   Future getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

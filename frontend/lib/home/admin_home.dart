@@ -36,11 +36,7 @@ class _AdminHomeState extends State<AdminHome> {
     Provider.of<RegisterProvider>(context, listen: false).unApprovedDoctors();
     final loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
-    ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
-
-    ClientIO().rootContext = context;
     super.initState();
-
     Future.delayed(
       Duration.zero,
       () {

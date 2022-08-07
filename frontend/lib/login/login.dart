@@ -109,15 +109,15 @@ class _LoginState extends State<Login> {
 
         switch (loginResponse['role']) {
           case "admin":
-            Navigator.of(context).pushReplacementNamed(adminHomeRoute);
+            Navigator.of(ctx).pushReplacementNamed(adminHomeRoute);
             break;
           case "doctor":
-            Navigator.of(context).pushReplacementNamed(doctorHomeRoute,
+            Navigator.of(ctx).pushReplacementNamed(doctorHomeRoute,
                 arguments: loginResponse["user"]["_id"]);
 
             break;
           case "patient":
-            Navigator.of(context).pushReplacementNamed(patientHomeRoute);
+            Navigator.of(ctx).popAndPushNamed(patientHomeRoute);
             break;
           default:
             Navigator.pop(ctx);
@@ -258,7 +258,7 @@ class _LoginState extends State<Login> {
                     ),
                   ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Expanded(
@@ -297,7 +297,7 @@ class _LoginState extends State<Login> {
                                 prefixIcon: const Icon(Icons.person),
                                 label: const Text(
                                   "username",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -330,7 +330,7 @@ class _LoginState extends State<Login> {
                                   prefixIcon: const Icon(Icons.lock),
                                   label: const Text(
                                     "password",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
