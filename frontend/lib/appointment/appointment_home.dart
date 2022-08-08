@@ -149,7 +149,12 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                                           Text(
                                             //                             DateFormat.yMMMEd()
                                             // .format(DateTime.parse(appointments[index]['date'])
-                                            appointments[index]['date'],
+                                            DateFormat.yMMMEd()
+                                                .format(DateTime.parse(
+                                                  appointments[index]['date'],
+                                                ))
+                                                .toString(),
+
                                             style: const TextStyle(
                                               fontSize: 20,
                                             ),

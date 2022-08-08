@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentDetail extends StatefulWidget {
   AppointmentDetail();
@@ -94,8 +95,11 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                         child: const Text("Date",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w500))),
-                    Text(date,
-                        style: TextStyle(
+                    Text(
+                        DateFormat.yMMMEd()
+                            .format(DateTime.parse(date))
+                            .toString(),
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w500)),
                   ],
                 ),

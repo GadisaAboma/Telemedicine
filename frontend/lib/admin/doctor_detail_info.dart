@@ -15,6 +15,7 @@ class DoctorDetailInfo extends StatefulWidget {
 
 class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
   bool isLoading = false;
+  bool isDelete = false;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +144,55 @@ class _DoctorDetailInfoState extends State<DoctorDetailInfo> {
                 SizedBox(
                   width: 30,
                 ),
-                ElevatedButton(onPressed: () {}, child: Text("Reject")),
+                ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        isDelete = true;
+                      });
+                      var success = await Provider.of<RegisterProvider>(context,
+                              listen: false)
+                          .rejectDoctor(widget.doctorInfo["_id"]);
+                      setState(() {
+                        isDelete = false;
+                      });
+                      if (success == 'success') {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text("Success"),
+                                content: const Text("Successfully rejected!"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                        Navigator.of(context).pop('refresh');
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text("Failed"),
+                                content: const Text("Failed rejecting!"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                      }
+                    },
+                    child: isDelete
+                        ? CircularProgressIndicator()
+                        : const Text("Reject")),
               ],
             ),
           ],
