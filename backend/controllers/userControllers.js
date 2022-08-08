@@ -3,6 +3,7 @@ const Admin = require('../models/Admin')
 const Patient = require('../models/Patient')
 const Doctor = require('../models/Doctor')
 const Post = require('../models/place')
+const Appointment = require('../models/appointment');
 
 
 const jwt = require('jsonwebtoken')
@@ -51,16 +52,20 @@ const generateAuthToken = (id) => {
 const fetchAppointments = asyncHandler(async (req, res) => {
     const { id, userType } = req.body
 
-    let user
+    let appointments
 
     if (userType === 'patients') {
-        user = await Patient.findById(id)
+        // user = await Patient.findById(id)
+        appointments = await Appointment.find({
+            patientId: id
+        })
 
     } else {
-        user = await Doctor.findById(id)
+        appointments = await Appointment.find({
+            doctorId: id
+        })
     }
-
-    res.send(user.appointments)
+    res.send(appointments)
 
 })
 
@@ -185,6 +190,30 @@ const updateUserInfo = asyncHandler(async (req, res) => {
 })
 
 
+const deleteAppointment = asyncHandler(async (req, res) => {
+    const { id, doctorId, patientId, type } = req.body
+    let appointment
+    if (type === 'patients') {
+        appointment = await Appointment.findById(
+            id
+        )
+    } else {
+        appointment = await Appointment.findById(
+            id,
+        )
+    }
+
+    const success = await appointment.remove();
+
+    if (success) {
+        res.send("success")
+    } else {
+        res.status(404)
+        throw new Error("Failed to remove")
+    }
+
+})
+
 module.exports = {
     loginUser,
     fetchAppointments,
@@ -193,5 +222,6 @@ module.exports = {
     getMyPosts,
     deletePost,
     confirmPassword,
-    updateUserInfo
+    updateUserInfo,
+    deleteAppointment
 }

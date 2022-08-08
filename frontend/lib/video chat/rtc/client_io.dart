@@ -8,7 +8,7 @@ typedef RTCCallHandler = void Function(Map<String, dynamic>);
 
 class ClientIO {
   static final _instance = ClientIO._();
-  static const _baseUri = 'http://192.168.1.41:8888/';
+  static const _baseUri = 'http://192.168.1.106:8888/';
 
   ClientIO._();
 

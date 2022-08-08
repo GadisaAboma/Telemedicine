@@ -246,6 +246,7 @@ class RegisterProvider extends ChangeNotifier {
       print(e.message);
       return Future.error(e.message);
     } catch (e) {
+      print(e);
       return Future.error("something is wrong");
     }
   }

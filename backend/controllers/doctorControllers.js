@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const Doctor = require('../models/Doctor')
 const Admin = require('../models/Admin')
 const Patient = require('../models/Patient')
+const Appointment = require('../models/appointment')
 
 //////////////////////////////////
 //// PUSH NOTIFICATION
@@ -39,7 +40,7 @@ const Patient = require('../models/Patient')
 //             },
 //             token: deviceToken,
 //           };
-          
+
 //           admin.messaging().send(message)
 //             .then((response) => {
 //               // Response is a message ID string.
@@ -88,7 +89,7 @@ const registerDoctor = asyncHandler(async (req, res) => {
     const doctor = new Doctor({
         ...req.body,
         idUrl: req.file.path,
-         messages: {
+        messages: {
             user: "patient",
             content: {
                 sender: "Telemedicine",
@@ -148,31 +149,45 @@ const setAppointment = asyncHandler(async (req, res) => {
     //sendNotificationEventCreation()
 
     const { id, date, description, doctorId } = req.body
-    const patient = await Patient.findById(id)
-    const doctor = await Doctor.findById(doctorId)
+    // const patient = await Patient.findById(id)
+    // const doctor = await Doctor.findById(doctorId)
+
+    // patient.appointments.push({
+    //     date,
+    //     description,
+    //     doctorId
+    // })
+
+    // doctor.appointments.push({
+    //     date,
+    //     description,
+    //     patientId: id
+    // })
+
+    // const saved = await patient.save()
+    // const newSaved = await doctor.save()
+    // if (saved && newSaved) {
+    //     res.status(201).send("Success")
+    // } else {
+    //     res.status(404)
+    //     res.send("failed to save")
+    // }
 
 
-    patient.appointments.push({
-        date,
-        description,
-        doctorId
+    const appointment = new Appointment({
+        description: description,
+        patientId: id,
+        doctorId: doctorId,
+        date: date
     })
 
-    doctor.appointments.push({
-        date,
-        description,
-        patientId: id
-    })
-
-    const saved = await patient.save()
-    const newSaved = await doctor.save()
-    if (saved && newSaved) {
+    const saved = await appointment.save();
+    if (saved) {
         res.status(201).send("Success")
     } else {
         res.status(404)
         res.send("failed to save")
     }
-
 })
 
 module.exports = {
