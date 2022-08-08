@@ -40,8 +40,14 @@ class _SetAppointmentState extends State<SetAppointment> {
         formKey.currentState!.save();
         String doctorId =
             Provider.of<RegisterProvider>(context, listen: false).loggedId;
+        String doctorName =
+            Provider.of<RegisterProvider>(context, listen: false).loggedName;
+
+        print(doctorName);
+        print(args['name']);
         var result = await Provider.of<PatientProvider>(listen: false, context)
-            .setAppointment(id, date.toString(), doctorId, description);
+            .setAppointment(id, date.toString(), doctorId, description,
+                args['name'], doctorName);
         if (result == 'Success') {
           showDialog(
               context: context,
@@ -81,9 +87,10 @@ class _SetAppointmentState extends State<SetAppointment> {
         return;
       }
     }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Set Appointement"),
+        title: const Text("Set Appointment"),
       ),
       body: SingleChildScrollView(
         child: Card(
@@ -170,7 +177,7 @@ class _SetAppointmentState extends State<SetAppointment> {
                   lastDate: DateTime.now().add(const Duration(days: 30)),
                   onDateChanged: (selectedDate) {
                     setState(() {
-                      date = DateFormat.yMMMEd().format(selectedDate);
+                      date = selectedDate;
                     });
                   },
                 ),

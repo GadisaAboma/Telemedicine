@@ -17,5 +17,6 @@ String createPost = '/createPost';
 String postDetail = '/postDetail';
 String editAccount = '/editAccount';
 String editPage = "/editPage";
+String appointmentDetail = '/appointmentDetail';
 
 // static String url = "http://10.141.214.82:3000";

@@ -19,6 +19,14 @@ const appointmentSchema = new Schema({
         type: String,
         required: true,
     },
+    doctorName: {
+        type: String,
+        required: true,
+    },
+    patientName: {
+        type: String,
+        required: true
+    }
 
 })
 

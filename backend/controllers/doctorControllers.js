@@ -148,37 +148,15 @@ const setAppointment = asyncHandler(async (req, res) => {
     console.log(req.body)
     //sendNotificationEventCreation()
 
-    const { id, date, description, doctorId } = req.body
-    // const patient = await Patient.findById(id)
-    // const doctor = await Doctor.findById(doctorId)
-
-    // patient.appointments.push({
-    //     date,
-    //     description,
-    //     doctorId
-    // })
-
-    // doctor.appointments.push({
-    //     date,
-    //     description,
-    //     patientId: id
-    // })
-
-    // const saved = await patient.save()
-    // const newSaved = await doctor.save()
-    // if (saved && newSaved) {
-    //     res.status(201).send("Success")
-    // } else {
-    //     res.status(404)
-    //     res.send("failed to save")
-    // }
-
+    const { id, date, description, doctorId, doctorName, patientName } = req.body
 
     const appointment = new Appointment({
         description: description,
         patientId: id,
         doctorId: doctorId,
-        date: date
+        date: date,
+        doctorName,
+        patientName
     })
 
     const saved = await appointment.save();

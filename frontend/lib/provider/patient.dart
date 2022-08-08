@@ -80,18 +80,20 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
-  Future setAppointment(
-      String id, var date, String doctorId, String description) async {
+  Future setAppointment(String id, var date, String doctorId,
+      String description, String patientName, String doctorName) async {
     try {
-      final response = await http.post(
-          Uri.parse("$serverUrl/api/doctors/setAppointment"),
-          body: (json.encode({
-            "id": id,
-            "date": date,
-            "description": description,
-            "doctorId": doctorId
-          })),
-          headers: {
+      final response =
+          await http.post(Uri.parse("$serverUrl/api/doctors/setAppointment"),
+              body: (json.encode({
+                "id": id,
+                "date": date,
+                "description": description,
+                "doctorId": doctorId,
+                "patientName": patientName,
+                "doctorName": doctorName
+              })),
+              headers: {
             "Content-type": "application/json",
             "Accept": "application/json",
           });
