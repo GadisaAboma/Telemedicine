@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:frontend/appointment/appointment_detail.dart';
 import 'package:frontend/appointment/appointment_home.dart';
 import 'package:frontend/appointment/select_user.dart';
 import 'package:frontend/appointment/set_appointment.dart';
@@ -76,10 +77,10 @@ class MyApp extends StatelessWidget {
           "/setAppointment": (context) => SetAppointment(),
           "/selectUser": (context) => SelectUser(),
           "/createPost": (context) => CreatePost(),
-
           "/postDetail": (context) => PostDetail(),
           "/editAccount": (context) => EditAccount(),
           "/editPage": (context) => EditPage(),
+           "/appointmentDetail": (context) => AppointmentDetail(),
         },
         // home: Login(),
       ),

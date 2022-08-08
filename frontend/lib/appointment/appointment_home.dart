@@ -92,55 +92,86 @@ class _AppointmentHomeState extends State<AppointmentHome> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 20),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.65,
-                                          child: Text(
-                                            appointments[index]['description'],
-                                            softWrap: true,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        appointmentDetail,
+                                        arguments: {
+                                          "description": appointments[index]
+                                              ['description'],
+                                          "date": appointments[index]['date'],
+                                          "doctorName": appointments[index]
+                                              ['doctorName'],
+                                          "patientName": appointments[index]
+                                              ['patientName'],
+                                        });
+                                  },
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     Navigator.of(context).pushNamed(
+                                          //         appointmentDetail,
+                                          //         arguments: {
+                                          //           "description":
+                                          //               appointments[index]
+                                          //                   ['description'],
+                                          //           "date": appointments[index]
+                                          //               ['date']
+                                          //         });
+                                          //   },
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.65,
+                                            child: Text(
+                                              appointments[index]
+                                                  ['description'],
+                                              softWrap: true,
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            //                             DateFormat.yMMMEd()
+                                            // .format(DateTime.parse(appointments[index]['date'])
+                                            appointments[index]['date'],
                                             style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w600),
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          //                             DateFormat.yMMMEd()
-                                          // .format(DateTime.parse(appointments[index]['date'])
-                                          appointments[index]['date'],
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    isDeleting
-                                        ? CircularProgressIndicator()
-                                        : IconButton(
-                                            onPressed: () {
-                                              deleteAppointment(
-                                                appointments[index]['_id'],
-                                                appointments[index]
-                                                    ['patientId'],
-                                                appointments[index]['doctorId'],
-                                              );
-                                            },
-                                            icon: const Icon(Icons.cancel),
-                                     )
-                                  ],
+                                        ],
+                                      ),
+                                      isDeleting
+                                          ? const CircularProgressIndicator()
+                                          : IconButton(
+                                              onPressed: () {
+                                                deleteAppointment(
+                                                  appointments[index]['_id'],
+                                                  appointments[index]
+                                                      ['patientId'],
+                                                  appointments[index]
+                                                      ['doctorId'],
+                                                );
+                                              },
+                                              icon: const Icon(Icons.cancel),
+                                            )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

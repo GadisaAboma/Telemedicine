@@ -373,7 +373,7 @@ class _LoginState extends State<Login> {
                           ),
                           Container(
                             child: TextButton(
-                              onPressed: forgetPassword,
+                              onPressed: () {},
                               child: const Text(
                                 "Forget password",
                                 style: TextStyle(color: Colors.black54),
