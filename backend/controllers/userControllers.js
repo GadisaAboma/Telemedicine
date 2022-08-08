@@ -5,10 +5,74 @@ const Doctor = require('../models/Doctor')
 const Post = require('../models/place')
 const Appointment = require('../models/appointment');
 
+/////////////////////////////////////////////////////
+
+const nodemailer = require("nodemailer");
+
 
 const jwt = require('jsonwebtoken')
 
+
+  
+
+  function sendEmail(email, secretCode){
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'info.telemedicine.babycare@gmail.com',
+          pass: 'ylmlvjblewybnffc'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'info.telemedicine.babycare@gmail.com',
+        to: email,
+        subject: 'Conformation message from babycare telemedicine application ',
+        text: 'here is your secret code from babycare telemedicine!',
+        html:'<h1>&secretCode is '+ secretCode +"</h1>"
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+  }
+
+   
+
+  ///////////////////////////////////////////////////
+
+const forgotPassword = asyncHandler(async (req, res)=>{
+    const { secretCode,email } = req.body
+
+    const admin = await Admin.findOne({ email })
+    const patient = await Patient.findOne({ email })
+    const doctor = await Doctor.findOne({ email })
+    if(admin){
+        sendEmail(email, secretCode)
+        res.send("sent")
+    } else if(patient){
+        sendEmail(email, secretCode)
+        res.send("sent")
+    } else if(doctor){
+        sendEmail(email, secretCode)
+        res.send("sent")
+    } else{
+        res.status(404)
+        throw new Error("invalid email")
+    }
+    
+
+    
+})
 const loginUser = asyncHandler(async (req, res) => {
+
+
+      
     const { username, password } = req.body
 
     const admin = await Admin.findOne({ username })
@@ -158,6 +222,36 @@ const confirmPassword = asyncHandler(async (req, res) => {
     }
 })
 
+const resetPassord = asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const { password, email } = req.body
+    try{
+       let admin = await Admin.findOne({email})
+       let doctor = await Doctor.findOne({email})
+       let patient = await Patient.findOne({email})
+    //   console.log(patient)
+       if(admin){
+        admin.password = password
+        await admin.save()
+        res.send("success")
+       } else if(doctor){
+        doctor.password = password
+        await doctor.save()
+        res.send("success")
+       } else if(patient){
+        patient.password = password
+        await patient.save()
+        res.send("success")
+       } else{
+        res.status(404)
+        throw new Error("Failed to save password")
+       }
+    } catch (e){
+        res.status(404)
+        throw new Error("Failed to save password")
+    }
+})
+
 const updateUserInfo = asyncHandler(async (req, res) => {
     const { name, password, id, type, username } = req.body
     let user;
@@ -223,5 +317,7 @@ module.exports = {
     deletePost,
     confirmPassword,
     updateUserInfo,
-    deleteAppointment
+    deleteAppointment,
+    forgotPassword,
+    resetPassord
 }

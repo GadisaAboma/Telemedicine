@@ -24,6 +24,11 @@ const doctorSchema = new Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
     isActive: {
         type: Boolean,
         default: false

@@ -28,7 +28,7 @@ class Auth extends ChangeNotifier {
   }
 
   Future<void> signUp(String name, String email, String password) async {
-    var url = Uri.parse('http://10.141.221.253:3000/api/user/register');
+    var url = Uri.parse('http://192.168.1.41:3000/api/user/register');
 
     try {
       final res = await http.post(

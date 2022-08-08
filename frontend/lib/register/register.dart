@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/login/login.dart';
@@ -20,6 +21,7 @@ class _RegisterState extends State<Register> {
   late bool isLoading;
   String fullname = "";
   String username = "";
+  String email = "";
   File? _image;
   String password = "";
   String? gender;
@@ -85,7 +87,7 @@ class _RegisterState extends State<Register> {
         loadingSpinner(ctx);
         final registerResponse =
             await Provider.of<RegisterProvider>(context, listen: false)
-                .register(fullname, username, password, accountType,
+                .register(fullname, username, email, password, accountType,
                     specializedIn, gender.toString(), _image);
         print("registerResponse: $registerResponse");
         if (registerResponse == "success" && accountType == "patient") {
@@ -265,6 +267,31 @@ class _RegisterState extends State<Register> {
                           },
                         ),
                         SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            String newValue = value.toString().trim();
+                            final bool isValid =
+                                EmailValidator.validate(newValue);
+                            if (!isValid) {
+                              return "invalid email";
+                            }
+                          },
+                          onSaved: (value) {
+                            setState(() {
+                              email = value.toString();
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
                           height: 30,
                         ),
                         Column(
@@ -353,7 +380,7 @@ class _RegisterState extends State<Register> {
                                       );
                                     },
                                     icon: const Icon(Icons.image),
-                                    label: const Text('Attach your id'),
+                                    label: const Text('Attach file'),
                                   ),
                                 ),
                                 const SizedBox(width: 20),

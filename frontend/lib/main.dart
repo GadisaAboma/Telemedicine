@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/': (context) => RouteApp(),
+          '/': (context) => Login(),
           "/register": (context) => Register(),
           "/PatientHome": (context) => PatientHome(),
           "/doctorHome": (context) => DoctorHome(),
