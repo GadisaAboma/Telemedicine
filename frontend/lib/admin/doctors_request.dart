@@ -45,12 +45,12 @@ class _DoctorsRequestState extends State<DoctorsRequest> {
       isLoading = false;
     });
   }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +67,8 @@ class _DoctorsRequestState extends State<DoctorsRequest> {
                     children: [
                       ListTile(
                         title: Text(unApprovedDoctorsList[index]["name"]),
-                        onTap: () {
-                          Navigator.of(context).push(
+                        onTap: () async {
+                          var refresh = await Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
                                 return DoctorDetailInfo(
@@ -76,6 +76,9 @@ class _DoctorsRequestState extends State<DoctorsRequest> {
                               },
                             ),
                           );
+                          if (refresh == 'refresh') {
+                            fetchRequests();
+                          }
                         },
                       ),
                       const Divider()
