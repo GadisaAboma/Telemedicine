@@ -61,6 +61,7 @@ class RegisterProvider extends ChangeNotifier {
   Future register(
       String name,
       String username,
+      String email,
       String password,
       String accountType,
       String specializedIn,
@@ -72,12 +73,14 @@ class RegisterProvider extends ChangeNotifier {
             "name": name,
             "gender": gender,
             "username": username,
+            "email": email,
             "password": password,
             "specializedIn": specializedIn,
           }
         : {
             "name": name,
             "username": username,
+            "email": email,
             "gender": gender,
             "password": password,
           };
@@ -125,6 +128,9 @@ class RegisterProvider extends ChangeNotifier {
       if (response.statusCode == 400) {
         return Future.error(responseData["error"]);
       }
+      if (response.statusCode == 500) {
+        return Future.error(responseData["error"]);
+      }
       currentUser = responseData;
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
@@ -163,6 +169,38 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       // print("response data  " + response.body);
+      return json.decode(response.body);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future resetPassord(String email, String password) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/user/resetPassord"),
+          body: json.encode({"password": password, "email": email}),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      // print("response data  " + response.body);
+      return response.body;
+    } catch (e) {
+      print("error " + e.toString());
+    }
+  }
+
+  Future forgotPassword(int secretCode, String email) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/user/forgotPassword"),
+          body: json.encode({"secretCode": secretCode, "email": email}),
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          });
+      print("response data  " + response.body);
       return json.decode(response.body);
     } catch (e) {
       print(e);
@@ -246,6 +284,7 @@ class RegisterProvider extends ChangeNotifier {
       print(e.message);
       return Future.error(e.message);
     } catch (e) {
+      print(e);
       return Future.error("something is wrong");
     }
   }

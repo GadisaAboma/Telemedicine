@@ -27,19 +27,15 @@ class _AdminHomeState extends State<AdminHome> {
   int index = 0;
 
   var unApprovedDoctorsList;
+  var loggedInUser;
 
   // @override
   // void initState() {
-  //   Provider.of<RegisterProvider>(context, listen: false).unApprovedDoctors();
+  //   // Provider.of<RegisterProvider>(context, listen: false).unApprovedDoctors();
   //   final loggedInUser =
   //       Provider.of<RegisterProvider>(context, listen: false).currentUser;
   //   super.initState();
-  //   Future.delayed(
-  //     Duration.zero,
-  //     () {
-  //       fetchPosts();
-  //     },
-  //   );
+  //   // print(loggedInUser["messages"][""]);
   // }
 
   Widget bodyWidget(BuildContext ctx) {
@@ -54,48 +50,47 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Container(
-            height: 40,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Search",
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: Container(
+          height: 40,
+          child: TextField(
+            decoration: InputDecoration(
+              labelText: "Search",
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.person,
-                size: 30,
-              ),
-            )
-          ],
         ),
-        drawer: AdmminDrawer(),
-        body: bodyWidget(context),
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: index,
-            onTap: (value) {
-              setState(() {
-                index = value;
-              });
-            },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.approval), label: "Approval")
-            ]),
-      
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.person,
+              size: 30,
+            ),
+          )
+        ],
+      ),
+      drawer: AdmminDrawer(),
+      body: bodyWidget(context),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (value) {
+            setState(() {
+              index = value;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.approval), label: "Approval")
+          ]),
     );
   }
 }

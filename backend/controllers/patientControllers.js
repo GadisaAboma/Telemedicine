@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler')
 const Post = require('../models/place')
 
 const registerPatient = asyncHandler(async (req, res) => {
-    const { name, username, gender, password, } = req.body
+    const { name, username,email, gender, password, } = req.body
 
     const admin = await Admin.findOne({ username })
 
@@ -31,6 +31,7 @@ const registerPatient = asyncHandler(async (req, res) => {
     const patient = new Patient({
         name,
         username,
+        email,
         password,
         gender,
         messages:{

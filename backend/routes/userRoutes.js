@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { auth } = require('../middlewares/auth')
-const { loginUser, confirmPassword, updateUserInfo, startTextChat, fetchAppointments, createPost, getAllPosts, getMyPosts, deletePost } = require('../controllers/userControllers')
+const { loginUser, confirmPassword, deleteAppointment, updateUserInfo,resetPassord, forgotPassword, fetchAppointments, createPost, getAllPosts, getMyPosts, deletePost } = require('../controllers/userControllers')
 
 
 const multer = require('multer')
@@ -26,6 +26,10 @@ router.get('/getMyPosts', auth, getMyPosts)
 router.post('/deletePost', deletePost)
 router.post('/confirmPassword', confirmPassword)
 router.post('/updateUserInfo', updateUserInfo)
+router.post('/deleteAppointment', deleteAppointment);
+router.post('/forgotPassword', forgotPassword);
+router.post('/resetPassord', resetPassord);
+
 
 
 

@@ -38,6 +38,29 @@ class DoctorProvider extends ChangeNotifier {
     }
   }
 
+  Future deleteAppointment(
+      String id, String patientId, String doctorId, String type) async {
+    try {
+      var url = Uri.parse('$serverUrl/api/user/deleteAppointment');
+
+      var res = await http.post(url,
+          headers: {
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
+          body: json.encode({
+            "id": id,
+            "patientId": patientId,
+            "doctorId": doctorId,
+            "type": type
+          }));
+      print(json.decode(res.body));
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future verifyUserIdentity(String id, String password, String type) async {
     var url = Uri.parse('$serverUrl/api/user/confirmPassword');
 

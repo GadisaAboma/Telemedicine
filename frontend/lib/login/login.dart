@@ -12,6 +12,7 @@ import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../forgot password/forget_password.dart';
 import '../video chat/rtc/client_io.dart';
 import '../video chat/rtc/contact_event.dart';
 import '../video chat/utils/sotre_util.dart';
@@ -393,13 +394,17 @@ class _LoginState extends State<Login> {
   }
 
   void forgetPassword() async {
-    String message = "This is a test message!";
-    List<String> recipents = ["0967436185"];
-    String _result =
-        await sendSMS(message: message, recipients: recipents, sendDirect: true)
-            .catchError((onError) {
-      print(onError);
-    });
-    print(_result);
+    //   String message = "This is a test message!";
+    //   List<String> recipents = ["0967436185"];
+    //   String _result =
+    //       await sendSMS(message: message, recipients: recipents, sendDirect: true)
+    //           .catchError((onError) {
+    //     print(onError);
+    //   });
+    //   print(_result);
+    
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return ForgotPassword();
+    }));
   }
 }

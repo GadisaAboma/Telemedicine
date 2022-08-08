@@ -34,13 +34,14 @@ class _DoctorHomeState extends State<DoctorHome> {
   final GlobalKey<AnimatedFloatingActionButtonState> fabKey = GlobalKey();
   int index = 0;
   dynamic doctorInfo;
+  var loggedInUser;
 
   @override
   void initState() {
     doctorInfo =
         Provider.of<RegisterProvider>(context, listen: false).doctordInfo;
 
-    final loggedInUser =
+    loggedInUser =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
     // ClientIO().init(loggedInUser["_id"], loggedInUser["username"]);
     super.initState();
@@ -227,7 +228,7 @@ class _DoctorHomeState extends State<DoctorHome> {
               index = value;
             });
           },
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
@@ -241,19 +242,47 @@ class _DoctorHomeState extends State<DoctorHome> {
                   color: Colors.white,
                 ),
                 label: "Notification"),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.message,
-                  color: Colors.white,
-                ),
-                label: "message"),
+            if (loggedInUser["isActive"])
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.message,
+                    color: Colors.white,
+                  ),
+                  label: "message"),
           ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, createPost);
+          if (!loggedInUser["isActive"]) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Row(children: [
+                      Icon(Icons.info),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("You are not approved")
+                    ]),
+                    content: Text("To add post you have to approved first"),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("ok"))
+                    ],
+                  );
+                });
+          }
+          if(loggedInUser["isActive"] ) Navigator.pushNamed(context, createPost);
         },
-        child: Icon(Icons.add),
-      
+        child: Icon(
+          Icons.add,
+          color: loggedInUser["isActive"]
+              ? Theme.of(context).primaryColor
+              : Colors.grey,
+        ),
       ),
     );
   }
