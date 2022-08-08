@@ -1,6 +1,6 @@
 // const serverUrl = "http://192.168.1.102:3000";
 
-String serverUrl = "http://192.168.1.41:3000";
+String serverUrl = "https://morning-spire-45845.herokuapp.com/";
 
 String patientHomeRoute = "/PatientHome";
 String doctorHomeRoute = "/doctorHome";

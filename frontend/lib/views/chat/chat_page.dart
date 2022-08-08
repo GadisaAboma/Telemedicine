@@ -29,18 +29,13 @@ class _ChatPageState extends State<ChatPage> {
   dynamic currentContact;
   bool isVideo = true;
 
-  
-
   @override
   void initState() {
     super.initState();
-    
-    
 
     currentContact =
         Provider.of<RegisterProvider>(context, listen: false).currentUser;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +59,8 @@ class _ChatPageState extends State<ChatPage> {
     var size = MediaQuery.of(context).size;
     bool isVideo = true;
     return WillPopScope(
-      onWillPop: ()async {
-        
-        Provider.of<PreviousChat>(context, listen: false)
-                    .removeChatHistory();
+      onWillPop: () async {
+        Provider.of<PreviousChat>(context, listen: false).removeChatHistory();
         return true;
       },
       child: Scaffold(
@@ -86,6 +79,8 @@ class _ChatPageState extends State<ChatPage> {
             actions: [
               IconButton(
                   onPressed: () async {
+                    // FocusScope.of(context)!.focus();
+                    // FocusScope.of(context).requestFocus(FocusNode());
                     final res = await HttpUtil()
                         .createRoom(isVideo == true ? 'video' : 'audio');
                     final String room = res['room'];

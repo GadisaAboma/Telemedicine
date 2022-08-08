@@ -79,7 +79,7 @@ class _RTCVideoState extends State<RTCVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Telemedicine Video Call'),
+        title: const Text('Calling...'),
       ),
       body: Stack(
         alignment: Alignment.center,

@@ -18,7 +18,7 @@ class RTCView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final size = isMainView ? screenSize * 0.8 : screenSize * 0.3;
+    final size = isMainView ? screenSize : screenSize * 0.3;
 
     return type == 'audio' ? _buildAudioView(size) : _buildVideoView(size);
   }

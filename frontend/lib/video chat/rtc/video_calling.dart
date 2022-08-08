@@ -17,7 +17,7 @@ class VideoCalling extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Text('Calling $username'),
+          Text('Calling '),
           const SizedBox(
             height: 16,
           ),
