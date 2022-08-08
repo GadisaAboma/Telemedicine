@@ -1,6 +1,6 @@
 // const serverUrl = "http://192.168.1.102:3000";
 
-String serverUrl = "http://192.168.1.41:3000";
+String serverUrl = "http://192.168.1.106:3000";
 
 
 String patientHomeRoute = "/PatientHome";
@@ -10,7 +10,7 @@ String loginRoute = "/";
 String registerRoute = "/register";
 String searchDoctorRoute = "/searchDoctor";
 String chatPageRoute = '/chatPage';
-String chatbotUrl = 'http://192.168.1.41:5000/bot';
+String chatbotUrl = 'http://192.168.1.106:5000/bot';
 String appointmentPage = '/appointment';
 String setAppointment = '/setAppointment';
 String selectUser = '/selectUser';
