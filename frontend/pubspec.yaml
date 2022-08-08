@@ -59,6 +59,7 @@ dependencies:
   smooth_page_indicator:
   flutter_svg: 
   lottie: 
+  flutter_email_sender: ^5.1.0
 
 dev_dependencies:
   flutter_test:
