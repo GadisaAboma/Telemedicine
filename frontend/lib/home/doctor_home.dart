@@ -53,13 +53,14 @@ class _DoctorHomeState extends State<DoctorHome> {
     );
   }
 
-  void setNavigation(int navagateIndex) {
-    if (navagateIndex == 0) {
-      index = 0;
-    } else if (navagateIndex == 1) {
-      index = 1;
-    }
-  }
+  // Future setNavigation(int navagateIndex) async {
+  //   if (navagateIndex == 0) {
+  //     await fetchPosts();
+  //     index = 0;
+  //   } else if (navagateIndex == 1) {
+  //     index = 1;
+  //   }
+  // }
   // SocketService? s;
 
   Widget listOfPatient(BuildContext ctx) {
@@ -161,6 +162,7 @@ class _DoctorHomeState extends State<DoctorHome> {
   Widget SetBody(BuildContext ctx) {
     Widget returnedWidget;
     if (index == 0) {
+      
       returnedWidget = isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -275,7 +277,8 @@ class _DoctorHomeState extends State<DoctorHome> {
                   );
                 });
           }
-          if(loggedInUser["isActive"] ) Navigator.pushNamed(context, createPost);
+          if (loggedInUser["isActive"])
+            Navigator.pushNamed(context, createPost);
         },
         child: Icon(
           Icons.add,

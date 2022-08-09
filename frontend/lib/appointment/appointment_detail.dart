@@ -44,9 +44,13 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w500),
                         )),
-                    Text(description,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500)),
+                    Container(
+                      width: 200,
+                      child: Text(description,
+                      softWrap: true,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500)),
+                    ),
                   ],
                 ),
               ),

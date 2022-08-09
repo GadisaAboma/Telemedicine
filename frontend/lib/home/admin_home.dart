@@ -53,20 +53,7 @@ class _AdminHomeState extends State<AdminHome> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Container(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: "Search",
-              fillColor: Colors.white,
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        ),
+        title: Text("Welcome Admin"),
         actions: [
           IconButton(
             onPressed: () {},
