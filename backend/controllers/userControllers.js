@@ -52,6 +52,8 @@ const forgotPassword = asyncHandler(async (req, res)=>{
     const admin = await Admin.findOne({ email })
     const patient = await Patient.findOne({ email })
     const doctor = await Doctor.findOne({ email })
+
+    try{
     if(admin){
         sendEmail(email, secretCode)
         res.send("sent")
@@ -62,6 +64,9 @@ const forgotPassword = asyncHandler(async (req, res)=>{
         sendEmail(email, secretCode)
         res.send("sent")
     } else{
+        res.status(404)
+        throw new Error("invalid email")
+    }}catch(e){
         res.status(404)
         throw new Error("invalid email")
     }

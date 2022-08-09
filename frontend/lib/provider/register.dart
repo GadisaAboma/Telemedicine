@@ -109,6 +109,7 @@ class RegisterProvider extends ChangeNotifier {
         request.fields['name'] = name.toString();
         request.fields['username'] = username.toString();
         request.fields['gender'] = gender.toString();
+        request.fields['email'] = email.toString();
         request.fields['password'] = password.toString();
         request.fields['specializedIn'] = specializedIn.toString();
         var img = await http.MultipartFile.fromPath("doctorId", image!.path);
@@ -134,14 +135,13 @@ class RegisterProvider extends ChangeNotifier {
       currentUser = responseData;
       if (responseData["role"] == "doctor") {
         doctordInfo = responseData["_doc"];
+        currentUser = responseData["_doc"];
         loggedId = responseData['_doc']["_id"];
         loggedName = responseData['_doc']['name'];
       } else {
         loggedId = responseData['_id'];
         loggedName = responseData['name'];
       }
-
-      print(responseData);
 
       userType = accountType + 's';
       setLoading();
@@ -201,9 +201,14 @@ class RegisterProvider extends ChangeNotifier {
             "Accept": "application/json",
           });
       print("response data  " + response.body);
-      return json.decode(response.body);
+      final resp = json.decode(response.body);
+      if (response.statusCode == 404) {
+        return  Future.error("This eamil was not registered");
+      } else {
+        return response;
+      }
     } catch (e) {
-      print(e);
+      return  Future.error("This eamil was not registered");
     }
   }
 

@@ -275,9 +275,11 @@ class _RegisterState extends State<Register> {
                             String newValue = value.toString().trim();
                             final bool isValid =
                                 EmailValidator.validate(newValue);
-                            if (!isValid) {
+                             if (newValue.isEmpty) {
+                              return "please enter eamil";
+                            }else if (!isValid) {
                               return "invalid email";
-                            }
+                            } 
                           },
                           onSaved: (value) {
                             setState(() {

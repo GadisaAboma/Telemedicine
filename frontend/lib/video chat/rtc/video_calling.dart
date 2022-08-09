@@ -17,16 +17,16 @@ class VideoCalling extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Text('Calling '),
+          Text('Calling............'),
           const SizedBox(
             height: 16,
           ),
-          CircleAvatar(
-            radius: 15,
-            child: Text(
-              username[0].toUpperCase(),
-            ),
-          )
+          // CircleAvatar(
+          //   radius: 15,
+          //   child: Text(
+          //     username[0].toUpperCase(),
+          //   ),
+          // )
         ],
       ),
     );

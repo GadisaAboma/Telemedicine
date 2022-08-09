@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
 
         Provider.of<PreviousChat>(ctx, listen: false)
             .initVideo(context, loginResponse["user"]["_id"], username);
-
+        print(loginResponse["user"]["_id"]);
         switch (loginResponse['role']) {
           case "admin":
             Navigator.of(ctx).popAndPushNamed(adminHomeRoute);
@@ -209,7 +209,7 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 350,
+                  height: 354,
                   padding: const EdgeInsets.only(top: 30, bottom: 20),
                   decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -373,7 +373,12 @@ class _LoginState extends State<Login> {
                           ),
                           Container(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ForgotPassword();
+                                }));
+                              },
                               child: const Text(
                                 "Forget password",
                                 style: TextStyle(color: Colors.black54),
@@ -402,7 +407,7 @@ class _LoginState extends State<Login> {
     //     print(onError);
     //   });
     //   print(_result);
-    
+
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return ForgotPassword();
     }));

@@ -52,22 +52,19 @@ class DrawerWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            Provider.of<RegisterProvider>(context, listen: false)
-                        .loggedUserId !=
-                    'admins'
-                ? ListTile(
-                    title: const Text(
-                      "Appointments",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    leading: const Icon(Icons.event),
-                    onTap: () {
-                      // Provider.of<PreviousChat>(context, listen: false).dispose();
-                      Navigator.of(context).pop();
-                      Navigator.pushNamed(context, appointmentPage);
-                    },
-                  )
-                : Container(),
+            if (userInfo["isActive"])
+              ListTile(
+                title: const Text(
+                  "Appointments",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                leading: const Icon(Icons.event),
+                onTap: () {
+                  // Provider.of<PreviousChat>(context, listen: false).dispose();
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, appointmentPage);
+                },
+              ),
             ListTile(
               title: const Text(
                 "Edit Your Account",

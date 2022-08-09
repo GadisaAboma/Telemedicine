@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/forgot%20password/confirm_secretcode.dart';
 import 'package:frontend/provider/register.dart';
@@ -53,6 +54,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     TextFormField(
                       controller: controller,
                       keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        String newValue = value.toString().trim();
+                        final bool isValid = EmailValidator.validate(newValue);
+                        if (newValue.isEmpty) {
+                          return "please enter eamil";
+                        } else if (!isValid) {
+                          return "invalid email";
+                        }
+                      },
                       decoration: InputDecoration(
                         labelText: "Email",
                         border: OutlineInputBorder(
@@ -65,29 +75,57 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                          email = controller.text;
-                          secretCode = Random().nextInt(9000) + 1000;
-                        });
-                        try {
-                          final response = await Provider.of<RegisterProvider>(
-                                  context,
-                                  listen: false)
-                              .forgotPassword(secretCode, email);
-                          print(response);
+                        if (formKey.currentState!.validate()) {
                           setState(() {
-                            isLoading = false;
+                            isLoading = true;
+                            email = controller.text;
+                            secretCode = Random().nextInt(9000) + 1000;
                           });
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return ConfirmSecretCode(secretCode: secretCode, email:email);
-                          }));
-                        } catch (e) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          print(e);
+                          try {
+                            final response =
+                                await Provider.of<RegisterProvider>(context,
+                                        listen: false)
+                                    .forgotPassword(secretCode, email);
+                            print(response);
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return ConfirmSecretCode(
+                                  secretCode: secretCode, email: email);
+                            }));
+                          } catch (e) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Row(
+                                      children: [
+                                        Icon(Icons.warning),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(" Invalid email")
+                                      ],
+                                    ),
+                                    content:Text(
+                                          e.toString(),
+                                          softWrap: true,
+                                        ),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("ok"))
+                                    ],
+                                  );
+                                });
+                          }
                         }
                       },
                       child: Container(

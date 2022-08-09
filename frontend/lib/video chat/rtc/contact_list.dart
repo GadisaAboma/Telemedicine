@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import '../utils/http_util.dart';
 import 'rtc_media_screen.dart';
 import 'client_io.dart';
 import 'contact_event.dart';
-
+import '../utils/http_util.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatefulWidget {
@@ -29,16 +28,14 @@ class _ContactListState extends State<ContactList> {
   @override
   void initState() {
     super.initState();
-
     ClientIO().init(widget.userid, widget.username);
 
     ClientIO().rootContext = context;
 
     _sub = ClientIO().watchMain().listen((event) {
-     
+      print('listen contact event');
 
       final contact = event.username + ':' + event.userid;
-    
 
       if (event.online) {
         if (contacts.contains(contact)) return;
@@ -49,7 +46,6 @@ class _ContactListState extends State<ContactList> {
         if (contacts.remove(contact)) setState(() {});
       }
     });
-   
   }
 
   @override

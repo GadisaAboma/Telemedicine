@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/drawer/patient_drawer.dart';
 import 'package:frontend/patients/contact-list/doctors-list.dart';
 import 'package:frontend/utils/helpers.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +88,7 @@ class _PatientHomeState extends State<PatientHome> {
             )
           ],
         ),
-        drawer: DrawerWidget(
+        drawer: PatientDrawer(
           userInfo: loggedInUser,
         ),
         body: setBody(),

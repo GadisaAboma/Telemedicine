@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-
-import '../client_io.dart';
-import 'peer_event.dart';
+import '../../rtc/client_io.dart';
+import '../../rtc/peer/peer_event.dart';
 
 abstract class PeerBase {
   Map<String, dynamic> get mediaConstraints;
@@ -69,7 +68,6 @@ abstract class PeerBase {
   void disconnect() => close();
 
   void signaling(String willSignalEvent, dynamic data);
-  
 
   void toggleMedia(String name) {
     final tracks = name == 'audio'
