@@ -27,41 +27,45 @@ const patientSchema = new Schema({
         required: true,
     },
 
-    appointments: [{
-        description: {
-            type: String, 
-            required: true,
-          },
-          date: {
-            type: String,
-            required: true,
-          },
-          doctorId: {
-              type: String,
-              required: true,
-          }
+    notifications: [{
+        
     }],
 
-     messages: [{
-        user:{
-            type:String,
-            required:true
+    appointments: [{
+        description: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: String,
+            required: true,
+        },
+        doctorId: {
+            type: String,
+            required: true,
+        }
+    }],
+
+    messages: [{
+        user: {
+            type: String,
+            required: true
         },
         content: [{
             sender: {
-                type:String,
+                type: String,
                 required: true,
-                },
-                message:{
-                    type:String,
-                    required: true,
-                },
-                reciever:{
-                    type:String,
-                    required: true,
-                }
+            },
+            message: {
+                type: String,
+                required: true,
+            },
+            reciever: {
+                type: String,
+                required: true,
+            }
         }]
-  }]
+    }]
 
 })
 

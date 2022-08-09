@@ -236,6 +236,28 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
+  Future rejectDoctor(String id) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/admin/reject"),
+          body: json.encode({"id": id}),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          });
+
+      notifyListeners();
+      if (response.body == 'success') {
+        return "success";
+      } else {
+        return "error";
+      }
+    } catch (e) {
+     
+      notifyListeners();
+    }
+  }
+
   Future<void> unApprovedDoctors() async {
     try {
       final response =
@@ -293,6 +315,8 @@ class RegisterProvider extends ChangeNotifier {
       return Future.error("something is wrong");
     }
   }
+
+
 
   String get loggedUserId {
     return loggedId;

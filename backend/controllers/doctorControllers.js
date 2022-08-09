@@ -159,6 +159,10 @@ const setAppointment = asyncHandler(async (req, res) => {
         patientName
     })
 
+    // const patient = await Patient.findById(id)
+
+    // patient.notifications.push("Appointment is set for you by " + doctorName +", check it on your appoitment lists" )
+    // await patient.save();
     const saved = await appointment.save();
     if (saved) {
         res.status(201).send("Success")

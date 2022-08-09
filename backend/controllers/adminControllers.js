@@ -42,8 +42,21 @@ const approveRequest = asyncHandler(async (req, res) => {
 
 })
 
+const rejectRequest = asyncHandler(async (req, res) => {
+    const { id } = req.body
+    const doctor = await Doctor.findById(id)
+    const success = await doctor.remove()
+
+    if (success) {
+        res.send("success")
+    } else {
+        throw new Error('Failed rejecting')
+    }
+})
+
 module.exports = {
     registerAdmin,
     allRequests,
-    approveRequest
+    approveRequest,
+    rejectRequest
 }
