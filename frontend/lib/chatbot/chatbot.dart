@@ -66,6 +66,9 @@ class _ChatBotState extends State<ChatBot> {
                 return buildItem(ctx, _data[index], animation, index);
               },
             ),
+            SizedBox(
+              height: 30,
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: ColorFiltered(
@@ -128,7 +131,7 @@ void _scrollDown() {
 Widget buildItem(
     BuildContext context, String item, Animation<double> animation, int index) {
   bool mine = item.endsWith('<bot>');
-  //_scrollDown();
+  _scrollDown();
   return SizeTransition(
     sizeFactor: animation,
     child: Container(

@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler')
 const Post = require('../models/place')
 
 const registerPatient = asyncHandler(async (req, res) => {
-    const { name, username,email, gender, password, } = req.body
+    const { name, username, email, gender, password, } = req.body
 
     const admin = await Admin.findOne({ username })
 
@@ -34,12 +34,12 @@ const registerPatient = asyncHandler(async (req, res) => {
         email,
         password,
         gender,
-        messages:{
-            user:"patient",
-            content:{
-            sender:"Telemedicine",
-            message:"welcome" + name,
-            reciever:"patient"
+        messages: {
+            user: "patient",
+            content: {
+                sender: "Telemedicine",
+                message: "welcome" + name,
+                reciever: "patient"
 
             }
 
@@ -51,19 +51,21 @@ const registerPatient = asyncHandler(async (req, res) => {
 })
 
 const fetchPatient = asyncHandler(async (req, res) => {
-   try {
-    const patient = await Patient.findOne(req.body)
-    if(patient != null){
-        res.send(patient)
-    }
-    }catch(e){
+    try {
+        const patient = await Patient.findOne(req.body)
+        if (patient != null) {
+            res.send(patient)
+        }
+    } catch (e) {
         res.send(e)
     }
 })
 const searchDoctor = asyncHandler(async (req, res) => {
-    
+
     const { specializedIn } = req.body
+
     const doctor = await Doctor.find({specializedIn, isActive:true} )
+
     console.log(doctor)
 
     if (doctor) {
@@ -76,9 +78,9 @@ const searchDoctor = asyncHandler(async (req, res) => {
 
 })
 const fetchDoctor = asyncHandler(async (req, res) => {
-    
+
     const { username } = req.body
-    const doctor = await Doctor.find({username} )
+    const doctor = await Doctor.find({ username })
     console.log(doctor)
 
     if (doctor) {
@@ -113,12 +115,12 @@ const getAllPosts = asyncHandler(async (req, res) => {
 
     var currentIndex = allPosts.length, temporaryValue, randomIndex;
     while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = allPosts[currentIndex];
-      allPosts[currentIndex] = allPosts[randomIndex];
-      allPosts[randomIndex] = temporaryValue;
-    } 
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = allPosts[currentIndex];
+        allPosts[currentIndex] = allPosts[randomIndex];
+        allPosts[randomIndex] = temporaryValue;
+    }
 
     res.send(allPosts)
 
@@ -142,12 +144,29 @@ const createPost = asyncHandler(async (req, res) => {
     }
 })
 
+const newNotificationCount = asyncHandler(async (req, res) => {
+    const { id } = req.body
+    const user = await Patient.findById(id)
+    res.send(user.newNotificationCount + "")
+})
+
+const fetchNotifications = asyncHandler(async (req, res) => {
+
+    const { id } = req.body
+    const user = await Patient.findById(id)
+    user.newNotificationCount = 0;
+    await user.save()
+    res.send(user.notifications);
+})
+
 module.exports = {
     registerPatient,
-    searchDoctor,fetchPatient,patient,
+    searchDoctor, fetchPatient, patient,
     createPost,
     getAllPosts,
-    fetchDoctor
+    fetchDoctor,
+    newNotificationCount,
+    fetchNotifications
 
 
 }

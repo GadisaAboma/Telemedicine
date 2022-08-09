@@ -28,8 +28,13 @@ const patientSchema = new Schema({
     },
 
     notifications: [{
-        
+
     }],
+
+    newNotificationCount: {
+        type: Number,
+        default: 0
+    },
 
     appointments: [{
         description: {

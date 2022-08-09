@@ -13,71 +13,71 @@ const nodemailer = require("nodemailer");
 const jwt = require('jsonwebtoken')
 
 
-  
 
-  function sendEmail(email, secretCode){
+
+function sendEmail(email, secretCode) {
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'info.telemedicine.babycare@gmail.com',
-          pass: 'ylmlvjblewybnffc'
+            user: 'info.telemedicine.babycare@gmail.com',
+            pass: 'ylmlvjblewybnffc'
         }
-      });
-      
-      var mailOptions = {
+    });
+
+    var mailOptions = {
         from: 'info.telemedicine.babycare@gmail.com',
         to: email,
         subject: 'Conformation message from babycare telemedicine application ',
         text: 'here is your secret code from babycare telemedicine!',
-        html:'<h1>&secretCode is '+ secretCode +"</h1>"
-      };
+        html: '<h1>&secretCode is ' + secretCode + "</h1>"
+    };
 
-      transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
+            console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+            console.log('Email sent: ' + info.response);
         }
-      });
-  }
+    });
+}
 
-   
 
-  ///////////////////////////////////////////////////
 
-const forgotPassword = asyncHandler(async (req, res)=>{
-    const { secretCode,email } = req.body
+///////////////////////////////////////////////////
+
+const forgotPassword = asyncHandler(async (req, res) => {
+    const { secretCode, email } = req.body
 
     const admin = await Admin.findOne({ email })
     const patient = await Patient.findOne({ email })
     const doctor = await Doctor.findOne({ email })
 
     try{
-    if(admin){
+    if (admin) {
         sendEmail(email, secretCode)
         res.send("sent")
-    } else if(patient){
+    } else if (patient) {
         sendEmail(email, secretCode)
         res.send("sent")
-    } else if(doctor){
+    } else if (doctor) {
         sendEmail(email, secretCode)
         res.send("sent")
-    } else{
+    } else {
         res.status(404)
         throw new Error("invalid email")
     }}catch(e){
         res.status(404)
         throw new Error("invalid email")
     }
-    
 
-    
+
+
 })
 const loginUser = asyncHandler(async (req, res) => {
 
 
-      
+
     const { username, password } = req.body
 
     const admin = await Admin.findOne({ username })
@@ -230,28 +230,28 @@ const confirmPassword = asyncHandler(async (req, res) => {
 const resetPassord = asyncHandler(async (req, res) => {
     console.log(req.body)
     const { password, email } = req.body
-    try{
-       let admin = await Admin.findOne({email})
-       let doctor = await Doctor.findOne({email})
-       let patient = await Patient.findOne({email})
-    //   console.log(patient)
-       if(admin){
-        admin.password = password
-        await admin.save()
-        res.send("success")
-       } else if(doctor){
-        doctor.password = password
-        await doctor.save()
-        res.send("success")
-       } else if(patient){
-        patient.password = password
-        await patient.save()
-        res.send("success")
-       } else{
-        res.status(404)
-        throw new Error("Failed to save password")
-       }
-    } catch (e){
+    try {
+        let admin = await Admin.findOne({ email })
+        let doctor = await Doctor.findOne({ email })
+        let patient = await Patient.findOne({ email })
+        //   console.log(patient)
+        if (admin) {
+            admin.password = password
+            await admin.save()
+            res.send("success")
+        } else if (doctor) {
+            doctor.password = password
+            await doctor.save()
+            res.send("success")
+        } else if (patient) {
+            patient.password = password
+            await patient.save()
+            res.send("success")
+        } else {
+            res.status(404)
+            throw new Error("Failed to save password")
+        }
+    } catch (e) {
         res.status(404)
         throw new Error("Failed to save password")
     }
@@ -291,6 +291,10 @@ const updateUserInfo = asyncHandler(async (req, res) => {
 
 const deleteAppointment = asyncHandler(async (req, res) => {
     const { id, doctorId, patientId, type } = req.body
+
+
+    const doctor = await Doctor.findById(doctorId);
+
     let appointment
     if (type === 'patients') {
         appointment = await Appointment.findById(
@@ -300,7 +304,14 @@ const deleteAppointment = asyncHandler(async (req, res) => {
         appointment = await Appointment.findById(
             id,
         )
+        const patient = await Patient.findById(patientId);
+
+        patient.notifications.unshift(doctor.name + " cancelled your appointment, " + appointment.description);
+        patient.newNotificationCount = patient.newNotificationCount + 1;
+
+        await patient.save()
     }
+
 
     const success = await appointment.remove();
 
