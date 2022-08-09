@@ -233,8 +233,7 @@ class RegisterProvider extends ChangeNotifier {
 
   Future rejectDoctor(String id) async {
     try {
-      final response = await http.post(
-          Uri.parse("$serverUrl/api/admin/reject"),
+      final response = await http.post(Uri.parse("$serverUrl/api/admin/reject"),
           body: json.encode({"id": id}),
           headers: {
             "Content-Type": "application/json",
@@ -248,7 +247,40 @@ class RegisterProvider extends ChangeNotifier {
         return "error";
       }
     } catch (e) {
-     
+      notifyListeners();
+    }
+  }
+
+  Future countNotification(String id) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/patients/countNotification"),
+          body: json.encode({"id": id}),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          });
+
+      notifyListeners();
+      return response.body;
+    } catch (e) {
+      notifyListeners();
+    }
+  }
+
+  Future fetchNotifications(String id) async {
+    try {
+      final response = await http.post(
+          Uri.parse("$serverUrl/api/patients/fetchNotifications"),
+          body: json.encode({"id": id}),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          });
+
+      notifyListeners();
+      return json.decode(response.body);
+    } catch (e) {
       notifyListeners();
     }
   }
@@ -310,8 +342,6 @@ class RegisterProvider extends ChangeNotifier {
       return Future.error("something is wrong");
     }
   }
-
-
 
   String get loggedUserId {
     return loggedId;
